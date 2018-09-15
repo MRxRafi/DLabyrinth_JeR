@@ -6,6 +6,7 @@ Se trata de un juego de vista cenital, en el que varios jugadores se enfrentará
 **Integrantes del grupo:**  
 *Rafael Tomé Ruiz   r.tome.2016@alumnos.urjc.es   MRxRafi  
 Adrián Poza Guillermo   a.poza.2016@alumnos.urjc.es    apozag  
-Manuel Martín Rodriguez   m.martinrodr.2016@alumnos.urjc.es    Astarhel*
-
-
+Manuel Martín Rodriguez   m.martinrodr.2016@alumnos.urjc.es    Astarhel*  
+  
+**Link al tablero Trello:**  
+https://trello.com/b/uw2mn1GI/juegos-en-red
