@@ -1,9 +1,9 @@
 # Labyrinth_JeR
-**Documento de Diseño del Juego: **
+**Documento de Diseño del Juego:**
 
 CONCEPTO
 Título: DLabyrinth. 
-Estudio/Diseñadores:  RAM Studios - Adrián Poza Guillermo, Manuel Martín Rodríguez, Rafael Tomé Ruiz 
+Estudio/Diseñadores:  RAM Studios - Adrián Poza Guillermo, Manuel Martín Rodríguez, Rafael Tomé Ruiz  
 Plataforma:PC 
 Versión: La versión del documento. Debe ser un número y no una fecha. (Ver el campo de Historial de Versiones) 
 Sinopsis de Jugabilidad y Contenido: Supervivencia. Tu personaje aparece en un mapa predefinido con nada encima. Debe sobrevivir a los demás jugadores.
