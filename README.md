@@ -57,10 +57,10 @@
 Adrián Poza Guillermo Diseñador y programador  
 Manuel Martín Rodríguez Programador  
 Rafael Tomé Ruiz  Programador  
-**DETALLES DE PRODUCCIÓN**
-**Fecha de Inicio:** 26/09/2018
-**Fecha de Terminación:** ¿Cuándo termina la etapa de Producción del proyecto?
-**Presupuesto:** Pagamos por venir a clase.
+**DETALLES DE PRODUCCIÓN**  
+**Fecha de Inicio:** 26/09/2018  
+**Fecha de Terminación:** ¿Cuándo termina la etapa de Producción del proyecto?  
+**Presupuesto:** Pagamos por venir a clase.  
 
 
 **Integrantes del grupo:**  
