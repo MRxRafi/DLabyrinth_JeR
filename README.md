@@ -10,7 +10,7 @@
 **Mecánica:** Supervivencia en un mapa 2D. El jugador deberá coger armas repartidas por el mapa y ser el último personaje en pie.  
 **Tecnología:** Navegador web (Javascript), teclado y un ordenador de gama baja-media.  
 **Público:** Personas competitivas.  
-**Versión del documento:** 1.1 (19-09-2018)  
+**Versión del documento:** 1.2 (23-09-2018) (Añadido imágenes)  
 **VISIÓN GENERAL DEL JUEGO:** DLabyrinth es un trepidante juego de battle royale que pondrá a prueba la capacidad de supervivencia del jugador en un entorno en 2D en forma de laberinto. Cada jugador deberá eliminar a sus contrincantes y tratar de ser el último superviviente. La munición y recursos son limitados y deben usarse con cierta estrategia para ganar ventaja.  
 
 **MECÁNICA DEL JUEGO**  
@@ -46,6 +46,8 @@
 **Referencias de BGM y SFX:** Sonidos de libre distribución descargados a través de la web.  
 **PROGRESO DEL JUEGO:** Se entra al juego y aparece el menú principal. Si se elige comenzar una partida se nos incluirá en un “lobby” hasta que alcancemos el número necesario de jugadores para comenzar la partida. Cuando alguno de estos jugadores gane la partida terminará.  
 **PERSONAJES:** Tu avatar de jugador. (Por definir cuántos personajes habrá)  
+*Personaje de ejemplo:*  
+![Error al cargar](/Assests/personajes/esqueleto_con_corbata.png)  
 **ENEMIGOS:** El avatar del resto de jugadores. (Un máximo de 8 jugadores, es decir, 7 enemigos)  
 **HABILIDADES:** En progreso  
 **ARMAS:** Metralleta, pistola, minas.  
@@ -61,6 +63,13 @@ Rafael Tomé Ruiz  Programador
 **Fecha de Inicio:** 26/09/2018  
 **Fecha de Terminación:** ¿Cuándo termina la etapa de Producción del proyecto?  
 **Presupuesto:** Pagamos por venir a clase.  
+
+**EJEMPLOS DEL JUEGO:**  
+*Contenido del mapa:*
+![Error al cargar](/Assests/tiles.jpg)
+
+*Mapa:*
+![Error al cargar](/Assests/underdwell-level-1.png)
 
 
 **Integrantes del grupo:**  
