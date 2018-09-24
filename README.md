@@ -14,9 +14,14 @@
 **VISIÓN GENERAL DEL JUEGO:** DLabyrinth es un trepidante juego de battle royale que pondrá a prueba la capacidad de supervivencia del jugador en un entorno en 2D en forma de laberinto. Cada jugador deberá eliminar a sus contrincantes y tratar de ser el último superviviente. La munición y recursos son limitados y deben usarse con cierta estrategia para ganar ventaja.  
 
 **MECÁNICA DEL JUEGO**  
+**Mecánicas generales:** Nuestro perosnaje podrá moverse, recoger armas y comida del uselo y meterlas en el inventario y rocoger cápsulas de escudo y utilizarlas (¨no se pueden almacenar). También se pueden ultilizar las armas, como apuñalar con el cuchillo o disparar con las armas de fuego.
+EL juego implementa un radio de visión. Nuestro personaje solo podrá ver lo que hay en un circulo predefinido alrededor del el.
+Cogiendo una linterna del mapa podremos aumentar este rango de visón mientras la llevemos en el inventario.
+Las armas tienen un rango limitado dependiendo del tipo de arma.
+Si eres golpeado por u nproyectil el juego te indica la dirección por la que venía ese proyectil.
 **Cámara:** Cámara de vista cenital. Juego en 2D. La cámara se desplazará en función del movimiento del personaje manejado por el usuario.  
 **Periféricos:** Teclado.  
-**Controles:** W-Avanzar, S-Retroceder, A-Girar antihorario, D-Girar Horario, Spacebar- Disparar.  
+**Controles:** W-Avanzar, S-Retroceder, A-Girar antihorario, D-Girar Horario, Spacebar- Disparar, E-Recoger cosas del suelo, Q-Cambiar entre las armas disponibles.  
 **Puntuación:** La puntuación inicial será 0. En cada ronda de la partida se sumarán los puntos correspondientes a tu posición según los jugadores que hayas aniquilado. Al final de la partida se mostrará un Ladder Board.  
 **Guardar/Cargar:** Al ser un juego multijugador en tiempo real no se pueden guardar ni cargar partidas.
 
@@ -60,8 +65,8 @@ Cuando solo quede un jugador en pie la partida terminará, se mostrará una pant
 ![Error al cargar](/Assests/personajes/esqueleto_con_corbata_recortado.png)  
 **ENEMIGOS:** El avatar del resto de jugadores. (Un máximo de 8 jugadores, es decir, 7 enemigos)  
 **HABILIDADES:** En progreso  
-**ARMAS:** Metralleta, pistola, minas.  
-**ITEMS:** Botiquín de primeros auxilios, escudo portátil, baterías para escudo portátil.  
+**ARMAS:** Metralleta, Pistola, Bazooka, Rifle láser, minas.  
+**ITEMS:** Botiquín de primeros auxilios, linterna, baterías para escudo portátil.  
 **LOGROS:** Posiblemente a añadir en futuras versiones.  
 **MÚSICA Y SONIDOS:** La música y/o sonidos que se usarán en el juego, nombre, descripción junto con un número de referencia. Si es música de fondo, la referencia debe de empezar con una ‘M’ seguida de un número en secuencia. Si es un efecto de sonido, empezar con ‘S’. (A añadir en futuras versiones)  
 **IMÁGENES DE CONCEPTO:** Concept Art - A añadir en futuras versiones  
