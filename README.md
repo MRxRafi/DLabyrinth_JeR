@@ -43,7 +43,7 @@ Cuando solo quede un jugador en pie la partida terminará, se mostrará una pant
 
 ![Error al Cargar](/Assests/menu_pausa.png)  
 
-![Error al Cargar](/Assests/menu_pausa.png)  
+![Error al Cargar](/Assests/final_ronda.png)  
 
 
 
