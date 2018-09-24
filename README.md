@@ -14,11 +14,12 @@
 **VISIÓN GENERAL DEL JUEGO:** DLabyrinth es un trepidante juego de battle royale que pondrá a prueba la capacidad de supervivencia del jugador en un entorno en 2D en forma de laberinto. Cada jugador deberá eliminar a sus contrincantes y tratar de ser el último superviviente. La munición y recursos son limitados y deben usarse con cierta estrategia para ganar ventaja.  
 
 **MECÁNICA DEL JUEGO**  
-**Mecánicas generales:** Nuestro perosnaje podrá moverse, recoger armas y comida del uselo y meterlas en el inventario y rocoger cápsulas de escudo y utilizarlas (¨no se pueden almacenar). También se pueden ultilizar las armas, como apuñalar con el cuchillo o disparar con las armas de fuego.
+**Mecánicas generales:** Nuestro perosnaje podrá moverse, recoger armas y comida del suelo y meterlas en el inventario y recoger cápsulas de escudo y utilizarlas (¨no se pueden almacenar). También se pueden ultilizar las armas, como apuñalar con el cuchillo o disparar con las armas de fuego.
 EL juego implementa un radio de visión. Nuestro personaje solo podrá ver lo que hay en un circulo predefinido alrededor del el.
 Cogiendo una linterna del mapa podremos aumentar este rango de visón mientras la llevemos en el inventario.
 Las armas tienen un rango limitado dependiendo del tipo de arma.
-Si eres golpeado por u nproyectil el juego te indica la dirección por la que venía ese proyectil.
+Si eres golpeado por un proyectil el juego te indica la dirección por la que venía ese proyectil.  
+![Error al Cargar](/Assests/diagrama_juego.png)  
 **Cámara:** Cámara de vista cenital. Juego en 2D. La cámara se desplazará en función del movimiento del personaje manejado por el usuario.  
 **Periféricos:** Teclado.  
 **Controles:** W-Avanzar, S-Retroceder, A-Girar antihorario, D-Girar Horario, Spacebar- Disparar, E-Recoger cosas del suelo, Q-Cambiar entre las armas disponibles.  
@@ -34,7 +35,7 @@ Cuando solo quede un jugador en pie la partida terminará, se mostrará una pant
 
 **ESTADOS DEL JUEGO:**  (Falta hacer los diagramas para futuras versiones del gdd). El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
 
-![ERROR AL CARGAR](/Assests/Untitled Diagram.png)
+![Error al Cargar](/Assests/Untitled_Diagram.png)
 
 **INTERFACES:** Estilo 2D basado en sprites. Diseño y temática de color todavía por decidir  
 **Nombre de la Pantalla:** Menú principal.  
@@ -81,7 +82,7 @@ Rafael Tomé Ruiz  Programador
 
 **EJEMPLOS DEL JUEGO:**  
 *Contenido del mapa:*
-![Error al cargar](/Assests/tiles.jpg)
+![Error al cargar](/Assests/tiles3.png)
 
 *Mapa:*
 ![Error al cargar](/Assests/underdwell-level-1.png)
