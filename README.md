@@ -35,7 +35,19 @@ Cuando solo quede un jugador en pie la partida terminará, se mostrará una pant
 
 **ESTADOS DEL JUEGO:**  (Falta hacer los diagramas para futuras versiones del gdd). El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
 
-![Error al Cargar](/Assests/Untitled_Diagram.png)
+![Error al Cargar](/Assests/Untitled_Diagram.png)  
+
+![Error al Cargar](/Assests/menu_principal(2).png)  
+
+![Error al Cargar](/Assests/opciones.png)  
+
+![Error al Cargar](/Assests/menu_pausa.png)  
+
+![Error al Cargar](/Assests/menu_pausa.png)  
+
+
+
+
 
 **INTERFACES:** Estilo 2D basado en sprites. Diseño y temática de color todavía por decidir  
 **Nombre de la Pantalla:** Menú principal.  
