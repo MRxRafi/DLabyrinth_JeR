@@ -47,7 +47,7 @@
 **PROGRESO DEL JUEGO:** Se entra al juego y aparece el menú principal. Si se elige comenzar una partida se nos incluirá en un “lobby” hasta que alcancemos el número necesario de jugadores para comenzar la partida. Cuando alguno de estos jugadores gane la partida terminará.  
 **PERSONAJES:** Tu avatar de jugador. (Por definir cuántos personajes habrá)  
 *Personaje de ejemplo:*  
-![Error al cargar](/Assests/personajes/esqueleto_con_corbata.png)  
+![Error al cargar](/Assests/personajes/esqueleto_con_corbata_recortado.png)  
 **ENEMIGOS:** El avatar del resto de jugadores. (Un máximo de 8 jugadores, es decir, 7 enemigos)  
 **HABILIDADES:** En progreso  
 **ARMAS:** Metralleta, pistola, minas.  
