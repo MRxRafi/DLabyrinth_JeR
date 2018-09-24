@@ -18,7 +18,11 @@
 **Periféricos:** Teclado.  
 **Controles:** W-Avanzar, S-Retroceder, A-Girar antihorario, D-Girar Horario, Spacebar- Disparar.  
 **Puntuación:** La puntuación inicial será 0. En cada ronda de la partida se sumarán los puntos correspondientes a tu posición según los jugadores que hayas aniquilado. Al final de la partida se mostrará un Ladder Board.  
-**Guardar/Cargar:** Al ser un juego multijugador en tiempo real no se pueden guardar ni cargar partidas.  
+**Guardar/Cargar:** Al ser un juego multijugador en tiempo real no se pueden guardar ni cargar partidas.
+
+**FLUJO DE JUEGO:** Al abrir el juego se nos presenta el menú principal. En él el jugador podrá elegir entre varias opciones como modificar los controles, el sonido, visitar los créditos y salir de la aplicación así como comenzar una partida.
+Al 
+
 **ESTADOS DEL JUEGO:**  (Falta hacer los diagramas para futuras versiones del gdd). El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
 **INTERFACES:** Estilo 2D basado en sprites. Diseño y temática de color todavía por decidir  
 **Nombre de la Pantalla:** Menú principal.  
