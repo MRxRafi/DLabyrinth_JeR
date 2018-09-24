@@ -28,6 +28,9 @@ Golpear a otros jugadores con algún arma les provocará daños dependiendo del 
 Cuando solo quede un jugador en pie la partida terminará, se mostrará una pantalla con las puntuaciones tras lo cual se regresará al menú principal.
 
 **ESTADOS DEL JUEGO:**  (Falta hacer los diagramas para futuras versiones del gdd). El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
+
+![ERROR AL CARGAR](/Assests/Untitled Diagram.png)
+
 **INTERFACES:** Estilo 2D basado en sprites. Diseño y temática de color todavía por decidir  
 **Nombre de la Pantalla:** Menú principal.  
 **Descripción de la Pantalla:** Permite empezar una nueva partida, configurar las opciones del juego, mirar los controles, consultar los créditos o bien salir del juego.  
@@ -40,7 +43,6 @@ Cuando solo quede un jugador en pie la partida terminará, se mostrará una pant
 **Nombre de la pantalla:** Salir  
 **Descripción de la pantalla:** Si le das a “Ok” el juego te mandará a la pantalla principal (menú de inicio) y te desconectaras de la partida actual.  
 **Estado de la pantalla:** Se accede pulsando “Esc” en el teclado una vez dentro de una partida.  
-
 **Nombre de la pantalla:** Controles  
 **Descripción de la pantalla:** Muestra una imagen de los controles.  
 **Estado de la pantalla:** Se accede al pulsar en “Controles” en el menú principal.  
