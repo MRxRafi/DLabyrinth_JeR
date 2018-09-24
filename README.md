@@ -30,10 +30,10 @@ Si eres golpeado por un proyectil el juego te indica la dirección por la que ve
 Al escoger comenzar partida el jugador será colocado en un "lobby". Deberá esperar a que este se llene de otros jugadores para poder comenzar.
 Al empezar la partida jugable nuestro personaje aparecerá en una zona aleatoria de un mapa aleatorio elegido previamente. Comenzaremos con un cuchillo en nuestro inventario, con la vida completa y el medidor de escudos a 0. A partir de aquí nuestro objetivo será ser los ultimos supervivientes de la partida. Para ello tenemos la opción de eliminar a los jugadores enemigos. 
 El jugador podra recoger armas que aparecen aleatoriamente en el mapa, munición para las armas, asi como comida para recuperar puntos de salud y cápsulas energéticas, que rellenaran nuestro nivel de escudo hasta alcanzar el tope. En nuestro inventario podremos almacenar hasta dos armas de fuego además del cuchillo inicial así como 2 unidades de comida. Las cápsulas de escudo no son almacenables.
-Golpear a otros jugadores con algún arma les provocará daños dependiendo del arma utilizada. Si los puntos de vida alcanzan el 0 el personaje morirá. AL morir el jugador tiene la opción de seguir viendo la partida hasta su finalización o volver al menú principal.
-Cuando solo quede un jugador en pie la partida terminará, se mostrará una pantalla con las puntuaciones tras lo cual se regresará al menú principal.
+Golpear a otros jugadores con algún arma les provocará daños dependiendo del arma utilizada. Si los puntos de vida alcanzan el 0 el personaje morirá. AL morir el jugador tiene la opción de seguir viendo la partida hasta finalizar la ronda.
+Cuando solo quede un jugador en pie la ronda terminará, se mostrará una pantalla con las puntuaciones tras lo cual comenzará la nueva ronda. Tras la tercera ronda, se acaba la partida y aparecen los nombre de los jugadores en la tres primeras posiciones. Se vuelve al menú principal.
 
-**ESTADOS DEL JUEGO:**  (Falta hacer los diagramas para futuras versiones del gdd). El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
+**ESTADOS DEL JUEGO:**  El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
 
 ![Error al Cargar](/Assests/Untitled_Diagram.png)  
 
@@ -44,9 +44,6 @@ Cuando solo quede un jugador en pie la partida terminará, se mostrará una pant
 ![Error al Cargar](/Assests/menu_pausa.png)  
 
 ![Error al Cargar](/Assests/final_ronda.png)  
-
-
-
 
 
 **INTERFACES:** Estilo 2D basado en sprites. Diseño y temática de color todavía por decidir  
