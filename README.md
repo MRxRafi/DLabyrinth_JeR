@@ -1,7 +1,7 @@
 # Labyrinth_JeR
 **Documento de Diseño del Juego:**
 
-**CONCEPTO**
+**CONCEPTO**  
 **Título:** DLabyrinth.  
 **Estudio/Diseñadores:**  RAM Studios - Adrián Poza Guillermo, Manuel Martín Rodríguez, Rafael Tomé Ruiz  
 **Plataforma:** PC  
