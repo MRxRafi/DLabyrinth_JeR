@@ -1,4 +1,4 @@
-# Labyrinth_JeR
+# DLabyrinth_Royale_JeR
 **Documento de Diseño del Juego:**
 
 **CONCEPTO**  
