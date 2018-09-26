@@ -10,7 +10,7 @@
 **Mecánica:** Supervivencia en un mapa 2D. El jugador deberá coger armas repartidas por el mapa y ser el último personaje en pie.  
 **Tecnología:** Navegador web (Javascript), teclado y un ordenador de gama baja-media.  
 **Público:** Personas competitivas.  
-**Versión del documento:** 1.2 (23-09-2018) (Añadido imágenes)  
+**Versión del documento:** 1.3 (26-09-2018) (Añadido Matchmaking y chat)  
 **VISIÓN GENERAL DEL JUEGO:** DLabyrinth es un trepidante juego de battle royale que pondrá a prueba la capacidad de supervivencia del jugador en un entorno en 2D en forma de laberinto. Cada jugador deberá eliminar a sus contrincantes y tratar de ser el último superviviente. La munición y recursos son limitados y deben usarse con cierta estrategia para ganar ventaja.  
 
 **MECÁNICA DEL JUEGO**  
