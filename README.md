@@ -76,16 +76,12 @@ Cuando solo quede un jugador en pie la ronda terminará, se mostrará una pantal
 *Personaje de ejemplo:*  
 ![Error al cargar](/Assests/personajes/esqueleto_con_corbata_recortado.png)  
 **ENEMIGOS:** El avatar del resto de jugadores. (Un máximo de 8 jugadores, es decir, 7 enemigos)  
-**HABILIDADES:** En progreso  
 **ARMAS:** Metralleta, Pistola, Bazooka, Rifle láser, minas.  
 **ITEMS:** Botiquín de primeros auxilios, linterna, baterías para escudo portátil.  
 **LOGROS:** Posiblemente a añadir en futuras versiones.  
 **MÚSICA Y SONIDOS:** La música y/o sonidos que se usarán en el juego, nombre, descripción junto con un número de referencia. Si es música de fondo, la referencia debe de empezar con una ‘M’ seguida de un número en secuencia. Si es un efecto de sonido, empezar con ‘S’. (A añadir en futuras versiones)  
 **IMÁGENES DE CONCEPTO:** Concept Art - A añadir en futuras versiones  
-**MIEMBROS DEL EQUIPO:**   
-Adrián Poza Guillermo Diseñador y programador  
-Manuel Martín Rodríguez Programador  
-Rafael Tomé Ruiz  Programador  
+  
 **DETALLES DE PRODUCCIÓN**  
 **Fecha de Inicio:** 26/09/2018  
 **Fecha de Terminación:** ¿Cuándo termina la etapa de Producción del proyecto?  
@@ -100,9 +96,9 @@ Rafael Tomé Ruiz  Programador
 
 
 **Integrantes del grupo:**  
-*Rafael Tomé Ruiz   r.tome.2016@alumnos.urjc.es   MRxRafi  
-Adrián Poza Guillermo   a.poza.2016@alumnos.urjc.es    apozag  
-Manuel Martín Rodriguez   m.martinrodr.2016@alumnos.urjc.es    Astarhel*  
+*Rafael Tomé Ruiz   r.tome.2016@alumnos.urjc.es   MRxRafi - Programador  
+Adrián Poza Guillermo   a.poza.2016@alumnos.urjc.es    apozag - Diseñador y programador  
+Manuel Martín Rodriguez   m.martinrodr.2016@alumnos.urjc.es    Astarhel - Programador*  
   
 **Link al tablero Trello:**  
 https://trello.com/b/uw2mn1GI/juegos-en-red
