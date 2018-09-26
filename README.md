@@ -105,18 +105,27 @@ ARMAS:
 ~~~
 Metralleta, Pistola, Bazooka, Rifle láser, minas. Aparecen aleatoriamente en ciertos puntos del mapa. La metralleta, pistola y bazooka tienen un rango corto-medio de disparo (un par de cuadros más allá del rango de visión). El rifle láser tiene rango largo, el disparo aguanta 5 cuadros más allá del rango de visión. Las minas se colocan por el mapa y sólo son visibles por el jugador que las colocó (cuidado al pasar por encima porque también le explotan a él).  
   *Daño de las armas:* Metralleta: un corazón (o escudo) por cada ráfaga. Pistola: un corazón (o uno de escudo) por disparo. Bazooka: dos corazones (o escudos) por disparo. Mina: dos corazones (o escudos) por mina pisada.  
-**ITEMS:** Botiquín de primeros auxilios, linterna, baterías para escudo portátil.  
-  *Rendijas en los mapas:* los jugadores podrán esconderse dentro de las rendijas que están repartidos por el mapa, de manera que no serán visibles a ojo de otro usuario a no ser que disparen, se vuelvan a mover o les alcance un disparo.  
-**LOGROS:** Posiblemente a añadir en futuras versiones.  
-**MÚSICA Y SONIDOS:** La música y/o sonidos que se usarán en el juego, nombre, descripción junto con un número de referencia. Si es música de fondo, la referencia debe de empezar con una ‘M’ seguida de un número en secuencia. Si es un efecto de sonido, empezar con ‘S’. (A añadir en futuras versiones)  
-**IMÁGENES DE CONCEPTO:** Concept Art - A añadir en futuras versiones  
   
-**DETALLES DE PRODUCCIÓN**  
+~~~
+ITEMS:
+~~~
+Botiquín de primeros auxilios, linterna, baterías para escudo portátil.  
+  *Rendijas en los mapas:* los jugadores podrán esconderse dentro de las rendijas que están repartidos por el mapa, de manera que no serán visibles a ojo de otro usuario a no ser que disparen, se vuelvan a mover o les alcance un disparo.  
+  
+~~~
+IMÁGENES DE CONCEPTO:
+~~~
+Concept Art - A añadir en futuras versiones  
+  
+~~~
+DETALLES DE PRODUCCIÓN
+~~~
 **Fecha de Inicio:** 26/09/2018  
-**Fecha de Terminación:** ¿Cuándo termina la etapa de Producción del proyecto?  
-**Presupuesto:** Pagamos por venir a clase.  
+**Fecha de Finalización:** ¿Cuándo termina la etapa de Producción del proyecto?  
 
-**EJEMPLOS DEL JUEGO:**  
+~~~
+EJEMPLOS DEL JUEGO:
+~~~
 *Contenido del mapa:*
 ![Error al cargar](/Assests/tiles3.png)
 
@@ -124,7 +133,9 @@ Metralleta, Pistola, Bazooka, Rifle láser, minas. Aparecen aleatoriamente en ci
 ![Error al cargar](/Assests/underdwell-level-1.png)
 
 
-**Integrantes del grupo:**  
+~~~
+Integrantes del grupo:
+~~~
 *Rafael Tomé Ruiz   r.tome.2016@alumnos.urjc.es   MRxRafi - Programador  
 Adrián Poza Guillermo   a.poza.2016@alumnos.urjc.es    apozag - Diseñador y programador  
 Manuel Martín Rodriguez   m.martinrodr.2016@alumnos.urjc.es    Astarhel - Programador*  
