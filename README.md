@@ -24,8 +24,8 @@ Si eres golpeado por un proyectil el juego te indica la dirección por la que ve
 **Periféricos:** Teclado.  
 **Controles:** W-Avanzar, S-Retroceder, A-Girar antihorario, D-Girar Horario, Spacebar- Disparar, E-Recoger cosas del suelo, Q-Cambiar entre las armas disponibles.  
 **Puntuación:** La puntuación inicial será 0. En cada ronda de la partida se sumarán los puntos correspondientes a tu posición según los jugadores que hayas aniquilado. Al final de la partida se mostrará un Ladder Board. 
-**Match-Making:** EL juego incorpora un sistema de búsqueda por región, para minimizar el ping. El juego tiene un sistema de puntuación interna y empareja a los usuarios dentro de un abanico, desde las puntuaciones mas bajas hasta las mas altas (en una partida no podrán coincidir los 8 mejores jugadores o los 8 peores, por ejemplo).
-**Chat interno:** El juego incorpora un chat tanto en el lobby como en la propia partida. Los jugadores eliminados no podrá utilizar el chat.
+**Match-Making:** EL juego incorpora un sistema de búsqueda por región, para minimizar el ping. El juego tiene un sistema de puntuación interna y empareja a los usuarios dentro de un abanico, desde las puntuaciones mas bajas hasta las mas altas (en una partida no podrán coincidir los 8 mejores jugadores o los 8 peores, por ejemplo).  
+**Chat interno:** El juego incorpora un chat tanto en el lobby como en la propia partida. Los jugadores eliminados no podrá utilizar el chat.  
 **Guardar/Cargar:** Al ser un juego multijugador en tiempo real no se pueden guardar ni cargar partidas.
 
 **FLUJO DE JUEGO:** Al abrir el juego se nos presenta el menú principal. En él el jugador podrá elegir entre varias opciones como modificar los controles, el sonido, visitar los créditos y salir de la aplicación así como comenzar una partida.
