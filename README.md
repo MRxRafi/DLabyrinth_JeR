@@ -2,7 +2,7 @@
 **Documento de Diseño del Juego:**
 
 **CONCEPTO**  
-**Título:** DLabyrinth.  
+**Título:** DLabyrinth_Royale.  
 **Estudio/Diseñadores:**  RAM Studios - Adrián Poza Guillermo, Manuel Martín Rodríguez, Rafael Tomé Ruiz  
 **Plataforma:** PC  
 **Sinopsis de Jugabilidad y Contenido:** Supervivencia. Tu personaje aparece en un mapa predefinido con nada encima. Debe sobrevivir a los demás jugadores.  
