@@ -76,6 +76,22 @@ El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (on
 ![Error al Cargar](/Assests/final_ronda.png)  
 
 ~~~
+ESTADOS DEL JUEGO  
+~~~
+
+1. **Boot:** Inicia físicas principales del juego  
+2. **Preload:** Carga assets del juego  
+3. **Menu:** Estado intermedio en el que hay 4 botones:  
+  -*Empezar partida* te manda a matchingState.  
+  -*Opciones* te manda a optionState.  
+  -*Créditos* te manda a creditState.  
+  -*Salir* te manda a endingState.  
+4. **Opciones:** puedes mirar los controles del juego y algunas opciones de sonido. Se puede volver al menuState pulsando sobre "Volver al menú principal".  
+5. **Créditos:** aparecen los principales diseñadores y desarrolladores del juego. Pulsando 'M' se puede volver al menú Principal.  
+6. **Empezar partida:** en matchingState se espera a que el emparejador encuentre los jugadores. Después, si ha sido satisfactorio, te manda al levelState.  
+7. **Salir:** agradecimientos por jugar, y se cierra la aplicación.  
+
+~~~
 NIVELES:
 ~~~
 Solo hay un nivel, el mapa en el que se desarrolla la batalla. Hay más de una temática para el mapa, pero sólo cambia su forma y el aspecto visual.  
