@@ -28,7 +28,7 @@ Para prevenir que los jugadores se aburran y no se encuentren en el mapa, cada c
 ![Error al Cargar](/Assests/diagrama_juego1.png)  
 **Cámara:** Cámara de vista cenital. Juego en 2D. La cámara se desplazará en función del movimiento del personaje manejado por el usuario.  
 **Periféricos:** Teclado.  
-**Controles:** W-Avanzar, S-Retroceder, A-Girar antihorario, D-Girar Horario, Spacebar- Disparar, E-Recoger cosas del suelo, Q-Cambiar entre las armas disponibles.  
+**Controles:** W-Arriba, S-Abajo, A-Izquierda, D-Derecha, Spacebar- Disparar, E-Recoger cosas del suelo, Q-Cambiar entre las armas disponibles.  
 **Puntuación:** La puntuación inicial será 0. En cada ronda de la partida se sumarán los puntos correspondientes a tu posición según los jugadores que hayas aniquilado. Al final de la partida se mostrará un Ladder Board.  
 **Match-Making:** EL juego incorpora un sistema de búsqueda por región, para minimizar el ping. El juego tiene un sistema de puntuación interna y empareja a los usuarios dentro de un abanico, desde las puntuaciones mas bajas hasta las mas altas (en una partida no podrán coincidir los 8 mejores jugadores o los 8 peores, por ejemplo).  
 **Chat interno:** El juego incorpora un chat tanto en el lobby como en la propia partida. Los jugadores eliminados no podrá utilizar el chat.  
