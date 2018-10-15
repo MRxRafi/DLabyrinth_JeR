@@ -2,6 +2,7 @@ DLabyrinth.levelState = function(game){
 
 }
 var player, orbe;
+var objects = new Array();
 
 DLabyrinth.levelState.prototype = {
     preload: function() {
@@ -23,10 +24,14 @@ DLabyrinth.levelState.prototype = {
         this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
         this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
+        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         //Creamos el jugador y el orbe
         player = new Jugador('spriteSheet');
         orbe = new Orbe('orb', player);
+
+        var g = new Gun(500, 500, 'orb');
+        objects.push(g);
 
         //La cámara sigue al jugador
         game.camera.follow(player.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -50,9 +55,12 @@ DLabyrinth.levelState.prototype = {
             keydown = true;
         }
         if (this.sKey.isDown){
-            player.down = true;
+            player.down = true; 
             player.sprite.y +=5;
             keydown = true;
+        }
+        if(fireButton.isDown){
+            orbe.weapons[0].fire();
         }
         if(this.aKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { player.left = true; }
         if(this.dKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { player.right = true; }
@@ -71,11 +79,22 @@ DLabyrinth.levelState.prototype = {
         orbe.sprite.body.velocity.x = (player.sprite.x - orbe.sprite.x - 30)*5;
         orbe.sprite.body.velocity.y = (player.sprite.y - orbe.sprite.y - 30)*5;
         
+        this.checkCollisions();
+    },
+    checkCollisions : function(){
+        var i = 0;
+        objects.forEach(function(o){
+            if(game.physics.arcade.collide(player.sprite, o.sprite)){
+                o.sprite.destroy();
+                objects.splice(i, 1);
+            }
+            i++;
+        });
     }
 }
 
 //Constructores
-function Jugador(sprsheet){
+function Jugador(sprsheet,orb){
     //Sprite del personaje y asignación de las animaciones a variables
     this.sprite = game.add.sprite(300, 300, sprsheet);
     this.leftAnimation = this.sprite.animations.add('walkLeft', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
@@ -89,8 +108,12 @@ function Jugador(sprsheet){
     this.right = false;
     this.sprite.animations.play('upAnimation', 30, true);
 
+    
+    
+
     //Activamos físicas arcade para el personaje
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+
     
     //Aquí es donde meteremos la vida, munición, armas..
     
@@ -105,6 +128,25 @@ function Orbe(sprsheet, pl){
     this.sprite = game.add.sprite(pl.sprite.x - this.offsetX, pl.sprite.y - this.offsetY ,sprsheet);
     this.sprite.scale.setTo(0.05);
 
+    this.weapons = [game.add.weapon(30, 'bullet'), game.add.weapon(30, 'bullet')];
+    this.weapons[0].trackSprite(this.sprite, 0, 0);
+    this.weapons[1].trackSprite(this.sprite, 0, 0);
+
+    this.switch = function(){
+        var a = weapons[0];
+        weapons[0] = weapons[1];
+        weapons[1] = a;
+    }
+
      //Activamos físicas arcade para el orbe.
      game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+}
+
+function Gun(x, y, spr) {
+    this.damage;
+    this.sprite = game.add.sprite(x, y, spr);
+    this.fireRate;
+    this.bullets;
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+
 }
