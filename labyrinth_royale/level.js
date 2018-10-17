@@ -1,7 +1,8 @@
 DLabyrinth.levelState = function(game){
 
 }
-var player, orbe;
+var player;
+var orbe;
 var objects = new Array();
 
 DLabyrinth.levelState.prototype = {
@@ -10,7 +11,13 @@ DLabyrinth.levelState.prototype = {
         game.load.spritesheet('spriteSheet', 'assets/spriteSheets/spriteSheet1.png', 30, 49, 40);
         game.load.image('orb', 'assets/props/orb.png');
         game.load.image('bg', 'assets/tiles/debug.png');
+        game.load.image('bullet', 'assets/props/bullet.png');
+
+        //Vidas
+        game.load.image('halfL', 'assets/props/life/half.png');
+        game.load.image('oneL', 'assets/props/life/one.png');
     },
+
 
     create: function() {
         //Sprite background
@@ -24,14 +31,39 @@ DLabyrinth.levelState.prototype = {
         this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
         this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.qKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-        //Creamos el jugador y el orbe
+        //Creamos el jugador
         player = new Jugador('spriteSheet');
-        orbe = new Orbe('orb', player);
 
-        var g = new Gun(500, 500, 'orb');
+         //Creamos los sprites de la vida (al principio siempre 3 corazones)
+         oneH = [game.add.sprite(35, 15, 'oneL'), game.add.sprite(35+20, 15, 'oneL'), game.add.sprite(35+40, 15, 'oneL')];
+         for(i = 0; i < 3; i++){
+             oneH[i].fixedToCamera = true;
+             oneH[i].scale.setTo(0.1);
+         }
+         oneH[0].cameraOffset.setTo(15, 15);
+         oneH[1].cameraOffset.setTo(15+40, 15);
+         oneH[2].cameraOffset.setTo(15+80, 15);
+ 
+         //Creamos los sprites de medio corazón y los hacemos invisibles al principio
+         halfH = [game.add.sprite(35, 15, 'halfL'), game.add.sprite(35+20, 15, 'halfL'), game.add.sprite(35+40, 15, 'halfL')]
+         for(i = 0; i < 3; i++){
+             halfH[i].fixedToCamera = true;
+             halfH[i].scale.setTo(0.1);
+             halfH[i].visible = false;
+         }
+         halfH[0].cameraOffset.setTo(15, 15);
+         halfH[1].cameraOffset.setTo(15+40, 15);
+         halfH[2].cameraOffset.setTo(15+80, 15);
+ 
+         changedLife = false;
+
+        var g = new WeaponItem(500, 500, 'orb', 1, 500, 10);
+        var h = new WeaponItem(100, 100,'bullet', 0.25, 200, 30);
         objects.push(g);
+        objects.push(h);
 
         //La cámara sigue al jugador
         game.camera.follow(player.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -58,9 +90,16 @@ DLabyrinth.levelState.prototype = {
             player.down = true; 
             player.sprite.y +=5;
             keydown = true;
-        }
+        } 
+        if (this.qKey.isDown){
+           orbe.switch();
+        } 
         if(fireButton.isDown){
-            orbe.weapons[0].fire();
+            if(player.hasOrb){
+                if(orbe.weapons[0].ammo > 0){
+                    orbe.weapons[0].weapon.fireAtPointer(game.input.mousePointer);
+                }
+            }
         }
         if(this.aKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { player.left = true; }
         if(this.dKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { player.right = true; }
@@ -76,8 +115,67 @@ DLabyrinth.levelState.prototype = {
         if(!keydown){ 
             player.sprite.animations.stop(null, true);
         }
+
+        //Movimiento del orbe
+        if(player.hasOrb){
         orbe.sprite.body.velocity.x = (player.sprite.x - orbe.sprite.x - 30)*5;
         orbe.sprite.body.velocity.y = (player.sprite.y - orbe.sprite.y - 30)*5;
+        }
+
+        //Actualizacion vida personajes
+        if(changedLife && player.lifePoints >= 0.5){
+            //Ocultamos los medios corazones
+            for(i = 0; i < 3; i++){ halfH[i].visible = false; }
+        
+            for(i = 0; i < player.lifePoints; i++){ 
+                oneH[i].visible = true;
+            }
+            for(i = 2; i > player.lifePoints-1; i--){ 
+                oneH[i].visible = false;
+            }
+            //Si la vida no es entera dibujamos corazon partido
+            if(player.lifePoints != 1 || player.lifePoints != 2 || player.lifePoints != 3){
+                if(i!=3 && i>=0){halfH[i+1].visible = true;}
+            }
+            changedLife = false;
+        }
+        /*
+        if(changedLife){
+            player.lifeSprite.destroy();
+            if(player.lifePoints === 3){ //Manejamos el sprite 
+                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'threeL');
+                player.lifeSprite.fixedToCamera = true;
+                player.lifeSprite.cameraOffset.setTo(35, 15);
+                player.lifeSprite.scale.setTo(0.1);
+            } else if (player.lifePoints === 2.5) {
+                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'twoHL');
+                player.lifeSprite.fixedToCamera = true;
+                player.lifeSprite.cameraOffset.setTo(35, 15);
+                player.lifeSprite.scale.setTo(0.1);
+            } else if (player.lifePoints === 2){
+                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'twoL');
+                player.lifeSprite.fixedToCamera = true;
+                player.lifeSprite.cameraOffset.setTo(35, 15);
+                player.lifeSprite.scale.setTo(0.1);
+            } else if(player.lifePoints === 1.5) {
+                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'oneHL');
+                player.lifeSprite.fixedToCamera = true;
+                player.lifeSprite.cameraOffset.setTo(35, 15);
+                player.lifeSprite.scale.setTo(0.1);
+            } else if(player.lifePoints === 1) {
+                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'oneL');
+                player.lifeSprite.fixedToCamera = true;
+                player.lifeSprite.cameraOffset.setTo(35, 15);
+                player.lifeSprite.scale.setTo(0.1);
+            } else if(player.lifePoints === 0.5){
+                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'halfL');
+                player.lifeSprite.fixedToCamera = true;
+                player.lifeSprite.cameraOffset.setTo(35, 15);
+                player.lifeSprite.scale.setTo(0.1);
+            }
+            changedLife = false;
+        }
+        */
         
         this.checkCollisions();
     },
@@ -85,6 +183,11 @@ DLabyrinth.levelState.prototype = {
         var i = 0;
         objects.forEach(function(o){
             if(game.physics.arcade.collide(player.sprite, o.sprite)){
+                if(!player.hasOrb){
+                    orbe = new Orbe('orb', player);
+                    player.hasOrb = true;
+                }
+                orbe.setWeapon(o);
                 o.sprite.destroy();
                 objects.splice(i, 1);
             }
@@ -108,8 +211,16 @@ function Jugador(sprsheet,orb){
     this.right = false;
     this.sprite.animations.play('upAnimation', 30, true);
 
+    this.hasOrb = false;
     
-    
+     //Aquí es donde meteremos la vida, munición, armas..    
+     this.lifePoints = 3;
+     /*
+     this.lifeSprite = game.add.image( game.camera.x + 50, game.camera.y + 20,'threeL');
+     this.lifeSprite.fixedToCamera = true;
+     this.lifeSprite.cameraOffset.setTo(35, 15);
+     this.lifeSprite.scale.setTo(0.1);
+     */
 
     //Activamos físicas arcade para el personaje
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -127,26 +238,61 @@ function Orbe(sprsheet, pl){
     //Añadimos orbe cerca del jugador correspondiente
     this.sprite = game.add.sprite(pl.sprite.x - this.offsetX, pl.sprite.y - this.offsetY ,sprsheet);
     this.sprite.scale.setTo(0.05);
+    this.sprite.anchor.setTo(0.5);
 
-    this.weapons = [game.add.weapon(30, 'bullet'), game.add.weapon(30, 'bullet')];
-    this.weapons[0].trackSprite(this.sprite, 0, 0);
-    this.weapons[1].trackSprite(this.sprite, 0, 0);
+    this.weapons = [new Weapon(), new Weapon()];//game.add.weapon(30, 'bullet'), game.add.weapon(30, 'bullet')];
+    this.weapons[0].weapon = game.add.weapon(30, 'bullet');
+    this.weapons[1].weapon = game.add.weapon(30, 'bullet');
+    this.weapons[0].weapon.trackSprite(this.sprite, 0, 0);
+    this.weapons[1].weapon.trackSprite(this.sprite, 0, 0);
+    this.weapons[0].weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
+    this.weapons[1].weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
+    this.weapons[0].weapon.bulletSpeed = 700;
+    this.weapons[1].weapon.bulletSpeed = 700;
+    
+    
+    this.weapons[0].empty = true;
+    this.weapons[1].empty = true;
 
     this.switch = function(){
-        var a = weapons[0];
-        weapons[0] = weapons[1];
-        weapons[1] = a;
+        var a = this.weapons[0];
+        this.weapons[0] = this.weapons[1];
+        this.weapons[1] = a;
+        //this.weapons[0].weapon.onFire.add(function(){this.weapons[0].ammo -= 1;}, this);
     }
+    this.setWeapon = function(w){
+        if(!this.weapons[0].empty && this.weapons[1].empty){
+        this.weapons[1].weapon.fireRate = w.fireRate;
+        this.weapons[1].damage = w.damage;
+        this.weapons[1].ammo = w.bullets;
+        this.weapons[1].empty = false;
+        this.weapons[1].weapon.onFire.add(function(){this.weapons[0].ammo -= 1;}, this);
 
+        }
+        else{
+        this.weapons[0].weapon.fireRate = w.fireRate;
+        this.weapons[0].damage = w.damage;
+        this.weapons[0].ammo = w.bullets;
+        this.weapons[0].empty = false;
+        this.weapons[0].weapon.onFire.add(function(){this.weapons[0].ammo -= 1;}, this);
+
+        }
+    }
      //Activamos físicas arcade para el orbe.
      game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 
-function Gun(x, y, spr) {
-    this.damage;
+function WeaponItem(x, y, spr, d, fr, b) {
+    this.damage = d;
     this.sprite = game.add.sprite(x, y, spr);
-    this.fireRate;
-    this.bullets;
+    this.fireRate = fr;
+    this.bullets = b;
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
+}
+function Weapon(){
+    this.empty;
+    this.weapon;
+    this.damage;
+    this.ammo;
 }
