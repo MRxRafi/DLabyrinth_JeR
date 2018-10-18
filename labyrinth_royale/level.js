@@ -6,6 +6,7 @@ var orbes;
 var weaponItems;
 var ammoItems;
 var lifeItems;
+var interfaz;
 
 DLabyrinth.levelState.prototype = {
     preload: function() {
@@ -15,9 +16,14 @@ DLabyrinth.levelState.prototype = {
         game.load.image('bg', 'assets/tiles/debug.png');
         game.load.image('bullet', 'assets/props/bullet.png');
 
-        //Vidas
+        //Vidas y escudo
         game.load.image('halfL', 'assets/props/life/half.png');
         game.load.image('oneL', 'assets/props/life/one.png');
+        game.load.image('shield', 'assets/props/shield/shield.png');
+
+        //Armas
+        game.load.image('pistol', 'assets/props/pistol.png');
+        game.load.image('machineGun', 'assets/props/ak-47.png');
     },
 
 
@@ -34,6 +40,7 @@ DLabyrinth.levelState.prototype = {
         this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.qKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+	this.qKey.onDown.add(changeWeaponFunc1, this);
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.tKey = game.input.keyboard.addKey(Phaser.Keyboard.T);
@@ -41,7 +48,7 @@ DLabyrinth.levelState.prototype = {
         this.fKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.hKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
         this.rKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
-
+	this.rKey.onDown.add(changeWeaponFunc2, this);
 
         //Conjuntos de objetos del juego
         players = new Array();
@@ -53,30 +60,12 @@ DLabyrinth.levelState.prototype = {
         //Creamos los jugador
         players.push( new Jugador(300, 300, 'spriteSheet'));
         players.push( new Jugador(500, 300, 'spriteSheet'));
-
-        //Creamos los sprites de la vida (al principio siempre 3 corazones)
-         oneH = [game.add.sprite(35, 15, 'oneL'), game.add.sprite(35+20, 15, 'oneL'), game.add.sprite(35+40, 15, 'oneL')];
-         for(i = 0; i < 3; i++){
-             oneH[i].fixedToCamera = true;
-             oneH[i].scale.setTo(0.1);
-         }
-         oneH[0].cameraOffset.setTo(15, 15);
-         oneH[1].cameraOffset.setTo(15+40, 15);
-         oneH[2].cameraOffset.setTo(15+80, 15);
- 
-         //Creamos los sprites de medio corazón y los hacemos invisibles al principio
-         halfH = [game.add.sprite(35, 15, 'halfL'), game.add.sprite(35+20, 15, 'halfL'), game.add.sprite(35+40, 15, 'halfL')]
-         for(i = 0; i < 3; i++){
-             halfH[i].fixedToCamera = true;
-             halfH[i].scale.setTo(0.1);
-             halfH[i].visible = false;
-         }
-         halfH[0].cameraOffset.setTo(15, 15);
-         halfH[1].cameraOffset.setTo(15+40, 15);
-         halfH[2].cameraOffset.setTo(15+80, 15);
- 
-         changedLife = false;
-
+	
+	/////////////////////////// INTERFAZ ///////////////////////////
+        interfaz = new Interface();
+        interfaz.createInterface();
+        /////////////////////////// FIN INTERFAZ ///////////////////////////
+	
         //Armas por el mapa
         //var g = new WeaponItem(500, 500, 'orb', 1, 500, 10, 'pistola');
         var h = new WeaponItem(100, 100,'bullet', 0.25, 200, 30, 'metralleta');
@@ -117,11 +106,6 @@ DLabyrinth.levelState.prototype = {
             players[0].sprite.y +=5;
             keydownMove[0] = true;
         } 
-        if (this.qKey.isDown){
-            if(players[0].hasOrb){
-                orbes[0].switch();
-            }
-        } 
         if(fireButton.isDown){
             if(players[0].hasOrb){
                 if(orbes[0].weapons[0].ammo > 0){
@@ -154,11 +138,6 @@ DLabyrinth.levelState.prototype = {
             players[1].down = true; 
             players[1].sprite.y +=5;
             keydownMove[1] = true;
-        } 
-        if (this.rKey.isDown){
-            if(players[1].hasOrb){
-                orbes[1].switch();
-            }
         } 
         if(fireButton.isDown){
             if(players[1].hasOrb){
@@ -197,27 +176,13 @@ DLabyrinth.levelState.prototype = {
                 orbes[j].sprite.body.velocity.y = (players[j].sprite.y - orbes[j].sprite.y - 30)*5;
             }
         }
-
-        //Hacemos visible las vidas que le quedan al jugador
-        if(changedLife && players[0].lifePoints >= 0.5){
-            //Ocultamos los medios corazones
-            for(i = 0; i < 3; i++){ halfH[i].visible = false; }
-        
-            for(i = 0; i < players[0].lifePoints; i++){ 
-                oneH[i].visible = true;
-            }
-            for(i = 2; i > players[0].lifePoints-1; i--){ 
-                oneH[i].visible = false;
-            }
-            //Si la vida no es entera dibujamos corazon partido
-            if(players[0].lifePoints != 1 || players[0].lifePoints != 2 || players[0].lifePoints != 3){
-                if(i!=3 && i>=0){halfH[i+1].visible = true;}
-            }
-            changedLife = false;
-        }
         
         this.checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
+	/////////////////////////// INTERFAZ ///////////////////////////
+        interfaz.updateInterface(players[0], orbes);
+        /////////////////////////// FIN INTERFAZ ///////////////////////////
+	    
         //Administración de lo que sucede si algún jugador se queda sin vida
         for(var i = 0; i < players.length; i++){
             if(players[i].lifePoints <= 0){
@@ -226,11 +191,11 @@ DLabyrinth.levelState.prototype = {
                     //game.state.start('menuState');
                 }else{
                     if(players[i].hasOrb){
-						orbes[i].sprite.destroy();
-						orbes.splice(i, 1);
+			orbes[i].sprite.destroy();
+			orbes.splice(i, 1);
                         
                     }
-					players[i].sprite.destroy();
+		    players[i].sprite.destroy();
                     players.splice(i,1);
                    
                     this.create();
@@ -286,7 +251,7 @@ DLabyrinth.levelState.prototype = {
                             if(game.physics.arcade.collide(players[i].sprite, b)){
                                 players[i].lifePoints -= orbes[j].weapons[0].damage
                                 b.destroy();
-								if(i==0){changedLife = true;}
+								if(i==0){players[0].changedLife = true;}
                             }
                         }
 					}
@@ -398,4 +363,136 @@ function Weapon(){
     this.damage;
     this.ammo;
     this.type;
+}
+
+/* Para crear la interfaz necesitamos la siguiente información:
+    -Vidas del jugador
+    -Escudo del jugador
+    -Armas del jugador
+    -Munición del arma actual
+    -Posición actual del jugador (minimapa)
+    -Comida que tiene el jugador
+    -Puntuación del jugador. */
+function Interface(){
+    var iGroup = game.add.group(); //Grupo de sprite de la interfaz
+
+    var oneH, halfH; //Corazones
+    var shield; //Escudo
+    var weapons; //Armas
+    var ammo; //Municion
+
+    this.createInterface = function(){
+        /////////////// VIDA ///////////////
+        //Creamos los sprites de la vida (al principio siempre 3 corazones)
+        oneH = [game.add.sprite(35, 15, 'oneL'), game.add.sprite(35+20, 15, 'oneL'), game.add.sprite(35+40, 15, 'oneL')];
+        for(i = 0; i < oneH.length; i++){
+            oneH[i].fixedToCamera = true;
+            oneH[i].scale.setTo(0.1);
+            iGroup.add(oneH[i]);
+        }
+        oneH[0].cameraOffset.setTo(15, 15);
+        oneH[1].cameraOffset.setTo(15+40, 15);
+        oneH[2].cameraOffset.setTo(15+80, 15);
+
+        //Creamos los sprites de medio corazón y los hacemos invisibles al principio
+        halfH = [game.add.sprite(35, 15, 'halfL'), game.add.sprite(35+20, 15, 'halfL'), game.add.sprite(35+40, 15, 'halfL')]
+        for(i = 0; i < halfH.length; i++){
+            halfH[i].fixedToCamera = true;
+            halfH[i].scale.setTo(0.1);
+            halfH[i].visible = false;
+            iGroup.add(halfH[i]);
+        }
+        halfH[0].cameraOffset.setTo(15, 15);
+        halfH[1].cameraOffset.setTo(15+40, 15);
+        halfH[2].cameraOffset.setTo(15+80, 15);
+        /////////////// FIN VIDA ///////////////
+
+        /////////////// ESCUDO ///////////////
+        shield = [game.add.sprite(0, 0, 'shield'), game.add.sprite(0, 0, 'shield'), game.add.sprite(0, 0, 'shield')];
+        for(i = 0; i < shield.length; i++){
+            shield[i].fixedToCamera = true;
+            shield[i].scale.setTo(0.2);
+            shield[i].visible = false; //Inicialmente sin escudo
+            iGroup.add(shield[i]);
+        }
+        shield[0].cameraOffset.setTo(-135, -70);
+        shield[1].cameraOffset.setTo(-135+40, -70);
+        shield[2].cameraOffset.setTo(-135+80, -70);
+        /////////////// FIN ESCUDO ///////////////
+
+        /////////////// ARMAS ///////////////
+        weapons = [game.add.sprite(0, 0, 'pistol'), game.add.sprite(0, 0, 'pistol')];
+        for(i = 0; i < weapons.length; i++){
+            weapons[i].fixedToCamera = true;
+            weapons[i].scale.setTo(0.2);
+            weapons[i].visible = false; //Inicialmente sin armas
+            iGroup.add(weapons[i]);
+        }
+        weapons[0].cameraOffset.setTo(35, 600-100);
+        weapons[1].cameraOffset.setTo(35+60, 600-100);
+        /////////////// FIN ARMAS ///////////////
+
+        /////////////// MUNICION ///////////////
+        /////////////// FIN MUNICION ///////////////
+
+        /////////////// MINIMAPA ///////////////
+        /////////////// FIN MINIMAPA ///////////////
+
+    }
+
+    this.updateInterface = function(player, orbe){ 
+        /////////////// VIDA ///////////////
+        //Hacemos visible las vidas que le quedan al jugador
+        if(player.changedLife && player.lifePoints >= 0.5){
+            //Ocultamos los medios corazones
+            for(i = 0; i < 3; i++){ halfH[i].visible = false; }
+
+            for(i = 0; i < player.lifePoints; i++){ 
+                oneH[i].visible = true;
+            }
+            for(i = 2; i > player.lifePoints-1; i--){ 
+                oneH[i].visible = false;
+            }
+            //Si la vida no es entera dibujamos corazon partido
+            if(player.lifePoints != 1 || player.lifePoints != 2 || player.lifePoints != 3){
+                if(i!=3 && i>=0){halfH[i+1].visible = true;}
+            }
+            player.changedLife = false;
+        }
+        /////////////// FIN VIDA ///////////////
+
+        /////////////// ESCUDO ///////////////
+        /////////////// FIN ESCUDO ///////////////
+
+        /////////////// ARMAS ///////////////
+        //Si existe el orbe del personaje miramos si tiene armas
+        if(orbe[0] != null){ //Si las tiene mostramos sprite
+            if(!orbe[0].weapons[0].empty){
+                weapons[0].visible = true;
+            } else { weapons[0].visible = false; }
+            if(!orbe[0].weapons[1].empty){
+                weapons[1].visible = true;
+            } else { weapons[1].visible = false; }
+        }
+        /////////////// FIN ARMAS ///////////////
+
+        /////////////// MUNICION ///////////////
+        /////////////// FIN MUNICION ///////////////
+
+        /////////////// MINIMAPA ///////////////
+        /////////////// FIN MINIMAPA ///////////////
+
+        game.world.bringToTop(iGroup);
+    }
+}
+
+function changeWeaponFunc1(){
+    if(players[0].hasOrb){
+        orbes[0].switch();
+    }
+}
+function changeWeaponFunc2(){
+    if(players[1].hasOrb){
+        orbes[1].switch();
+    }
 }
