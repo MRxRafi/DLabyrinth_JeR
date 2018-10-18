@@ -223,13 +223,12 @@ DLabyrinth.levelState.prototype = {
                     this.create();
                     //game.state.start('menuState');
                 }else{
-                    if(players.hasOrb){
-                        orbes.splice(j, 1);
+                    if(players[i].hasOrb){
                         orbes[i].sprite.destroy();
+                        orbes.splice(i, 1);
                     }
-                    players.splice(j,1);
                     players[i].sprite.destroy();
-                    
+                    players.splice(i,1);
                 }
             }
         }
