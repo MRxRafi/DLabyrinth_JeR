@@ -1,11 +1,11 @@
 DLabyrinth.levelState = function(game){
 
 }
-var players = new Array();
-var orbes = new Array();
-var weaponItems = new Array();
-var ammoItems = new Array();
-var lifeItems = new Array();
+var players;
+var orbes;
+var weaponItems;
+var ammoItems;
+var lifeItem;
 
 DLabyrinth.levelState.prototype = {
     preload: function() {
