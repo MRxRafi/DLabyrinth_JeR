@@ -5,7 +5,7 @@ var players;
 var orbes;
 var weaponItems;
 var ammoItems;
-var lifeItem;
+var lifeItems;
 
 DLabyrinth.levelState.prototype = {
     preload: function() {
@@ -50,7 +50,7 @@ DLabyrinth.levelState.prototype = {
         ammoItems = new Array();
         lifeItems = new Array();
 
-        //Creamos el jugador
+        //Creamos los jugador
         players.push( new Jugador(300, 300, 'spriteSheet'));
         players.push( new Jugador(500, 300, 'spriteSheet'));
 
@@ -78,16 +78,14 @@ DLabyrinth.levelState.prototype = {
          changedLife = false;
 
         //Armas por el mapa
-        var g = new WeaponItem(800, 500, 'orb', 1, 500, 10, 'pistola');
-        var h = new WeaponItem(0, 100,'bullet', 0.25, 200, 30, 'metralleta');
-        weaponItems.push(g);
+        //var g = new WeaponItem(500, 500, 'orb', 1, 500, 10, 'pistola');
+        var h = new WeaponItem(100, 100,'bullet', 0.25, 200, 30, 'metralleta');
+        //weaponItems.push(g);
         weaponItems.push(h);
 
         //Munición por el mapa
-        var a = new AmmoItem(100, 100, 'bullet', 30, 'metralleta');
-        var p = new AmmoItem(600, 500, 'orb', 10, 'pistola');
+        var a = new AmmoItem(100, 500, 'bullet', 30, 'metralleta');
         ammoItems.push(a);
-        ammoItems.push(p);
 
         //La cámara sigue al jugador
         game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -95,31 +93,34 @@ DLabyrinth.levelState.prototype = {
     },
 
     update: function() {
-        //Animación personaje
-        var keydown = false;
+        var keydownMove = [false, false];
+
+        //KEYCONTROLLERS
+        //////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////     PLAYER 1        //////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////
         if (this.aKey.isDown){
             players[0].sprite.x -= 5;
-            keydown = true;
+            keydownMove[0] = true;
         } 
         if (this.dKey.isDown){
             players[0].sprite.x += 5;
-            keydown = true;
+            keydownMove[0] = true;
         }
         if (this.wKey.isDown){
             players[0].up = true;
             players[0].sprite.y -= 5;
-            keydown = true;
+            keydownMove[0] = true;
         }
         if (this.sKey.isDown){
             players[0].down = true; 
             players[0].sprite.y +=5;
-            keydown = true;
+            keydownMove[0] = true;
         } 
         if (this.qKey.isDown){
             if(players[0].hasOrb){
                 orbes[0].switch();
             }
-            keydown = true;
         } 
         if(fireButton.isDown){
             if(players[0].hasOrb){
@@ -127,37 +128,36 @@ DLabyrinth.levelState.prototype = {
                     orbes[0].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
                 }
             }
-            keydown = true;
         }
 
+        if(this.aKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[0].left = true; }
+        if(this.dKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[0].right = true; }
+
         //////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////     DEBUG        /////////////////////////////////////
+        ///////////////////////////////     PLAYER 2        //////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////
-        
-        var keydown = false;
         if (this.fKey.isDown){
             players[1].sprite.x -= 5;
-            keydown = true;
+            keydownMove[1] = true;
         } 
         if (this.hKey.isDown){
             players[1].sprite.x += 5;
-            keydown = true;
+            keydownMove[1] = true;
         }
         if (this.tKey.isDown){
             players[1].up = true;
             players[1].sprite.y -= 5;
-            keydown = true;
+            keydownMove[1] = true;
         }
         if (this.gKey.isDown){
             players[1].down = true; 
             players[1].sprite.y +=5;
-            keydown = true;
+            keydownMove[1] = true;
         } 
         if (this.rKey.isDown){
             if(players[1].hasOrb){
                 orbes[1].switch();
             }
-            keydown = true;
         } 
         if(fireButton.isDown){
             if(players[1].hasOrb){
@@ -165,49 +165,30 @@ DLabyrinth.levelState.prototype = {
                     orbes[1].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
                 }
             }
-            keydown = true;
         }
+
+        if(this.fKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { players[1].left = true; }
+        if(this.hKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { players[1].right = true; }
+
         ////////////////////////////////////////////////////////////////////////////////
         //
         /////////////////////////////////////////////////////////////////
 
-        if(this.aKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[0].left = true; }
-        if(this.dKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[0].right = true; }
-        
-        if(this.fKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[1].left = true; }
-        if(this.hKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[1].right = true; }
-
+        //Hacemos la animacion pertinente según lo obtenido anteriormente PARA AMBOS JUGADORES
         for(var j = 0; j < players.length; j++){
-            //Hacemos la animacion pertinente según lo obtenido anteriormente
-            if(players[j].up){ players[j].sprite.animations.play('walkUp', 30, true); }
+            if(players[j].up) { players[j].sprite.animations.play('walkUp', 30, true); }
             if(players[j].down) { players[j].sprite.animations.play('walkDown', 30, true); }
             if(players[j].left) { players[j].sprite.animations.play('walkLeft', 30, true); }
             if(players[j].right) { players[j].sprite.animations.play('walkRight', 30, true); }
-            players[j].up = players[j].down = players[j].right = players[j].left = false;
+            players[j].up = players[j].down = players[j].right = players[j].left = false; //Reiniciamos variables
 
-            //Paramos animación si no hay ninguna tecla pulsada
-            if(!keydown){ 
+            //Paramos animación si no hay ninguna tecla pulsada PARA AMBOS JUGADORES
+            if(!keydownMove[j]){ 
                 players[j].sprite.animations.stop(null, true);
             }
         }
-        /*
-        if(this.aKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[0].left = true; }
-        if(this.dKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { players[0].right = true; }
 
-        //Hacemos la animacion pertinente según lo obtenido anteriormente
-        if(players[0].up){ players[0].sprite.animations.play('walkUp', 30, true); }
-        if(players[0].down) { players[0].sprite.animations.play('walkDown', 30, true); }
-        if(players[0].left) { players[0].sprite.animations.play('walkLeft', 30, true); }
-        if(players[0].right) { players[0].sprite.animations.play('walkRight', 30, true); }
-        players[0].up = players[0].down = players[0].right = players[0].left = false;
-
-        //Paramos animación si no hay ninguna tecla pulsada
-        if(!keydown){ 
-            players[0].sprite.animations.stop(null, true);
-        }
-        */
-
-        //Movimiento del orbe
+        //Movimiento del orbe PARA AMBOS JUGADORES
         for(var j = 0; j < players.length; j++){
             if(players[j].hasOrb){
                 orbes[j].sprite.body.velocity.x = (players[j].sprite.x - orbes[j].sprite.x - 30)*5;
@@ -215,7 +196,7 @@ DLabyrinth.levelState.prototype = {
             }
         }
 
-        //Actualizacion vida personajes
+        //Hacemos visible las vidas que le quedan al jugador
         if(changedLife && players[0].lifePoints >= 0.5){
             //Ocultamos los medios corazones
             for(i = 0; i < 3; i++){ halfH[i].visible = false; }
@@ -232,46 +213,10 @@ DLabyrinth.levelState.prototype = {
             }
             changedLife = false;
         }
-        /*
-        if(changedLife){
-            player.lifeSprite.destroy();
-            if(player.lifePoints === 3){ //Manejamos el sprite 
-                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'threeL');
-                player.lifeSprite.fixedToCamera = true;
-                player.lifeSprite.cameraOffset.setTo(35, 15);
-                player.lifeSprite.scale.setTo(0.1);
-            } else if (player.lifePoints === 2.5) {
-                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'twoHL');
-                player.lifeSprite.fixedToCamera = true;
-                player.lifeSprite.cameraOffset.setTo(35, 15);
-                player.lifeSprite.scale.setTo(0.1);
-            } else if (player.lifePoints === 2){
-                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'twoL');
-                player.lifeSprite.fixedToCamera = true;
-                player.lifeSprite.cameraOffset.setTo(35, 15);
-                player.lifeSprite.scale.setTo(0.1);
-            } else if(player.lifePoints === 1.5) {
-                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'oneHL');
-                player.lifeSprite.fixedToCamera = true;
-                player.lifeSprite.cameraOffset.setTo(35, 15);
-                player.lifeSprite.scale.setTo(0.1);
-            } else if(player.lifePoints === 1) {
-                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'oneL');
-                player.lifeSprite.fixedToCamera = true;
-                player.lifeSprite.cameraOffset.setTo(35, 15);
-                player.lifeSprite.scale.setTo(0.1);
-            } else if(player.lifePoints === 0.5){
-                player.lifeSprite = game.add.image(player.sprite.x - 300,player.sprite.y - 250,'halfL');
-                player.lifeSprite.fixedToCamera = true;
-                player.lifeSprite.cameraOffset.setTo(35, 15);
-                player.lifeSprite.scale.setTo(0.1);
-            }
-            changedLife = false;
-        }
-        */
         
-        this.checkCollisions();
+        this.checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
+        //Administración de lo que sucede si algún jugador se queda sin vida
         for(var i = 0; i < players.length; i++){
             if(players[i].lifePoints <= 0){
                 if(i == 0){
@@ -290,6 +235,7 @@ DLabyrinth.levelState.prototype = {
         }
 
     },
+
     checkCollisions : function(){
         var i = 0;
         //recoger armas
@@ -317,9 +263,9 @@ DLabyrinth.levelState.prototype = {
                     //mostrar por pantalla: recoge un arma para usar municion
                     //////////////////////////////////////////////////////////////////
                     }else{
-                        if(orbes[j].setAmmo(o)){
-                            o.sprite.destroy();
-                            ammoItems.splice(i, 1);
+                        if(orbes[j].setAmmo(o)){ 
+                        o.sprite.destroy();
+                        ammoItems.splice(i, 1);
                         }
                     }
             }
@@ -366,12 +312,6 @@ function Jugador(x, y, sprsheet,orb){
     
      //Aquí es donde meteremos la vida, munición, armas..    
      this.lifePoints = 3;
-     /*
-     this.lifeSprite = game.add.image( game.camera.x + 50, game.camera.y + 20,'threeL');
-     this.lifeSprite.fixedToCamera = true;
-     this.lifeSprite.cameraOffset.setTo(35, 15);
-     this.lifeSprite.scale.setTo(0.1);
-     */
 
     //Activamos físicas arcade para el personaje
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE); 
@@ -401,6 +341,7 @@ function Orbe(sprsheet, pl){
         var a = this.weapons[0];
         this.weapons[0] = this.weapons[1];
         this.weapons[1] = a;
+        //this.weapons[0].weapon.onFire.add(function(){this.weapons[0].ammo -= 1;}, this);
     }
     this.setWeapon = function(w){
         var i = 0;
@@ -427,12 +368,12 @@ function Orbe(sprsheet, pl){
         return false;
     }
      //Activamos físicas arcade para el orbe.
-     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 
 function WeaponItem(x, y, spr, d, fr, b, type) {
-    this.damage = d;
     this.sprite = game.add.sprite(x, y, spr);
+    this.damage = d;
     this.fireRate = fr;
     this.bullets = b;
     this.type = type;
