@@ -136,6 +136,7 @@ DLabyrinth.levelState.prototype = {
         //////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////     PLAYER 2        //////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////
+		if(players[1]){
         if (this.fKey.isDown){
             players[1].sprite.x -= 5;
             keydownMove[1] = true;
@@ -169,6 +170,7 @@ DLabyrinth.levelState.prototype = {
 
         if(this.fKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { players[1].left = true; }
         if(this.hKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { players[1].right = true; }
+		}
 
         ////////////////////////////////////////////////////////////////////////////////
         //
@@ -224,11 +226,14 @@ DLabyrinth.levelState.prototype = {
                     //game.state.start('menuState');
                 }else{
                     if(players[i].hasOrb){
-                        orbes[i].sprite.destroy();
-                        orbes.splice(i, 1);
+						orbes[i].sprite.destroy();
+						orbes.splice(i, 1);
+                        
                     }
-                    players[i].sprite.destroy();
+					players[i].sprite.destroy();
                     players.splice(i,1);
+                   
+                    this.create();
                 }
             }
         }
@@ -276,16 +281,18 @@ DLabyrinth.levelState.prototype = {
         for(var j = 0; j < players.length; j++){
             if(players[j].hasOrb){
                 orbes[j].weapons[0].weapon.bullets.forEach(function(b){
-                    players.forEach(function(e){
-                        if(players[j] !== e){
-                            if(game.physics.arcade.collide(e.sprite, b)){
-                                e.lifePoints -= orbes[j].weapons[0].damage;
+                   for(var i = 0; i < players.length; i++){
+                        if(j != i){
+                            if(game.physics.arcade.collide(players[i].sprite, b)){
+                                players[i].lifePoints -= orbes[j].weapons[0].damage
                                 b.destroy();
+								if(i==0){changedLife = true;}
                             }
                         }
-                    });
-                });
-            }
+					}
+				});
+                }
+            
         }
         
     
