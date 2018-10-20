@@ -6,6 +6,7 @@ var orbes;
 var weaponItems;
 var ammoItems;
 var lifeItems;
+var shieldItems;
 var interfaz;
 
 DLabyrinth.levelState.prototype = {
@@ -40,7 +41,7 @@ DLabyrinth.levelState.prototype = {
         this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.qKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
-	this.qKey.onDown.add(changeWeaponFunc1, this);
+	    this.qKey.onDown.add(changeWeaponFunc1, this);
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.tKey = game.input.keyboard.addKey(Phaser.Keyboard.T);
@@ -48,7 +49,7 @@ DLabyrinth.levelState.prototype = {
         this.fKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.hKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
         this.rKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
-	this.rKey.onDown.add(changeWeaponFunc2, this);
+	    this.rKey.onDown.add(changeWeaponFunc2, this);
 
         //Conjuntos de objetos del juego
         players = new Array();
@@ -56,6 +57,7 @@ DLabyrinth.levelState.prototype = {
         weaponItems = new Array();
         ammoItems = new Array();
         lifeItems = new Array();
+        shieldItems = new Array();
 
         //Creamos los jugador
         players.push( new Jugador(300, 300, 'spriteSheet'));
@@ -75,6 +77,10 @@ DLabyrinth.levelState.prototype = {
         //Munición por el mapa
         var a = new AmmoItem(100, 500, 'bullet', 30, 'metralleta');
         ammoItems.push(a);
+
+        //Escudo por el mapa
+        var s = new ShieldItem(300, 500);
+        shieldItems.push(s);
 
         //La cámara sigue al jugador
         game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -242,6 +248,22 @@ DLabyrinth.levelState.prototype = {
         }
         });
 
+        //recoger escudo
+        i = 0;
+        shieldItems.forEach(function(s){
+            for(var j = 0; j < players.length; j++){
+                if(game.physics.arcade.collide(players[j].sprite, s.sprite)){
+                   
+                    players[j].shield = 3;
+                    shieldItems[i].sprite.destroy();
+                    shieldItems.splice(i, 1);
+                }
+                
+            }
+            i++;
+        });
+
+
         //Colision con balas
         for(var j = 0; j < players.length; j++){
             if(players[j].hasOrb){
@@ -249,9 +271,15 @@ DLabyrinth.levelState.prototype = {
                    for(var i = 0; i < players.length; i++){
                         if(j != i){
                             if(game.physics.arcade.collide(players[i].sprite, b)){
-                                players[i].lifePoints -= orbes[j].weapons[0].damage
+                                if(players[i].shield > 0){
+                                    players[i].shield -= orbes[j].weapons[0].damage;
+                                    if(i==0){players[0].changedShield = true;}
+
+                                }else{
+                                    players[i].lifePoints -= orbes[j].weapons[0].damage;
+                                    if(i==0){players[0].changedLife = true;}
+                                }
                                 b.destroy();
-								if(i==0){players[0].changedLife = true;}
                             }
                         }
 					}
@@ -283,6 +311,9 @@ function Jugador(x, y, sprsheet,orb){
     
     //Aquí es donde meteremos la vida, comida..   
     this.lifePoints = 3;
+
+    //Escudo
+    this.shield = 0;
 
     //Activamos físicas arcade para el personaje
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE); 
@@ -355,6 +386,10 @@ function AmmoItem(x, y, spr, a, type){
     this.sprite = game.add.sprite(x, y, spr);
     this.type = type;
     this.ammo = a;
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+}
+function ShieldItem(x, y){
+    this.sprite = game.add.sprite(x, y, 'shield');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 function Weapon(){
@@ -543,10 +578,9 @@ function changeWeaponFunc2(){
 
 /*
 // MINIMAPA SACADO DE http://www.html5gamedevs.com/topic/14182-creating-a-mini-map-in-phaser/  POR EL USUARIO "sanojian"
-
 //CREATE
 // the static mapvar
-miniMapBmd = this.game.add.bitmapData(g_game.tileMap.width*g_game.miniMapSize, g_game.tileMap.height*g_game.miniMapSize);
+miniMapBmd = game.add.bitmapData(g_game.tileMap.width*g_game.miniMapSize, g_game.tileMap.height*g_game.miniMapSize);
 // g_game.miniMapSize is the pixel size in the minimap
 // iterate my map layers
 for (l=0; l<g_game.tileMap.layers.length; l++) {
@@ -557,7 +591,7 @@ for (l=0; l<g_game.tileMap.layers.length; l++) {
                 // fill a pixel in the minimap
                 miniMapBmd.ctx.fillStyle = '#bc8d6b';
                 miniMapBmd.ctx.fillRect(x * g_game.miniMapSize, y * g_game.miniMapSize, g_game.miniMapSize, g_game.miniMapSize);
-            } else if(){} //... other types of tiles
+            } //else if(){} //... other types of tiles
         }
     }
 }
@@ -565,7 +599,6 @@ g_game.miniMap = this.game.add.sprite(x, y, miniMapBmd);
 // dynamic bmd where I draw mobile stuff like friends and enemies
 g_game.miniMapOverlay = this.game.add.bitmapData(g_game.tileMap.width*g_game.miniMapSize, g_game.tileMap.height*g_game.miniMapSize);
 this.game.add.sprite(g_game.miniMap.x, g_game.miniMap.y, g_game.miniMapOverlay);
-
 //UPDATE
 g_game.miniMapOverlay.context.clearRect(0, 0, g_game.miniMapOverlay.width, g_game.miniMapOverlay.height);
 g_game.soldiers.forEach(function(soldier)
