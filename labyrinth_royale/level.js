@@ -281,8 +281,8 @@ function Jugador(x, y, sprsheet,orb){
 
     this.hasOrb = false;
     
-     //Aquí es donde meteremos la vida, munición, armas..    
-     this.lifePoints = 3;
+    //Aquí es donde meteremos la vida, comida..   
+    this.lifePoints = 3;
 
     //Activamos físicas arcade para el personaje
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE); 
@@ -379,7 +379,9 @@ function Interface(){
     var oneH, halfH; //Corazones
     var shield; //Escudo
     var weapons; //Armas
-    var ammo; //Municion
+    var municion; //Municion
+    var comida; //Comida
+    var puntuacion; //Puntuacion
 
     this.createInterface = function(){
         /////////////// VIDA ///////////////
@@ -433,7 +435,29 @@ function Interface(){
         /////////////// FIN ARMAS ///////////////
 
         /////////////// MUNICION ///////////////
+        text = "Municion:  ";
+        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        municion = game.add.text(game.world.centerX-60, 0, text, style);
+        municion.fixedToCamera = true;
+        municion.cameraOffset.setTo(625, 400);
+        
         /////////////// FIN MUNICION ///////////////
+
+        /////////////// COMIDA ///////////////
+        text = "Comida:  ";
+        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        comida = game.add.text(game.world.centerX-60, 0, text, style);
+        comida.fixedToCamera = true;
+        comida.cameraOffset.setTo(625, 350);
+        /////////////// FIN COMIDA ///////////////
+
+        /////////////// PUNTUACIÓN ///////////////
+        text = "Puntuacion:  ";
+        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        puntuacion = game.add.text(game.world.centerX-60, 0, text, style);
+        puntuacion.fixedToCamera = true;
+        puntuacion.cameraOffset.setTo(625, 25);
+        /////////////// FIN PUNTUACIÓN ///////////////
 
         /////////////// MINIMAPA ///////////////
         /////////////// FIN MINIMAPA ///////////////
@@ -453,9 +477,13 @@ function Interface(){
             for(i = 2; i > player.lifePoints-1; i--){ 
                 oneH[i].visible = false;
             }
+            if (player.lifePoints > 2.5){ oneH[2].visible = true; }
+                if (player.lifePoints <= 2 && player.lifePoints > 1.5){ oneH[1].visible = true;  }
+                if (player.lifePoints <= 1 && player.lifePoints > 0.5){ oneH[0].visible = true;  }
+
             //Si la vida no es entera dibujamos corazon partido
-            if(player.lifePoints != 1 || player.lifePoints != 2 || player.lifePoints != 3){
-                if(i!=3 && i>=0){halfH[i+1].visible = true;}
+            if((player.lifePoints > 0 && player.lifePoints <= 0.5) || (player.lifePoints > 1 && player.lifePoints <= 1.5) || (player.lifePoints > 2 && player.lifePoints <= 2.5)){
+                if(i>=-1){halfH[i+1].visible = true;}
             }
             player.changedLife = false;
         }
@@ -477,7 +505,23 @@ function Interface(){
         /////////////// FIN ARMAS ///////////////
 
         /////////////// MUNICION ///////////////
+        if(orbe[0] != null){
+            municion.destroy();
+
+            text = "Municion:  " + orbe[0].weapons[0].ammo;
+            style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+            municion = game.add.text(game.world.centerX-60, 0, text, style);
+            municion.fixedToCamera = true;
+            municion.cameraOffset.setTo(625, 400);
+            
+        }
         /////////////// FIN MUNICION ///////////////
+
+        /////////////// COMIDA ///////////////
+        /////////////// FIN COMIDA ///////////////
+
+        /////////////// PUNTUACIÓN ///////////////
+        /////////////// FIN PUNTUACIÓN ///////////////
 
         /////////////// MINIMAPA ///////////////
         /////////////// FIN MINIMAPA ///////////////
@@ -496,3 +540,37 @@ function changeWeaponFunc2(){
         orbes[1].switch();
     }
 }
+
+/*
+// MINIMAPA SACADO DE http://www.html5gamedevs.com/topic/14182-creating-a-mini-map-in-phaser/  POR EL USUARIO "sanojian"
+
+//CREATE
+// the static mapvar
+miniMapBmd = this.game.add.bitmapData(g_game.tileMap.width*g_game.miniMapSize, g_game.tileMap.height*g_game.miniMapSize);
+// g_game.miniMapSize is the pixel size in the minimap
+// iterate my map layers
+for (l=0; l<g_game.tileMap.layers.length; l++) {
+    for (y = 0; y < g_game.tileMap.height; y++) {
+        for (x = 0; x < g_game.tileMap.width; x++) { 
+            var tile = g_game.tileMap.getTile(x, y, l);
+            if (tile && g_game.tileMap.layers[l].name == 'Ground') {
+                // fill a pixel in the minimap
+                miniMapBmd.ctx.fillStyle = '#bc8d6b';
+                miniMapBmd.ctx.fillRect(x * g_game.miniMapSize, y * g_game.miniMapSize, g_game.miniMapSize, g_game.miniMapSize);
+            } else if(){} //... other types of tiles
+        }
+    }
+}
+g_game.miniMap = this.game.add.sprite(x, y, miniMapBmd);
+// dynamic bmd where I draw mobile stuff like friends and enemies
+g_game.miniMapOverlay = this.game.add.bitmapData(g_game.tileMap.width*g_game.miniMapSize, g_game.tileMap.height*g_game.miniMapSize);
+this.game.add.sprite(g_game.miniMap.x, g_game.miniMap.y, g_game.miniMapOverlay);
+
+//UPDATE
+g_game.miniMapOverlay.context.clearRect(0, 0, g_game.miniMapOverlay.width, g_game.miniMapOverlay.height);
+g_game.soldiers.forEach(function(soldier)
+{
+    g_game.miniMapOverlay.rect(Math.floor(soldier.x / TILE_SIZE) * g_game.miniMapSize, Math.floor(soldier.y / TILE_SIZE) * g_game.miniMapSize, g_game.miniMapSize, g_game.miniMapSize, color);
+});
+g_game.miniMapOverlay.dirty = true; 
+*/
