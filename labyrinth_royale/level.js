@@ -7,6 +7,7 @@ var weaponItems;
 var ammoItems;
 var lifeItems;
 var shieldItems;
+var foodItems;
 var interfaz;
 
 DLabyrinth.levelState.prototype = {
@@ -35,13 +36,29 @@ DLabyrinth.levelState.prototype = {
         //Límites del mundo para la cámara
         game.world.setBounds(0, 0, 1920, 1920);
 
+         //Conjuntos de objetos del juego
+         players = new Array();
+         orbes = new Array();
+         weaponItems = new Array();
+         ammoItems = new Array();
+         lifeItems = new Array();
+         shieldItems = new Array();
+         foodItems = new Array();
+ 
+         //Creamos los jugador
+         players.push( new Jugador(300, 300, 'spriteSheet'));
+         players.push( new Jugador(500, 300, 'spriteSheet'));
+     
+
         //Asignamos teclas a variables
         this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
         this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
         this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.qKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
-	    this.qKey.onDown.add(changeWeaponFunc1, this);
+        this.qKey.onDown.add(changeWeaponFunc1, this);
+        this.zKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+        this.zKey.onDown.add(players[0].consume);
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.tKey = game.input.keyboard.addKey(Phaser.Keyboard.T);
@@ -51,18 +68,7 @@ DLabyrinth.levelState.prototype = {
         this.rKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
 	    this.rKey.onDown.add(changeWeaponFunc2, this);
 
-        //Conjuntos de objetos del juego
-        players = new Array();
-        orbes = new Array();
-        weaponItems = new Array();
-        ammoItems = new Array();
-        lifeItems = new Array();
-        shieldItems = new Array();
-
-        //Creamos los jugador
-        players.push( new Jugador(300, 300, 'spriteSheet'));
-        players.push( new Jugador(500, 300, 'spriteSheet'));
-	
+       
 	/////////////////////////// INTERFAZ ///////////////////////////
         interfaz = new Interface();
         interfaz.createInterface();
@@ -81,6 +87,10 @@ DLabyrinth.levelState.prototype = {
         //Escudo por el mapa
         var s = new ShieldItem(300, 500);
         shieldItems.push(s);
+
+        //Comida por el mapa
+        var f = new FoodItem(500, 500);
+        foodItems.push(f);
 
         //La cámara sigue al jugador
         game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -112,6 +122,9 @@ DLabyrinth.levelState.prototype = {
             players[0].sprite.y +=5;
             keydownMove[0] = true;
         } 
+        if(this.zKey.isDown){
+            players[0].consume();
+        }
         if(fireButton.isDown){
             if(players[0].hasOrb){
                 if(orbes[0].weapons[0].ammo > 0){
@@ -145,6 +158,7 @@ DLabyrinth.levelState.prototype = {
             players[1].sprite.y +=5;
             keydownMove[1] = true;
         } 
+       
         if(fireButton.isDown){
             if(players[1].hasOrb){
                 if(orbes[1].weapons[0].ammo > 0){
@@ -263,6 +277,23 @@ DLabyrinth.levelState.prototype = {
             i++;
         });
 
+        //recoger comida
+        i = 0;
+        foodItems.forEach(function(f){
+            for(var j = 0; j < players.length; j++){
+                if(players[j].food <=3){
+                    if(game.physics.arcade.collide(players[j].sprite, f.sprite)){
+                        players[j].food++;
+                        foodItems[i].sprite.destroy();
+                        foodItems.splice(i, 1);
+                    }
+                
+                }
+            }
+            i++;
+        });
+
+
 
         //Colision con balas
         for(var j = 0; j < players.length; j++){
@@ -314,6 +345,17 @@ function Jugador(x, y, sprsheet,orb){
 
     //Escudo
     this.shield = 0;
+
+    //Comida
+    this.food = 0;
+    //Consumir comida
+    this.consume = function(){
+        if(this.food > 0){
+            this.lifePoints = Math.min(this.lifePoints+1, 3);
+            changedLife = true;
+            this.food--;
+        }
+    }
 
     //Activamos físicas arcade para el personaje
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE); 
@@ -389,6 +431,10 @@ function AmmoItem(x, y, spr, a, type){
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 function ShieldItem(x, y){
+    this.sprite = game.add.sprite(x, y, 'shield');
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+}
+function FoodItem(x, y){
     this.sprite = game.add.sprite(x, y, 'shield');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
@@ -553,6 +599,12 @@ function Interface(){
         /////////////// FIN MUNICION ///////////////
 
         /////////////// COMIDA ///////////////
+        comida.destroy();
+        text = "Comida:  " + players[0].food;
+        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        comida = game.add.text(game.world.centerX-60, 0, text, style);
+        comida.fixedToCamera = true;
+        comida.cameraOffset.setTo(625, 350);
         /////////////// FIN COMIDA ///////////////
 
         /////////////// PUNTUACIÓN ///////////////
