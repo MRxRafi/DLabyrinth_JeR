@@ -342,17 +342,19 @@ function Jugador(x, y, sprsheet,orb){
     
     //Aquí es donde meteremos la vida, comida..   
     this.lifePoints = 3;
+    this.changedLife = false;
 
     //Escudo
     this.shield = 0;
+    this.changedShield = false;
 
     //Comida
-    this.food = 0;
+    this.food = 1;
     //Consumir comida
     this.consume = function(){
         if(this.food > 0){
             this.lifePoints = Math.min(this.lifePoints+1, 3);
-            changedLife = true;
+            this.changedLife = true;
             this.food--;
         }
     }
