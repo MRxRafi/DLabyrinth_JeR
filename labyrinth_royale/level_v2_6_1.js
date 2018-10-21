@@ -11,6 +11,7 @@ var foodItems;
 var interfaz;
 var map, layer;
 var miniMap, miniMapBmd;
+var temp, boolUpdate;
 
 DLabyrinth.levelState.prototype = {
     preload: function() {
@@ -64,6 +65,7 @@ DLabyrinth.levelState.prototype = {
         layer[1] = map.createLayer('other');
         layer[1].name = "cosas";
 
+	temp = setInterval(miniMapUpdate, 400); //Temporizador para mejorar fps (actualiza el minimapa)
          //Creamos los jugador
          players.push( new Jugador(300, 300, 'spriteSheet'));
          players.push( new Jugador(500, 300, 'spriteSheet'));
@@ -686,38 +688,41 @@ function Interface(){
             if(Math.floor(players[0].sprite.y / 32) >= 75){ min_x = 75; min_y = 75; x=100; y=100; }//Cuadrante 15
         }
 
-        //Según el cuadrante, pintamos en el minimapa la porción de mapa correspondiente
-        for (l=0; l< layer.length; l++) { // l < g_game.tileMap.layers.length
-            for (fy = min_y; fy < y; fy++) { // y < g_game.tileMap.layers.height
-                for (fx = min_x; fx < x; fx++) { // x < g_game.tileMap.width
-                    var tile = map.getTile(fx, fy, l); 
-                    if (tile && layer[l].name === 'floor') {
-                        // fill a pixel in the minimap
-                        miniMapBmd.ctx.fillStyle = '#A9D0F5';
-                        miniMapBmd.ctx.fillRect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
+       if(boolUpdate){
+            for (l=0; l< layer.length; l++) { // l < g_game.tileMap.layers.length
+                for (fy = min_y; fy < y; fy++) { // y < g_game.tileMap.layers.height
+                    for (fx = min_x; fx < x; fx++) { // x < g_game.tileMap.width
+                        var tile = map.getTile(fx, fy, l); 
+                        if (tile && layer[l].name === 'floor') {
+                            // fill a pixel in the minimap
+                            miniMapBmd.ctx.fillStyle = '#A9D0F5';
+                            miniMapBmd.ctx.fillRect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
 
-                        //Draw the lines of the rectangles
-                        miniMapBmd.ctx.beginPath();
-                        miniMapBmd.ctx.lineWidth="0.5";
-                        miniMapBmd.ctx.strokeStyle="black";
-                        miniMapBmd.ctx.rect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
-                        miniMapBmd.ctx.stroke();
-                    } else if(tile && layer[l].name === 'cosas'){
-                        // fill a pixel in the minimap
-                        miniMapBmd.ctx.fillStyle = '#08298A';
-                        miniMapBmd.ctx.fillRect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
+                            //Draw the lines of the rectangles
+                            miniMapBmd.ctx.beginPath();
+                            miniMapBmd.ctx.lineWidth="0.5";
+                            miniMapBmd.ctx.strokeStyle="black";
+                            miniMapBmd.ctx.rect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
+                            miniMapBmd.ctx.stroke();
+                        } else if(tile && layer[l].name === 'cosas'){
+                            // fill a pixel in the minimap
+                            miniMapBmd.ctx.fillStyle = '#08298A';
+                            miniMapBmd.ctx.fillRect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
 
-                        //Draw the lines of the rectangles
-                        miniMapBmd.ctx.beginPath();
-                        miniMapBmd.ctx.lineWidth="0.5";
-                        miniMapBmd.ctx.strokeStyle="black";
-                        miniMapBmd.ctx.rect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
-                        miniMapBmd.ctx.stroke();
-                    } //... other types of tiles
+                            //Draw the lines of the rectangles
+                            miniMapBmd.ctx.beginPath();
+                            miniMapBmd.ctx.lineWidth="0.5";
+                            miniMapBmd.ctx.strokeStyle="black";
+                            miniMapBmd.ctx.rect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
+                            miniMapBmd.ctx.stroke();
+                        } //... other types of tiles
+                    }
                 }
             }
+            miniMapBmd.dirty = true; //Sirve para que se actualice correctamente el minimapa
+            boolUpdate = false;
         }
-        miniMapBmd.dirty = true; //Sirve para que se actualice correctamente el minimapa
+
 
         //Aquí es donde actualizamos dinámicamente los objetos que se mueven
         game.miniMapOverlayBmd.context.clearRect(0, 0, game.miniMapOverlay.width, game.miniMapOverlay.height);
