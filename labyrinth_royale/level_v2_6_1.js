@@ -749,7 +749,9 @@ function changeWeaponFunc2(){
 function consumeFood(){
     players[0].consume();
 }
-
+function miniMapUpdate(){
+    boolUpdate = true;
+}
 /*
 // MINIMAPA SACADO DE http://www.html5gamedevs.com/topic/14182-creating-a-mini-map-in-phaser/  POR EL USUARIO "sanojian"
 //CREATE
