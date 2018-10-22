@@ -12,6 +12,7 @@ var interfaz;
 var map, layer;
 var temp, boolUpdate;
 var damage_spr;
+var vision_spr;
 
 DLabyrinth.levelState.prototype = {
     preload: function() {
@@ -20,7 +21,8 @@ DLabyrinth.levelState.prototype = {
         game.load.image('orb', 'assets/props/orb.png');
         game.load.image('bg', 'assets/tiles/debug.png');
         game.load.image('bullet', 'assets/props/bullet.png');
-        game.load.image('damage', 'assets/props/damage.png');
+        game.load.image('damage', 'assets/daño/damage.png');
+        game.load.image('vision', 'assets/vision.png');
 
         //Mapa
         game.load.tilemap('mapa', 'assets/map/MapaTiled.Json', null, Phaser.Tilemap.TILED_JSON);
@@ -43,6 +45,9 @@ DLabyrinth.levelState.prototype = {
 
         //Límites del mundo para la cámara
         game.world.setBounds(0, 0, 3200, 3200);
+
+        //Campo de vision del jugador
+        
 
          //Conjuntos de objetos del juego
          players = new Array();
@@ -544,6 +549,7 @@ function Weapon(){
 function Interface(){
     var iGroup = game.add.group(); //Grupo de sprite de la interfaz
 
+    var vision_spr;
     var oneH, halfH; //Corazones
     var shield; //Escudo
     var weapons; //Armas
@@ -552,6 +558,13 @@ function Interface(){
     var puntuacion; //Puntuacion
 
     this.createInterface = function(){
+
+        ////////////CAMPO DE VISION///////////////
+        vision_spr = game.add.sprite(0,0,'vision');
+        vision_spr.anchor.setTo(0.5);
+        iGroup.add(vision_spr);
+        //////////FIN CAMPO DE VISION/////////////
+
         /////////////// VIDA ///////////////
         //Creamos los sprites de la vida (al principio siempre 3 corazones)
         oneH = [game.add.sprite(35, 15, 'oneL'), game.add.sprite(35+20, 15, 'oneL'), game.add.sprite(35+40, 15, 'oneL')];
@@ -654,6 +667,9 @@ function Interface(){
     }
 
     this.updateInterface = function(player, orbe){ 
+        vision_spr.x = players[0].sprite.x;
+        vision_spr.y = players[0].sprite.y;
+
         /////////////// VIDA ///////////////
         //Hacemos visible las vidas que le quedan al jugador
         if(player.changedLife && player.lifePoints > 0){
@@ -702,8 +718,9 @@ function Interface(){
             municion = game.add.text(game.world.centerX-60, 0, text, style);
             municion.fixedToCamera = true;
             municion.cameraOffset.setTo(625, 350);
-            
         }
+        iGroup.add(municion);
+
         /////////////// FIN MUNICION ///////////////
 
         /////////////// COMIDA ///////////////
@@ -713,6 +730,7 @@ function Interface(){
         comida = game.add.text(game.world.centerX-60, 0, text, style);
         comida.fixedToCamera = true;
         comida.cameraOffset.setTo(625, 300);
+        iGroup.add(comida);
         /////////////// FIN COMIDA ///////////////
 
         /////////////// PUNTUACIÓN ///////////////
@@ -832,7 +850,7 @@ function Interface(){
             //damage_spr.angle = result;
         }
 
-        game.world.bringToTop(iGroup);
+        game.world.bringToTop(iGroup);    
     }
 }
 
