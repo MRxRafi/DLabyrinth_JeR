@@ -820,6 +820,8 @@ function Interface(){
 
         //Dibujamos al jugador
         game.miniMapOverlayBmd.rect(Math.floor((players[0].sprite.x / 32) - min_x) * 8, Math.floor((players[0].sprite.y / 32) - min_y) * 8, 8, 8, 'green');
+	//Dibujamos enemigo (Sujeto a cambios, como que solo aparezca en el radio de visión)
+        game.miniMapOverlayBmd.rect(Math.floor((players[1].sprite.x / 32) - min_x) * 8, Math.floor((players[1].sprite.y / 32) - min_y) * 8, 8, 8, 'red');
         game.miniMapOverlayBmd.dirty = true; //Sirve para que se actualice correctamente el minimapa
         /////////////// FIN MINIMAPA ///////////////
 
