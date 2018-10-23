@@ -64,6 +64,28 @@ DLabyrinth.levelState.prototype = {
         //HAY QUE USAR JSON PARA MULTIPLES CAPAS
         map = game.add.tilemap('mapa');
         map.addTilesetImage('map_tiles', 'tiles');
+	    
+	//CAJAS DE COLISION DEL MAPA
+	map.setCollisionBetween(0, 3);
+        map.setCollisionBetween(18, 19);
+        map.setCollisionBetween(32, 35);
+        map.setCollisionBetween(48, 51);
+        map.setCollisionBetween(64, 66);
+        map.setCollisionBetween(80, 82);
+        map.setCollisionBetween(100, 103);
+        map.setCollisionBetween(116, 119);
+        map.setCollisionBetween(150, 151);
+        map.setCollisionBetween(165, 167);
+        map.setCollisionBetween(181, 183);
+        map.setCollisionBetween(185, 186);
+        map.setCollisionBetween(197, 202);
+        map.setCollisionBetween(214, 218);
+        map.setCollisionBetween(230, 231);
+        map.setCollision(235);
+        map.setCollisionBetween(246, 247);
+        map.setCollision(250);    
+	    
+	    
         layer[0] = map.createLayer('Suelo');
         layer[0].name = "floor";
         layer[1] = map.createLayer('Paredes');
