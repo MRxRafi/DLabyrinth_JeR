@@ -18,6 +18,7 @@ DLabyrinth.levelState.prototype = {
     preload: function() {
         //Assets a cargar
         game.load.spritesheet('spriteSheet', 'assets/spriteSheets/spriteSheet2.png', 30, 49, 80);
+        game.load.spritesheet('food', 'assets/props/food_spriteSheet.png', 28, 28, 4)
         game.load.image('orb', 'assets/props/orb.png');
         game.load.image('bg', 'assets/tiles/debug.png');
         game.load.image('bullet', 'assets/props/bullet.png');
@@ -38,7 +39,11 @@ DLabyrinth.levelState.prototype = {
 
         //Armas
         game.load.image('pistol', 'assets/props/pistol.png');
-        game.load.image('machineGun', 'assets/props/ak-47.png');
+        game.load.image('ak-47', 'assets/props/ak-47.png');
+
+        //Munición
+        game.load.image('pistol_ammo', 'assets/props/ammo/pistol_ammo.png');
+        game.load.image('ak47_ammo', 'assets/props/ammo/ak_ammo.png');
     },
 
 
@@ -128,22 +133,26 @@ DLabyrinth.levelState.prototype = {
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 	
         //Armas por el mapa
-        //var g = new WeaponItem(500, 500, 'orb', 1, 500, 10, 'pistola');
-        var h = new WeaponItem(100, 100,'bullet', 0.25, 200, 30, 'metralleta');
-        //weaponItems.push(g);
+        var g = new WeaponItem(100, 200, 'pistol', 1, 500, 10, 'pistola');
+        var h = new WeaponItem(100, 100,'ak-47', 0.25, 200, 30, 'metralleta');
+        weaponItems.push(g);
         weaponItems.push(h);
 
         //Munición por el mapa
-        var a = new AmmoItem(100, 500, 'bullet', 30, 'metralleta');
+        var a = new AmmoItem(100, 500, 'ak47_ammo', 30, 'metralleta');
+        var a1 = new AmmoItem(100, 600, 'pistol_ammo', 10, 'pistola');
         ammoItems.push(a);
+        ammoItems.push(a1);
 
         //Escudo por el mapa
         var s = new ShieldItem(300, 500);
         shieldItems.push(s);
 
         //Comida por el mapa
-        var f = new FoodItem(500, 500);
+        var f = new FoodItem(500, 500, 'food');
+        var f1 = new FoodItem(500, 600, 'food');
         foodItems.push(f);
+        foodItems.push(f1);
 
         //La cámara sigue al jugador
         game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -553,6 +562,8 @@ function WeaponItem(x, y, spr, d, fr, b, type) {
     this.bullets = b;
     this.type = type;
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.immovable = true;
+
 
 }
 function AmmoItem(x, y, spr, a, type){
@@ -560,14 +571,33 @@ function AmmoItem(x, y, spr, a, type){
     this.type = type;
     this.ammo = a;
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.immovable = true;
+
 }
 function ShieldItem(x, y){
     this.sprite = game.add.sprite(x, y, 'shield');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.immovable = true;
+
 }
-function FoodItem(x, y){
-    this.sprite = game.add.sprite(x, y, 'shield');
+function FoodItem(x, y, spr){
+    this.sprite = game.add.sprite(x, y, spr);
+    switch(Math.floor(Math.random()*4)){
+        case 0:
+            this.sprite.frame = 0;
+            break;
+        case 1:
+            this.sprite.frame = 1;
+            break;
+        case 2:
+            this.sprite.frame = 2;
+            break;
+        case 3:
+            this.sprite.frame = 3;
+            break;
+    }
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.immovable = true;
 }
 function Weapon(){
     this.empty;
@@ -638,7 +668,7 @@ function Interface(){
         weapons = [game.add.sprite(0, 0, 'pistol'), game.add.sprite(0, 0, 'pistol')];
         for(i = 0; i < weapons.length; i++){
             weapons[i].fixedToCamera = true;
-            weapons[i].scale.setTo(0.2);
+            //weapons[i].scale.setTo(0.2);
             weapons[i].visible = false; //Inicialmente sin armas
             iGroup.add(weapons[i]);
         }
@@ -733,11 +763,10 @@ function Interface(){
             for(i = 0; i < 3; i++){ 
                 shield[i].visible = false;
             }
-            if (players[0].shield > 2){ shield[2].visible = true; console.log('3'); }
+            if (players[0].shield > 2){ shield[2].visible = true; }
             else if (players[0].shield <= 2 && players[0].shield > 1){ shield[1].visible = true; console.log('2'); }
             else if (players[0].shield <= 1 && players[0].shield > 0){ shield[0].visible = true; console.log('1'); }
             players[0].changedShield = false;
-            console.log('shield');
         }
         /////////////// FIN ESCUDO ///////////////
 
@@ -946,8 +975,5 @@ function drawDamageDirection(b){
     deleteSpr = function(){
         damage_spr.visible = false;
     }
-
     setTimeout(deleteSpr,1000);
-    
-
 }
