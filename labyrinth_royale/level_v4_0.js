@@ -336,7 +336,7 @@ DLabyrinth.levelState.prototype = {
 
                         if(tile != null && first_visible) { players[i].lifePoints = 0; }
 
-                        first_visible = false;
+                        if(i === players.length - 1) { first_visible = false; }
                         game.physics.arcade.collide(players[i].sprite, layer[j]);
                     }
                 }
