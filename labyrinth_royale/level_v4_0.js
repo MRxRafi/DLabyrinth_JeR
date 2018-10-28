@@ -13,6 +13,7 @@ var map, layer;
 var temp, boolUpdate;
 var damage_spr;
 var vision_spr;
+var exit; //boton de salir
 var first_visible; // Es true cuando acaba de hacerse visible una capa de bloqueo. En la iteración posterior se vuelve false
 var map_handler; //Objeto que maneja las habitacioens a cerrar
 
@@ -46,6 +47,9 @@ DLabyrinth.levelState.prototype = {
         //Munición
         game.load.image('pistol_ammo', 'assets/props/ammo/pistol_ammo.png');
         game.load.image('ak47_ammo', 'assets/props/ammo/ak_ammo.png');
+	    
+	//boton salir
+        game.load.image('salir', 'assets/buttons/cerrargame.png');
     },
 
 
@@ -163,6 +167,13 @@ DLabyrinth.levelState.prototype = {
 
         //La cámara sigue al jugador
         game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+	    
+	////////////Boton exit//////////////
+        exit = game.add.sprite(10, 560, 'salir');
+        exit.fixedToCamera = true;
+        exit.inputEnabled = true;
+        exit.events.onInputDown.add(this.cerrar, this);
+        ///////////Fin boton exit///////////
        
     },
 
@@ -304,6 +315,12 @@ DLabyrinth.levelState.prototype = {
             }
         }
 
+    },
+	
+	cerrar: function() {  //funcion para cerrar la partida
+
+        this.game.state.start('menuState');
+      
     },
 
     checkCollisions : function(){
@@ -656,6 +673,12 @@ function Interface(){
         vision_spr.anchor.setTo(0.5);
         iGroup.add(vision_spr);
         //////////FIN CAMPO DE VISION/////////////
+	    
+	////////////Boton exit//////////////
+        exit = game.add.sprite(10, 560, 'salir');
+        exit.fixedToCamera = true;
+        iGroup.add(exit);
+        ///////////Fin boton exit///////////
 
         /////////////// VIDA ///////////////
         //Creamos los sprites de la vida (al principio siempre 3 corazones)
