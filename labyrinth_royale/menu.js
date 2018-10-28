@@ -3,6 +3,7 @@ DLabyrinth.menuState = function(game){
    var image2;
    var image3;
    var image4;
+   var image5;
 }
 DLabyrinth.menuState.prototype = {
 
@@ -14,6 +15,7 @@ DLabyrinth.menuState.prototype = {
         game.load.image('opciones', 'assets/opciones.png');
         game.load.image('stats', 'assets/puntosmenu.png');
         game.load.image('salir', 'assets/exitmenu.png');
+        game.load.image('titulo', 'assets/titulo.png');
 
     },
 
@@ -25,6 +27,7 @@ DLabyrinth.menuState.prototype = {
         image2 = game.add.sprite(260, 240, 'opciones');
         image3 = game.add.sprite(260, 340, 'stats');
         image4 = game.add.sprite(260, 440, 'salir');
+        image5 = game.add.sprite(100, 25, 'titulo');
 
         image1.inputEnabled = true;
         image2.inputEnabled = true;
