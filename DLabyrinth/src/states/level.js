@@ -1,4 +1,4 @@
-﻿DLabyrinth.levelState = function(game){
+DLabyrinth.levelState = function(game){
 
 }
 var players;
@@ -15,6 +15,8 @@ var damage_spr;
 var vision_spr;
 var first_visible; // Es true cuando acaba de hacerse visible una capa de bloqueo. En la iteración posterior se vuelve false
 var map_handler; //Objeto que maneja las habitacioens a cerrar
+var playerGroup; //Grupo para los personajes (ordenar su profundidad para que aparezcan detras o delante)
+var itemsGroup; //Grupo para los items para que siempre aparezcan detrás del personaje
 
 DLabyrinth.levelState.prototype = {
     preload: function() {
@@ -28,10 +30,8 @@ DLabyrinth.levelState.prototype = {
 
         //Límites del mundo para la cámara
         game.world.setBounds(0, 0, 3200, 3200);
-
-        //Campo de vision del jugador
+        //game.stage.backgroundColor = "#71706F";
         
-
          //Conjuntos de objetos del juego
          players = new Array();
          orbes = new Array();
@@ -74,6 +74,7 @@ DLabyrinth.levelState.prototype = {
         temp = setInterval(miniMapUpdate, 400); //Temporizador para mejorar fps (actualiza el minimapa)
 
          //Creamos los jugador
+         playerGroup = game.add.group();
          players.push( new Jugador(300, 300, 'spriteSheet'));
          players.push( new Jugador(500, 300, 'spriteSheet2'));
         
@@ -109,7 +110,8 @@ DLabyrinth.levelState.prototype = {
         interfaz.createInterface();
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 
-       generateItems();
+        itemsGroup = game.add.group();
+        generateItems();
 
         //La cámara sigue al jugador
         game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -230,7 +232,8 @@ DLabyrinth.levelState.prototype = {
         }
         
         this.checkCollisions(); // Chequeamos colisiones jugadores-objetos
-
+        playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);
+        game.world.bringToTop(playerGroup);
 	/////////////////////////// INTERFAZ ///////////////////////////
         interfaz.updateInterface(players[0], orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
@@ -238,13 +241,18 @@ DLabyrinth.levelState.prototype = {
         //Administración de lo que sucede si algún jugador se queda sin vida
         for(var i = 0; i < players.length; i++){
             if(players[i].lifePoints <= 0){
+                var toRemove = playerGroup.getIndex(players[i].sprite);
                 if(i == 0){
+                    //Eliminamos al jugador 0 del grupo de jugadores
+                    playerGroup.remove(toRemove);
                     game.state.start('endingState');
                 }else{
                     if(players[i].hasOrb){
                         orbes[i].sprite.destroy();
                         orbes.splice(i, 1);
                     }
+                    //Eliminamos al jugador 1 del grupo de jugadores
+                    playerGroup.remove(toRemove);
 		            players[i].sprite.destroy();
                     players.splice(i,1);
                    
@@ -390,6 +398,7 @@ DLabyrinth.levelState.prototype = {
 function Jugador(x, y, sprsheet,orb){
     //Sprite del personaje y asignación de las animaciones a variables
     this.sprite = game.add.sprite(x, y, sprsheet);
+    playerGroup.add(this.sprite);
     this.leftAnimation = this.sprite.animations.add('walkLeft', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
     this.upAnimation = this.sprite.animations.add('walkUp', [10, 11, 12, 13, 14, 15, 16, 17, 18]);
     this.downAnimation = this.sprite.animations.add('walkDown', [20, 21, 22, 23, 24, 25, 26, 27, 28]);
@@ -479,6 +488,13 @@ function Jugador(x, y, sprsheet,orb){
     //Activamos físicas arcade para el personaje
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE); 
     this.sprite.body.immovable = true;   
+    //this.sprite.body.height = this.sprite.height/2;
+    //this.sprite.body.width = this.sprite.width/2;
+    
+
+    this.sprite.body.setSize(this.sprite.width/2+10, this.sprite.height/2, this.sprite.width/2 - 13, this.sprite.height/2);
+    //this.sprite.body.position.x = this.sprite.x + this.sprite.width/2; 
+    //this.sprite.body.position.y = this.sprite.y + this.sprite.height/2;
 }
 
 function Orbe(sprsheet, pl){
@@ -1011,6 +1027,7 @@ function generateItems(){
             w.sprite.y = Math.floor(Math.random()*2800 + 200);
             console.log('out');
         }
+        itemsGroup.add(w.sprite);
         weaponItems.push(w);
     }
     
@@ -1028,6 +1045,7 @@ function generateItems(){
             a.sprite.x = Math.floor(Math.random()*2800 + 200);
             a.sprite.y = Math.floor(Math.random()*2800 + 200);
         }
+        itemsGroup.add(a.sprite);
         ammoItems.push(a);
     }
     //Escudo
@@ -1037,6 +1055,7 @@ function generateItems(){
             s.sprite.x = Math.floor(Math.random()*2800 + 200);
             s.sprite.y = Math.floor(Math.random()*2800 + 200);
         }
+        itemsGroup.add(s.sprite);
         shieldItems.push(s);
     }
     //Comida
@@ -1046,6 +1065,7 @@ function generateItems(){
             f.sprite.x = Math.floor(Math.random()*2800 + 200);
             f.sprite.y = Math.floor(Math.random()*2800 + 200);
         }
+        itemsGroup.add(f.sprite);
         foodItems.push(f);
     }
 }
