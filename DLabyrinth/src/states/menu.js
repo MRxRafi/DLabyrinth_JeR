@@ -1,17 +1,12 @@
 DLabyrinth.menuState = function(game){
-   var image1;
-   var image2;
-   var image3;
-   var image4;
-   var image5;
+  
 }
 DLabyrinth.menuState.prototype = {
 
 
     preload: function() {
 
-
-        
+ 
         game.load.image('jugar', 'assets/buttons/jugarmenu.png');
         game.load.image('opciones', 'assets/buttons/opciones.png');
         game.load.image('stats', 'assets/buttons/puntosmenu.png');
@@ -24,7 +19,8 @@ DLabyrinth.menuState.prototype = {
 
     create: function() {
       
-        //game.stage.backgroundColor = "#4488AA";
+  	 var image1, image2, image3, image4, image5;
+           
 	game.add.tileSprite(0, 0, 800, 600, 'background');
 
         image1 = game.add.sprite(260, 140, 'jugar');
