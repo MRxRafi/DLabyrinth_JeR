@@ -11,7 +11,7 @@ CONCEPTO
 **Mecánica:** Supervivencia en un mapa 2D. El jugador deberá coger armas repartidas por el mapa y ser el último personaje en pie.  
 **Tecnología:** Navegador web (Javascript), teclado y un ordenador de gama baja-media.  
 **Público:** Personas competitivas.  
-**Versión del documento:** 1.4 (27-09-2018) (Las armas ahora son módulos insertables en un orbe que pertenece al personaje, corregidas erratas y mejorado el formato. Cambiado cuchillo por puños. Añadido cierre de zonas según el tiempo que pase).  
+**Versión del documento:** 1.4.1 (03-11-2018) Cambiada la ruta de las imágenes
 **VISIÓN GENERAL DEL JUEGO:** DLabyrinth es un trepidante juego de battle royale que pondrá a prueba la capacidad de supervivencia del jugador en un entorno en 2D en forma de laberinto. Cada jugador deberá eliminar a sus contrincantes y tratar de ser el último superviviente. La munición y recursos son limitados y deben usarse con cierta estrategia para ganar ventaja.  
   
  ~~~
@@ -25,7 +25,7 @@ El personaje en sí no es el que lleva las armas; por armas nos referimos a mód
 Si eres golpeado por un proyectil el juego te indica la dirección por la que venía ese proyectil.  
 El jugador dispone de un pequeño minimapa.  
 Para prevenir que los jugadores se aburran y no se encuentren en el mapa, cada cierto tiempo se cerrarán zonas del mapa. Primera fase: 1 minuto y medio (se da el aviso de que hay habitaciones que están por cerrarse y se mostrarán en el minimapa). Segunda fase: 1 minuto (se cierra una cuarta parte aproximadamente de las habitaciones). Tercera fase: 2 minutos (se cierra otro tercio de las habitaciones). Cuarta y última fase: 1 minuto y medio (se cierran todas las habitaciones y sólo quedan los pasillos principales).
-![Error al Cargar](/Assests/diagrama_juego1.png)  
+![Error al Cargar](/DLabyrinth/antiguo_assets/diagrama_juego1.png)  
 **Cámara:** Cámara de vista cenital. Juego en 2D. La cámara se desplazará en función del movimiento del personaje manejado por el usuario.  
 **Periféricos:** Teclado.  
 **Controles:** W-Arriba, S-Abajo, A-Izquierda, D-Derecha, Spacebar- Disparar, E-Recoger cosas del suelo, Q-Cambiar entre las armas disponibles.  
@@ -69,11 +69,11 @@ DIAGRAMAS DE LAS INTERFACES:
 ~~~
 El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
 
-![Error al Cargar](/Assests/Untitled_Diagram.png)  
-![Error al Cargar](/Assests/menu_principal(2).png)  
-![Error al Cargar](/Assests/opciones.png)  
-![Error al Cargar](/Assests/menu_pausa.png)  
-![Error al Cargar](/Assests/final_ronda.png)  
+![Error al Cargar](/DLabyrinth/antiguo_assets/Untitled_Diagram.png)  
+![Error al Cargar](/DLabyrinth/antiguo_assets/menu_principal(2).png)  
+![Error al Cargar](/DLabyrinth/antiguo_assets/opciones.png)  
+![Error al Cargar](/DLabyrinth/antiguo_assets/menu_pausa.png)  
+![Error al Cargar](/DLabyrinth/antiguo_assets/final_ronda.png)  
 
 ~~~
 ESTADOS DEL JUEGO  
@@ -116,7 +116,7 @@ PERSONAJES:
 ~~~
 Tu avatar de jugador. (Por definir cuántos personajes habrá, mínimo 8 para diferenciar entre los usuarios)  
 *Personaje de ejemplo:*  
-![Error al cargar](/Assests/personajes/esqueleto_con_corbata_recortado.png)  
+![Error al cargar](/DLabyrinth/antiguo_assets/personajes/esqueleto_con_corbata_recortado.png)  
 **Enemigos:** El avatar del resto de jugadores. (Un máximo de 8 jugadores, es decir, 7 enemigos)  
 ~~~
 ARMAS:
@@ -146,10 +146,10 @@ DETALLES DE PRODUCCIÓN
 EJEMPLOS DEL JUEGO:
 ~~~
 *Contenido del mapa:*
-![Error al cargar](/Assests/tiles3.png)
+![Error al cargar](/DLabyrinth/antiguo_assets/tiles3.png)
 
 *Mapa:*
-![Error al cargar](/Assests/underdwell-level-1.png)
+![Error al cargar](/DLabyrinth/antiguo_assets/underdwell-level-1.png)
 
 
 ~~~
