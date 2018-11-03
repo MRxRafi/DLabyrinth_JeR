@@ -5,14 +5,15 @@ DLabyrinth.preloadState = function(game){
 DLabyrinth.preloadState.prototype = {
     preload: function() {
         //ASSETS MENÚ//
-        game.load.image('jugar', 'assets/jugarmenu.png');
-        game.load.image('opciones', 'assets/opciones.png');
-        game.load.image('stats', 'assets/puntosmenu.png');
-        game.load.image('salirM', 'assets/exitmenu.png');
-        game.load.image('titulo', 'assets/titulo.png');
-
+        game.load.image('jugar', 'assets/buttons/jugarmenu.png');
+        game.load.image('opciones', 'assets/buttons/opciones.png');
+        game.load.image('stats', 'assets/buttons/puntosmenu.png');
+        game.load.image('salirM', 'assets/buttons/exitmenu.png');
+        game.load.image('titulo', 'assets/buttons/titulo.png');
+        game.load.image('background', 'assets/buttons/background.png');
+        
         //ASSETS OPTIONS//
-        game.load.image('salirO', 'assets/exitmenu2.png');
+        game.load.image('salirO', 'assets/buttons/exitmenu2.png');
 
         //ASSETS LEVEL//
         game.load.spritesheet('spriteSheet', 'assets/spriteSheets/spriteSheet2.png', 30, 49, 80);
