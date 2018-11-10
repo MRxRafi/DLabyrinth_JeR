@@ -8,6 +8,7 @@ DLabyrinth.bootState.prototype = {
 
     preload: function(){
         game.physics.startSystem("Phaser.Physics.ARCADE");
+        game.load.image('bar', 'assets/loading/bar.png');
     },
 
     create: function(){
