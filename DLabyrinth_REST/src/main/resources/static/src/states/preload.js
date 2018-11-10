@@ -4,6 +4,15 @@ DLabyrinth.preloadState = function(game){
 
 DLabyrinth.preloadState.prototype = {
     preload: function() {
+        //LOADING TEXT
+        game.add.text(game.world.centerX - 60, 200, "loading", { font: "50px Times New Roman", fill: "#FFFFFF", align: "left" });
+
+        //PROGRESS BAR
+        var preloadBar = game.add.sprite(100, 400, 'bar');
+        preloadBar.width = 600;
+        preloadBar.anchor.setTo(0, 0.5);
+        game.load.setPreloadSprite(preloadBar);
+        
         //ASSETS MENÚ//
         game.load.image('jugar', 'assets/buttons/jugarmenu.png');
         game.load.image('opciones', 'assets/buttons/opciones.png');
