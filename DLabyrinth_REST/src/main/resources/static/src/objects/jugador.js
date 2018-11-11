@@ -4,6 +4,7 @@
     - id_player: identificador del jugador dentro del juego. Antes se
     usaba la posición en el array de jugadores.
 */
+var otherPlayer;
 function Jugador(x, y, sprsheet, id_player) {
     this.id = id_player;
 
@@ -212,6 +213,26 @@ function Jugador(x, y, sprsheet, id_player) {
             if (this.fKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { this.left = true; }
             if (this.hKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { this.right = true; }
 
+        }
+        if(keydownMove){
+        	//Actualizamos posiciones en servidor
+        	if(this.id === DLabyrinth.player.id){
+        		DLabyrinth.player.positionX = this.sprite.x;
+        		DLabyrinth.player.positionY = this.sprite.y;
+        		updatePlayer(DLabyrinth.player);
+        	}
+        }
+        
+        var otherId;
+        if(this.id === 1 && DLabyrinth.player.id === 1) { otherId = 2; }
+        if(this.id === 2 && DLabyrinth.player.id === 2) { otherId = 1; }
+        getPlayer(function(player){
+        	otherPlayer = player;
+        }, otherId);
+        
+        if(otherPlayer != undefined){
+        	players[otherPlayer.id - 1].sprite.x = otherPlayer.positionX;
+        	players[otherPlayer.id - 1].sprite.y = otherPlayer.positionY;
         }
     }
 

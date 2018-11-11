@@ -66,7 +66,7 @@ function MapHandler(map, layer){
 
 //Temporizador del mapa
 function timeController(){
-    var randomTime = generateRandomInteger(10000,20000);
+    var randomTime = generateRandomInteger(100000,200000);
     that = this;
 
     //setTimeout(this.destroy,randomTime);
@@ -84,7 +84,7 @@ function timeController(){
         that.timer.pause();
         map_handler.closed();
         if(map_handler.phase != 0){
-            randomTime = generateRandomInteger(10000,20000);
+            randomTime = generateRandomInteger(100000,200000);
             var newTimer = new Timer(this.restartTime,randomTime);
             that.timer = newTimer;
             map_handler.nextRoom();

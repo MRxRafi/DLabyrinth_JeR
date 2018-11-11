@@ -4,7 +4,7 @@ DLabyrinth.preloadState = function(game){
 
 DLabyrinth.preloadState.prototype = {
     preload: function() {
-        //LOADING TEXT
+    	//LOADING TEXT
         game.add.text(game.world.centerX - 60, 200, "loading", { font: "50px Times New Roman", fill: "#FFFFFF", align: "left" });
 
         //PROGRESS BAR
@@ -12,7 +12,7 @@ DLabyrinth.preloadState.prototype = {
         preloadBar.width = 600;
         preloadBar.anchor.setTo(0, 0.5);
         game.load.setPreloadSprite(preloadBar);
-        
+
         //ASSETS MENÚ//
         game.load.image('jugar', 'assets/buttons/jugarmenu.png');
         game.load.image('opciones', 'assets/buttons/opciones.png');
@@ -52,8 +52,9 @@ DLabyrinth.preloadState.prototype = {
     },
 
     create: function() {
-    	//Creamos algunas variables globales
+    	//Creamos algunas variables globales para comunicarnos con el servidor
     	DLabyrinth.user;
+    	DLabyrinth.player;
     	//Pasamos al siguiente estado
        game.state.start('menuState');
     },

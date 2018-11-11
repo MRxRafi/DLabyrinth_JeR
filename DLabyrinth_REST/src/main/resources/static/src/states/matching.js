@@ -35,6 +35,10 @@ DLabyrinth.matchingState.prototype = {
         style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "center" };
         n_jugadores = game.add.text(game.world.centerX+80, 78, text, style);
         
+        numberUsers(function(numero_usuarios){
+        	if(numero_usuarios === 2){ game.state.start('levelState'); }
+        });
+        
         /*
         numberUsers(function(numero_usuarios){
         	if(numero_usuarios > 3 && DLabyrinth.user != undefined) { deleteUser(numero_usuarios); delete DLabyrinth.user; }

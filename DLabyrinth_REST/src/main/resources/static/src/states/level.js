@@ -55,6 +55,16 @@ DLabyrinth.levelState.prototype = {
         players.push(new Jugador(300, 300, 'spriteSheet', 1));
         players.push(new Jugador(500, 300, 'spriteSheet2', 2));
 
+        //Variables que subiremos al servidor y leerá el otro usuario
+        DLabyrinth.player = {
+        	id: DLabyrinth.user.id,
+        	positionX: players[DLabyrinth.user.id-1].sprite.x,
+        	positionY: players[DLabyrinth.user.id-1].sprite.y
+        };
+        
+        createPlayer(function(){}, DLabyrinth.player);
+        
+        //Inputs players
         players[0].createInputs();
         players[1].createInputs();
 
