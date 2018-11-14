@@ -83,7 +83,13 @@ DLabyrinth.levelState.prototype = {
         generateItems();
 
         //La cámara sigue al jugador
-        game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        var p;
+        for (var i = 0; i < players.length; i++){
+            if(players[i].id == DLabyrinth.player.id){
+                p = players[i];
+            }
+        }
+        game.camera.follow(p.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     },
 
