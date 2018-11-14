@@ -2,6 +2,7 @@ DLabyrinth.levelState = function (game) {
 
 }
 var players;
+var currentPlayer;
 var orbes;
 var weaponItems;
 var ammoItems;
@@ -82,14 +83,14 @@ DLabyrinth.levelState.prototype = {
         itemsGroup = game.add.group();
         generateItems();
 
-        //La cámara sigue al jugador
-        var p;
+        //Se busca a nuestro jugador en el array
         for (var i = 0; i < players.length; i++){
             if(players[i].id == DLabyrinth.player.id){
-                p = players[i];
+                currentPlayer = players[i];
             }
         }
-        game.camera.follow(p.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        //La cámara sigue al jugador
+        game.camera.follow(currentPlayer.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     },
 
@@ -106,7 +107,7 @@ DLabyrinth.levelState.prototype = {
         playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);
         game.world.bringToTop(playerGroup);
         /////////////////////////// INTERFAZ ///////////////////////////
-        interfaz.updateInterface(players[0], orbes);
+        interfaz.updateInterface(currentPlayer, orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 
 
