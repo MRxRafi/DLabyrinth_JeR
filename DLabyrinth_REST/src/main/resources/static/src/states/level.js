@@ -47,7 +47,7 @@ DLabyrinth.levelState.prototype = {
 
         first_visible = false;
 
-        map_handler = new MapHandler(map, map.layers);
+        //map_handler = new MapHandler(map, map.layers);
 
         temp = setInterval(miniMapUpdate, 400); //Temporizador para mejorar fps (actualiza el minimapa)
 
@@ -57,13 +57,12 @@ DLabyrinth.levelState.prototype = {
         players.push(new Jugador(500, 300, 'spriteSheet2', 2));
 
         //Variables que subiremos al servidor y leerá el otro usuario
-        DLabyrinth.player = {
-        	id: DLabyrinth.user.id,
-        	positionX: players[DLabyrinth.user.id-1].sprite.x,
-        	positionY: players[DLabyrinth.user.id-1].sprite.y
-        };
+        DLabyrinth.player.positionX = players[DLabyrinth.player.id-1].sprite.x;
+        DLabyrinth.player.positionY = players[DLabyrinth.player.id-1].sprite.y;
+
+        //console.log(JSON.stringify(DLabyrinth.player))
         
-        createPlayer(function(){}, DLabyrinth.player);
+        updatePlayer(DLabyrinth.player);
         
         //Inputs players
         players[0].createInputs();
@@ -101,7 +100,8 @@ DLabyrinth.levelState.prototype = {
             players[i].updateAnimations();
             players[i].checkLifePoints();
         }
-
+        
+        map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
         playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);

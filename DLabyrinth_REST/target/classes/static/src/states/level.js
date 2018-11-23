@@ -2,6 +2,7 @@ DLabyrinth.levelState = function (game) {
 
 }
 var players;
+var currentPlayer;
 var orbes;
 var weaponItems;
 var ammoItems;
@@ -46,7 +47,7 @@ DLabyrinth.levelState.prototype = {
 
         first_visible = false;
 
-        map_handler = new MapHandler(map, map.layers);
+        //map_handler = new MapHandler(map, map.layers);
 
         temp = setInterval(miniMapUpdate, 400); //Temporizador para mejorar fps (actualiza el minimapa)
 
@@ -56,13 +57,12 @@ DLabyrinth.levelState.prototype = {
         players.push(new Jugador(500, 300, 'spriteSheet2', 2));
 
         //Variables que subiremos al servidor y leerá el otro usuario
-        DLabyrinth.player = {
-        	id: DLabyrinth.user.id,
-        	positionX: players[DLabyrinth.user.id-1].sprite.x,
-        	positionY: players[DLabyrinth.user.id-1].sprite.y
-        };
+        DLabyrinth.player.positionX = players[DLabyrinth.player.id-1].sprite.x;
+        DLabyrinth.player.positionY = players[DLabyrinth.player.id-1].sprite.y;
+
+        //console.log(JSON.stringify(DLabyrinth.player))
         
-        createPlayer(function(){}, DLabyrinth.player);
+        updatePlayer(DLabyrinth.player);
         
         //Inputs players
         players[0].createInputs();
@@ -82,8 +82,14 @@ DLabyrinth.levelState.prototype = {
         itemsGroup = game.add.group();
         generateItems();
 
+        //Se busca a nuestro jugador en el array
+        for (var i = 0; i < players.length; i++){
+            if(players[i].id == DLabyrinth.player.id){
+                currentPlayer = players[i];
+            }
+        }
         //La cámara sigue al jugador
-        game.camera.follow(players[0].sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        game.camera.follow(currentPlayer.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     },
 
@@ -94,13 +100,14 @@ DLabyrinth.levelState.prototype = {
             players[i].updateAnimations();
             players[i].checkLifePoints();
         }
-
+        
+        map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
         playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);
         game.world.bringToTop(playerGroup);
         /////////////////////////// INTERFAZ ///////////////////////////
-        interfaz.updateInterface(players[0], orbes);
+        interfaz.updateInterface(currentPlayer, orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 
 

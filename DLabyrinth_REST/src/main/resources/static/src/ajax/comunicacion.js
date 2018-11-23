@@ -16,48 +16,6 @@ window.onbeforeunload = function(){
 }
 
 /*
- * ADMINISTRACIÓN PETICIONES USUARIO
- */
-function createUser(callback, user) {
-    $.ajax({
-        method: "POST",
-        url: 'http://192.168.1.72:8080/users',
-        data: JSON.stringify(user),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (user) {
-        console.log("User created: " + JSON.stringify(user));
-        callback(user);
-    })
-}
-
-function numberUsers(callback){
-    $.ajax({
-        method: "GET",
-        url: 'http://192.168.1.72:8080/users',
-        //data: JSON.stringify(user),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (numUsers) {
-        console.log("Info Received" + JSON.stringify(numUsers));
-        callback(numUsers);
-    })
-}
-
-function deleteUser(userId) {
-    $.ajax({
-        method: 'DELETE',
-        url: 'http://192.168.1.72:8080/users/' + userId
-    }).done(function (user) {
-        console.log("Deleted user " + userId)
-    })
-}
-
-/*
  * ADMINISTRACIÓN PETICIONES JUGADOR
  */
 
@@ -126,5 +84,35 @@ function deletePlayer(playerId) {
         url: 'http://192.168.1.72:8080/players/' + playerId
     }).done(function (player) {
         console.log("Deleted player " + playerId)
+    })
+}
+
+/*
+ * ADMINISTRACIÓN PETICIONES MAPA
+ */
+function startTimer() {
+    $.ajax({
+        method: 'PUT',
+        url: 'http://192.168.1.72:8080/map/',
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function () {
+        console.log("Timer Started")
+    })
+}
+
+function getMapHandler(callback){
+    $.ajax({
+        method: "GET",
+        url: 'http://192.168.1.72:8080/map/',
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function (map) {
+        console.log("Info Received" + JSON.stringify(map));
+        callback(map);
     })
 }

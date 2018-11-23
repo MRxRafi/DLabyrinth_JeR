@@ -5,6 +5,9 @@ public class Jugador {
 	private float positionX;
 	private float positionY;
 	
+	public Jugador() {
+
+	}
 	public long getId() {
 		return id;
 	}

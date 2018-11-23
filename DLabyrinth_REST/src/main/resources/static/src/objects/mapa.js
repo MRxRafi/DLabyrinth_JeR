@@ -8,7 +8,6 @@ function Mapa(){
             
         this.layers[0] = this.tileMap.createLayer('Suelo');
         this.layers[1] = this.tileMap.createLayer('Paredes');
-        this.layers[1] = this.tileMap.createLayer('Paredes');
         this.layers[2] = this.tileMap.createLayer('Cierres');
         this.layers[3] = this.tileMap.createLayer('Adornos1');
         this.layers[4] = this.tileMap.createLayer('Adornos2');
@@ -27,12 +26,33 @@ function Mapa(){
         this.tileMap.setCollisionBetween(1, 300, true, this.layers[5]);
     }
     
+    this.update = function(){
+    	if(DLabyrinth.map != undefined){
+    		var habitaciones = DLabyrinth.map.map.closedRooms;
+    		for(i = 6; i < 15; i++){
+    			if(habitaciones[i-5] && !this.layers[i].visible){
+    				this.closeZone(i);
+    			}
+    		}
+    	}
+    }
+    
+    this.closeZone = function(zone){
+    	this.layers[zone].visible = true;
+    	//Activamos colisiones del layer
+        this.tileMap.setCollisionBetween(5, 7, true, this.layers[zone]);
+        this.tileMap.setCollisionBetween(21, 23, true, this.layers[zone]);
+        this.tileMap.setCollisionBetween(37, 39, true, this.layers[zone]);
+        first_visible = true;
+    }
+    
 }
 
+/*
 function MapHandler(map, layer){
     //Fase 1: layer.length - 5 - 5 hasta layer.length - 5 (5 capas distintas a bloqueo y otras 5 de otras fases)
-    this.phase = 1;
-    this.next = generateRandomInteger(layer.length - 10, layer.length - 6);
+    this.phase = 1; //Lo recibo del exterior
+    this.next = generateRandomInteger(layer.length - 10, layer.length - 6); //Lo recibo del exterior
 
     this.closed = function(){
         layer[this.next].visible = true;
@@ -92,4 +112,4 @@ function timeController(){
         //El recolector de basura se encargará de eliminar el Timer que ha quedado sin variable
     }
     this.timer = new Timer(restartTime,randomTime);
-}
+}*/

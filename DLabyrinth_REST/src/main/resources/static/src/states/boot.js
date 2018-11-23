@@ -1,4 +1,6 @@
-var DLabyrinth = {}
+var DLabyrinth = {
+		
+}
 
 DLabyrinth.bootState = function(game){
 

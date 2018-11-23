@@ -60,6 +60,9 @@ function Jugador(x, y, sprsheet, id_player) {
     this.collisionArea.alpha = 0;
     game.physics.enable(this.collisionArea, Phaser.Physics.ARCADE);
 
+  //SI ES EL JUGADOR 1, COMENZAMOS EL TIMER DEL SERVIDOR (MapController)
+    if(this.id === 1 && DLabyrinth.player.id === 1) { startTimer(); }
+    
     this.punch = function () {
         switch (this.facing) {
             case 0:
@@ -226,10 +229,12 @@ function Jugador(x, y, sprsheet, id_player) {
         var otherId;
         if(this.id === 1 && DLabyrinth.player.id === 1) { otherId = 2; }
         if(this.id === 2 && DLabyrinth.player.id === 2) { otherId = 1; }
-        getPlayer(function(player){
-        	otherPlayer = player;
-        }, otherId);
-        
+        if((this.id === 1 && DLabyrinth.player.id === 1)||(this.id === 2 && DLabyrinth.player.id === 2)){
+        	getPlayer(function(player){
+            	otherPlayer = player;
+            }, otherId);
+        }
+
         if(otherPlayer != undefined){
         	players[otherPlayer.id - 1].sprite.x = otherPlayer.positionX;
         	players[otherPlayer.id - 1].sprite.y = otherPlayer.positionY;
