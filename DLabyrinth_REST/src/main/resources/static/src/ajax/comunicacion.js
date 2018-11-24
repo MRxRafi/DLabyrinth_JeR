@@ -116,3 +116,156 @@ function getMapHandler(callback){
         callback(map);
     })
 }
+
+function setWeaponItemType(weaponTypes){
+	$.ajax({
+		method: 'POST',
+		url: 'http://192.168.1.40:8080/items/weaponType',
+		data: JSON.stringify(weaponTypes),
+		processdata: false,
+		
+		headers: {
+           "Content-Type": "application/json"
+        }
+	        
+	})
+}
+function getWeaponItemType(callback){
+	$.ajax({
+		method: "GET",
+        url: 'http://192.168.1.40:8080/items/weaponType',
+        //data: JSON.stringify(user),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+	}).done(function(items){
+		callback(items);
+	})
+}
+
+function setWeaponItemPos(weaponPos){
+	$.ajax({
+		method: 'POST',
+		url: 'http://192.168.1.40:8080/items/weaponPos',
+		data: JSON.stringify(weaponPos),
+		processdata: false,
+		headers: {
+           "Content-Type": "application/json"
+	    }
+	})
+}
+
+function getWeaponItemPos(callback){
+	$.ajax({
+		method: "GET",
+        url: 'http://192.168.1.40:8080/items/weaponPos',
+        //data: JSON.stringify(user),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+	}).done(function(items){
+		callback(items);
+	})
+}
+
+function setAmmoItemType(ammoType){
+	$.ajax({
+		method: 'POST',
+		url: 'http://192.168.1.40:8080/items/ammoType',
+		data: JSON.stringify(ammoType),
+		processdata: false,
+		headers: {
+           "Content-Type": "application/json"
+	    }
+	})
+}
+function getAmmoItemType(callback){
+	$.ajax({
+		method: "GET",
+        url: 'http://192.168.1.40:8080/items/ammoType',
+        //data: JSON.stringify(user),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+	}).done(function(items){
+		callback(items);
+	})
+}
+
+function setAmmoItemPos(ammoPos){
+	$.ajax({
+		method: 'POST',
+		url: 'http://192.168.1.40:8080/items/ammoPos',
+		data: JSON.stringify(ammoPos),
+		processdata: false,
+		headers: {
+           "Content-Type": "application/json"
+	    }
+	})
+}
+function getAmmoItemPos(callback){
+	$.ajax({
+		method: "GET",
+        url: 'http://192.168.1.40:8080/items/ammoPos',
+        //data: JSON.stringify(user),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+	}).done(function(items){
+		callback(items);
+	})
+}
+
+function setShieldItemPos(shieldPos){
+	$.ajax({
+		method: 'POST',
+		url: 'http://192.168.1.40:8080/items/shieldPos',
+		data: JSON.stringify(shieldPos),
+		processdata: false,
+		headers: {
+           "Content-Type": "application/json"
+	    }
+	})
+}
+function getShieldItemPos(callback){
+	$.ajax({
+		method: "GET",
+        url: 'http://192.168.1.40:8080/items/shieldPos',
+        //data: JSON.stringify(user),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+	}).done(function(items){
+		callback(items);
+	})
+}
+function setFoodItemPos(foodPos){
+	$.ajax({
+		method: 'POST',
+		url: 'http://192.168.1.40:8080/items/foodPos',
+		data: JSON.stringify(foodPos),
+		processdata: false,
+		headers: {
+           "Content-Type": "application/json"
+	    }
+	})
+}
+function getFoodItemPos(callback){
+	$.ajax({
+		method: "GET",
+        url: 'http://192.168.1.40:8080/items/foodPos',
+        //data: JSON.stringify(user),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+	}).done(function(items){
+		callback(items);
+	})
+}
+
