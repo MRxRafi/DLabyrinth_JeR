@@ -19,6 +19,7 @@ var map_handler; //Objeto que maneja las habitacioens a cerrar
 var playerGroup; //Grupo para los personajes (ordenar su profundidad para que aparezcan detras o delante)
 var itemsGroup; //Grupo para los items para que siempre aparezcan detrás del personaje
 
+
 DLabyrinth.levelState.prototype = {
     preload: function () {
 
@@ -47,7 +48,7 @@ DLabyrinth.levelState.prototype = {
 
         first_visible = false;
 
-        //map_handler = new MapHandler(map, map.layers);
+        map_handler = new MapHandler(map, map.layers);
 
         temp = setInterval(miniMapUpdate, 400); //Temporizador para mejorar fps (actualiza el minimapa)
 
@@ -57,12 +58,15 @@ DLabyrinth.levelState.prototype = {
         players.push(new Jugador(500, 300, 'spriteSheet2', 2));
 
         //Variables que subiremos al servidor y leerá el otro usuario
-        DLabyrinth.player.positionX = players[DLabyrinth.player.id-1].sprite.x;
-        DLabyrinth.player.positionY = players[DLabyrinth.player.id-1].sprite.y;
-
-        //console.log(JSON.stringify(DLabyrinth.player))
+        DLabyrinth.player = {
+        	id: DLabyrinth.user.id,
+        	positionX: players[DLabyrinth.user.id-1].sprite.x,
+        	positionY: players[DLabyrinth.user.id-1].sprite.y,
+        	velX: players[DLabyrinth.user.id-1].sprite.body.getVelocityX(),
+        	velY: players[DLabyrinth.user.id-1].sprite.body.getVelocityY()
+        };
         
-        updatePlayer(DLabyrinth.player);
+        createPlayer(function(){}, DLabyrinth.player);
         
         //Inputs players
         players[0].createInputs();
@@ -71,7 +75,6 @@ DLabyrinth.levelState.prototype = {
         damage_spr = game.add.sprite(0, 0, 'damage');
         damage_spr.scale.setTo(0.1);
         damage_spr.anchor.setTo(0, 0.5);
-        //damage_spr.fixedToCamera = true;
         damage_spr.visible = false;
 
         /////////////////////////// INTERFAZ ///////////////////////////
@@ -79,15 +82,24 @@ DLabyrinth.levelState.prototype = {
         interfaz.createInterface();
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 
-        itemsGroup = game.add.group();
-        generateItems();
-
         //Se busca a nuestro jugador en el array
         for (var i = 0; i < players.length; i++){
             if(players[i].id == DLabyrinth.player.id){
                 currentPlayer = players[i];
             }
         }
+        
+        //El cliente correspondiente al jugador 0 genera los items cuya info se manda al servidor
+        itemsGroup = game.add.group();
+        if(currentPlayer.id == players[0].id){
+        	generateItems();
+        }
+        
+        //El resto de jugadores reciben la info de los items de forma que es igual para todos
+        else{
+        	loadItems();
+        }
+        
         //La cámara sigue al jugador
         game.camera.follow(currentPlayer.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
@@ -100,8 +112,7 @@ DLabyrinth.levelState.prototype = {
             players[i].updateAnimations();
             players[i].checkLifePoints();
         }
-        
-        map.update();
+
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
         playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);
@@ -109,7 +120,7 @@ DLabyrinth.levelState.prototype = {
         /////////////////////////// INTERFAZ ///////////////////////////
         interfaz.updateInterface(currentPlayer, orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
-
+        
 
     },
 
