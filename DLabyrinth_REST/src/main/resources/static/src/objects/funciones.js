@@ -40,7 +40,7 @@ function drawDamageDirection(b){
 
 function generateItems(){
   
-    //Armas
+    /////////////////////////////////////////ARMAS/////////////////////////////////
     for(var i = 0; i < 5; i++){
         switch(Math.floor(Math.random()*2)){
             case 0:
@@ -59,7 +59,9 @@ function generateItems(){
         weaponItems.push(w);
     }
     
-    //Munición
+    //////////////////////////////////////////FIN ARMAS//////////////////////////////////
+    
+    ////////////////////////////////////////MUNICION/////////////////////////////////////
     for(var i = 0; i < 6; i++){
         switch(Math.floor(Math.random()*2)){
             case 0:
@@ -76,7 +78,11 @@ function generateItems(){
         itemsGroup.add(a.sprite);
         ammoItems.push(a);
     }
-    //Escudo
+    
+    
+    //////////////////////////////////////FIN MUNICION///////////////////////////////////////
+    
+    /////////////////////////////////////ESCUDO//////////////////////////////////////////////
     for(var i = 0; i < 4; i ++){
         var s = new ShieldItem(Math.floor(Math.random()*2800 + 200), Math.floor(Math.random()*2800 + 200));
         while(map.tileMap.getTileWorldXY(s.sprite.x, s.sprite.y, 32, 32, map.layers[0]) === null){
@@ -96,13 +102,116 @@ function generateItems(){
         itemsGroup.add(f.sprite);
         foodItems.push(f);
     }
+    
+    //Por último, mandamos la info de los items al servidor
+    
+    var a = new Array();
+    var b = new Array();
+    for (var i = 0; i < 8; i++){
+    	b[i] = new Array();
+    }
+    for (var i = 0; i < 5; i++){
+    	a[i] =weaponItems[i].type;
+    	b[i][0] = weaponItems[i].sprite.x;
+    	b[i][1] = weaponItems[i].sprite.y;
+    }
+    setWeaponItemType(a);
+    setWeaponItemPos(b);
+    
+    for(var i = 0; i < 6; i++){
+    	a[i] = ammoItems[i].type;
+    	b[i][0] = ammoItems[i].sprite.x;
+    	b[i][1] = ammoItems[i].sprite.y;
+    }
+    setAmmoItemType(a);
+    setAmmoItemPos(b);
+   
+    for(var i = 0; i < 4; i++){
+    	b[i][0] = shieldItems[i].sprite.x;
+    	b[i][1] = shieldItems[i].sprite.y;
+    }
+    setShieldItemPos(b);
+    
+    for(var i = 0; i < 8; i++){
+    	b[i][0] = foodItems[i].sprite.x;
+    	b[i][1] = foodItems[i].sprite.y;
+    }
+    setFoodItemPos(b);
+    //itemsDone();
+}
+
+function loadItems(){
+	//console.log(isItemsDone(function(done){return done;}));
+	/*
+	while(!isItemsDone(function(done){return done;})){
+		console.log('esperando Items');
+	}
+	*/
+	
+	getWeaponItemType(function loadWT(wt){
+		for(var i = 0; i < wt.length; i++){
+			var w;
+			if(wt[i] == "pistola"){
+				w = new WeaponItem(0, 0, 'pistol', 1, 500, 10, 'pistola');
+			}else if(wt[i] == "metralleta"){
+				w = new WeaponItem(0, 0,'ak-47', 0.25, 200, 30, 'metralleta');
+			}
+			
+			weaponItems.push(w);
+			//console.log("Weapon: " + w.type)
+		}
+	});
+	
+	getWeaponItemPos(function loadWP(wp){
+		for(var i = 0; i < wp.length; i++){
+			weaponItems[i].sprite.x = wp[i][0];
+			weaponItems[i].sprite.y = wp[i][1];
+			//console.log('weaponItems '+ weaponItems[i].sprite.x);
+		}
+	});
+	
+	getAmmoItemType(function loadAT(at){
+		var a;
+		for(var i = 0; i < at.length; i++){
+			if(at[i] == 'pistola'){
+				a = new AmmoItem(0, 0, 'pistol_ammo', 10, 'pistola');
+			}else if(at[i] == 'metralleta'){
+				a = new AmmoItem(0, 0, 'ak47_ammo', 30, 'metralleta');
+			}
+			ammoItems.push(a);
+			//console.log("Ammo: " + a.type);
+		}
+	});
+	
+	getAmmoItemPos(function loadAP(ap){
+		for(var i = 0; i < ap.length; i++){
+			ammoItems[i].sprite.x = ap[i][0];
+			ammoItems[i].sprite.y = ap[i][1];
+			//console.log('ammo item: ' + ammoItems[i].sprite.x);
+		}
+	});
+	
+	getShieldItemPos(function loadSP(sp) {
+		for(var i = 0; i < sp.length; i++){
+			shieldItems[i] = new ShieldItem(sp[i][0], sp[i][1]);
+			//console.log(shieldItems[i]);
+			//console.log('shield ' + i);
+		}
+	});
+	
+	getFoodItemPos(function loadFP(fp) {
+		for(var i = 0; i < fp.length; i++){
+			foodItems[i] = new FoodItem(fp[i][0], fp[i][1], 'food');
+			//console.log(foodItems[i]);
+			//console.log('food ' + i)
+		}
+	});
 }
 
 function miniMapUpdate(){
     boolUpdate = true;
 }
 
-//Extraído de https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript por "Faiz Mohamed Haneef"
 function generateRandomInteger(min, max) {
     return Math.floor(min + Math.random()*(max + 1 - min))
 }
