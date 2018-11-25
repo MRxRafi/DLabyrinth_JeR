@@ -4,6 +4,7 @@ DLabyrinth.levelState = function (game) {
 var players;
 var currentPlayer;
 var orbes;
+var cargado;
 var weaponItems;
 var ammoItems;
 var lifeItems;
@@ -57,10 +58,10 @@ DLabyrinth.levelState.prototype = {
         players.push(new Jugador(500, 300, 'spriteSheet2', 2));
 
         //Variables que subiremos al servidor y leerá el otro usuario
-        DLabyrinth.player.positionX = players[DLabyrinth.player.id-1].sprite.x;
-        DLabyrinth.player.positionY = players[DLabyrinth.player.id-1].sprite.y;
-
-        //console.log(JSON.stringify(DLabyrinth.player))
+        DLabyrinth.player.positionX = players[DLabyrinth.player.id-1].sprite.x,
+        DLabyrinth.player.positionY = players[DLabyrinth.player.id-1].sprite.y,
+        DLabyrinth.player.velX = players[DLabyrinth.player.id-1].sprite.body.velocity.x,
+        DLabyrinth.player.velY = players[DLabyrinth.player.id-1].sprite.body.velocity.y
         
         updatePlayer(DLabyrinth.player);
         
@@ -71,7 +72,6 @@ DLabyrinth.levelState.prototype = {
         damage_spr = game.add.sprite(0, 0, 'damage');
         damage_spr.scale.setTo(0.1);
         damage_spr.anchor.setTo(0, 0.5);
-        //damage_spr.fixedToCamera = true;
         damage_spr.visible = false;
 
         /////////////////////////// INTERFAZ ///////////////////////////
@@ -79,27 +79,42 @@ DLabyrinth.levelState.prototype = {
         interfaz.createInterface();
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 
-        itemsGroup = game.add.group();
-        generateItems();
-
         //Se busca a nuestro jugador en el array
         for (var i = 0; i < players.length; i++){
-            if(players[i].id == DLabyrinth.player.id){
+            if(players[i].id === DLabyrinth.player.id){
                 currentPlayer = players[i];
             }
         }
+        
+        //El cliente correspondiente al jugador 0 genera los items cuya info se manda al servidor
+        itemsGroup = game.add.group();
+        cargado = false;
+        if(currentPlayer.id === 1){
+        	generateItems();
+        }
+        
+        //El resto de jugadores reciben la info de los items de forma que es igual para todos
+        else{
+        	loadItems();
+        }
+        
         //La cámara sigue al jugador
         game.camera.follow(currentPlayer.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     },
 
     update: function () {
+    	if(currentPlayer.id != 1 && weaponItems[0] === undefined && !cargado){
+    		loadItems();
+        }
+
         //Actualizamos eventos de teclado y animaciones de los personajes
         for (var i = 0; i < players.length; i++) {
             players[i].updateInputs();
             players[i].updateAnimations();
             players[i].checkLifePoints();
         }
+        loadOtherBullets(currentPlayer.id);
         
         map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
@@ -109,7 +124,7 @@ DLabyrinth.levelState.prototype = {
         /////////////////////////// INTERFAZ ///////////////////////////
         interfaz.updateInterface(currentPlayer, orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
-
+        
 
     },
 

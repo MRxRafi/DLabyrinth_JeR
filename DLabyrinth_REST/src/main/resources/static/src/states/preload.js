@@ -1,19 +1,19 @@
 DLabyrinth.preloadState = function(game){
 
 }
-//Activamos las fuentes de google para poder utilizarlas
-WebFontConfig = {
-    
-    google: {
-      families: ['Press Start 2P']
-    }
 
-};
+WebFontConfig = {
+	    
+	    google: {
+	      families: ['Press Start 2P']
+	    }
+
+	};
 
 DLabyrinth.preloadState.prototype = {
     preload: function() {
     	//LOADING TEXT
-        game.add.text(game.world.centerX - 140, 220, "Loading", { font: "40px Press Start 2P", fill: "#FFFFFF", align: "left" });
+    	game.add.text(game.world.centerX - 140, 220, "Loading", { font: "40px Press Start 2P", fill: "#FFFFFF", align: "left" });
 
         //PROGRESS BAR
         var preloadBar = game.add.sprite(100, 400, 'bar');
@@ -57,13 +57,11 @@ DLabyrinth.preloadState.prototype = {
         //Munición
         game.load.image('pistol_ammo', 'assets/props/ammo/pistol_ammo.png');
         game.load.image('ak47_ammo', 'assets/props/ammo/ak_ammo.png');
-        
-        
     },
 
     create: function() {
     	//Creamos algunas variables globales para comunicarnos con el servidor
-    	DLabyrinth.player = { id:undefined, posicionX:undefined, posicionY:undefined };
+    	DLabyrinth.player = { id:undefined, positionX:undefined, positionY:undefined, velX:undefined, velY:undefined };
     	DLabyrinth.map;
     	//Pasamos al siguiente estado
        game.state.start('menuState');

@@ -1,17 +1,14 @@
 DLabyrinth.endingState = function(game){
 
 }
-//Variable para la tecla a pulsar para pasar de estado
 var spaceKey;
-
 DLabyrinth.endingState.prototype = {
     preload: function(){
 
     },
 
     create : function(){
-		
-        //Añadimos fondo
+    	//Añadimos fondo
 		game.add.tileSprite(0, 0, 800, 600, 'background');
 		//Texto con estilo
 		var text = game.add.text(game.world.centerX, game.world.centerY, "Gracias por jugar \n \n Pulse 'Space' \n \n para volver al menú");

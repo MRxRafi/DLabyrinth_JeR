@@ -29,7 +29,7 @@ function createPlayer(callback, player) {
             "Content-Type": "application/json"
         }
     }).done(function (player) {
-        console.log("Player created: " + JSON.stringify(player));
+        //console.log("Player created: " + JSON.stringify(player));
         callback(player);
     })
 }
@@ -44,7 +44,7 @@ function numberPlayers(callback){
             "Content-Type": "application/json"
         }
     }).done(function (numPlayers) {
-        console.log("Info Received" + JSON.stringify(numPlayers));
+        //console.log("Info Received" + JSON.stringify(numPlayers));
         callback(numPlayers);
     })
 }
@@ -59,7 +59,7 @@ function getPlayer(callback, id){
             "Content-Type": "application/json"
         }
     }).done(function (player) {
-        console.log("Info Received" + JSON.stringify(player));
+        //console.log("Info Received" + JSON.stringify(player));
         callback(player);
     })
 }
@@ -74,7 +74,7 @@ function updatePlayer(player) {
             "Content-Type": "application/json"
         }
     }).done(function (player) {
-        console.log("Updated item: " + JSON.stringify(player))
+        //console.log("Updated item: " + JSON.stringify(player))
     })
 }
 
@@ -83,7 +83,40 @@ function deletePlayer(playerId) {
         method: 'DELETE',
         url: 'http://192.168.1.72:8080/players/' + playerId
     }).done(function (player) {
-        console.log("Deleted player " + playerId)
+        //console.log("Deleted player " + playerId)
+    })
+}
+
+/*
+ * ADMINISTRACIÓN PETICIONES BALA
+ */
+function createBala(bala) {
+    $.ajax({
+        method: "POST",
+        url: 'http://192.168.1.72:8080/balas',
+        data: JSON.stringify(bala),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function (bala) {
+        console.log("Bala created: " + JSON.stringify(bala));
+        //callback(bala);
+    })
+}
+
+function getBalas(callback, id){
+    $.ajax({
+        method: "GET",
+        url: 'http://192.168.1.72:8080/balas/' + id,
+        //data: JSON.stringify(jug),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function (balas) {
+        //console.log("Info Received" + JSON.stringify(balas));
+        callback(balas);
     })
 }
 
@@ -112,15 +145,19 @@ function getMapHandler(callback){
             "Content-Type": "application/json"
         }
     }).done(function (map) {
-        console.log("Info Received" + JSON.stringify(map));
+        //console.log("Info Received" + JSON.stringify(map));
         callback(map);
     })
 }
 
+/*
+* ADMINISTRACION PETICIONES ITEMS
+*/
+
 function setWeaponItemType(weaponTypes){
 	$.ajax({
 		method: 'POST',
-		url: 'http://192.168.1.40:8080/items/weaponType',
+		url: 'http://192.168.1.72:8080/items/weaponType',
 		data: JSON.stringify(weaponTypes),
 		processdata: false,
 		
@@ -133,7 +170,7 @@ function setWeaponItemType(weaponTypes){
 function getWeaponItemType(callback){
 	$.ajax({
 		method: "GET",
-        url: 'http://192.168.1.40:8080/items/weaponType',
+        url: 'http://192.168.1.72:8080/items/weaponType',
         //data: JSON.stringify(user),
         processData: false,
         headers: {
@@ -147,7 +184,7 @@ function getWeaponItemType(callback){
 function setWeaponItemPos(weaponPos){
 	$.ajax({
 		method: 'POST',
-		url: 'http://192.168.1.40:8080/items/weaponPos',
+		url: 'http://192.168.1.72:8080/items/weaponPos',
 		data: JSON.stringify(weaponPos),
 		processdata: false,
 		headers: {
@@ -159,7 +196,7 @@ function setWeaponItemPos(weaponPos){
 function getWeaponItemPos(callback){
 	$.ajax({
 		method: "GET",
-        url: 'http://192.168.1.40:8080/items/weaponPos',
+        url: 'http://192.168.1.72:8080/items/weaponPos',
         //data: JSON.stringify(user),
         processData: false,
         headers: {
@@ -173,7 +210,7 @@ function getWeaponItemPos(callback){
 function setAmmoItemType(ammoType){
 	$.ajax({
 		method: 'POST',
-		url: 'http://192.168.1.40:8080/items/ammoType',
+		url: 'http://192.168.1.72:8080/items/ammoType',
 		data: JSON.stringify(ammoType),
 		processdata: false,
 		headers: {
@@ -184,7 +221,7 @@ function setAmmoItemType(ammoType){
 function getAmmoItemType(callback){
 	$.ajax({
 		method: "GET",
-        url: 'http://192.168.1.40:8080/items/ammoType',
+        url: 'http://192.168.1.72:8080/items/ammoType',
         //data: JSON.stringify(user),
         processData: false,
         headers: {
@@ -198,7 +235,7 @@ function getAmmoItemType(callback){
 function setAmmoItemPos(ammoPos){
 	$.ajax({
 		method: 'POST',
-		url: 'http://192.168.1.40:8080/items/ammoPos',
+		url: 'http://192.168.1.72:8080/items/ammoPos',
 		data: JSON.stringify(ammoPos),
 		processdata: false,
 		headers: {
@@ -209,7 +246,7 @@ function setAmmoItemPos(ammoPos){
 function getAmmoItemPos(callback){
 	$.ajax({
 		method: "GET",
-        url: 'http://192.168.1.40:8080/items/ammoPos',
+        url: 'http://192.168.1.72:8080/items/ammoPos',
         //data: JSON.stringify(user),
         processData: false,
         headers: {
@@ -223,7 +260,7 @@ function getAmmoItemPos(callback){
 function setShieldItemPos(shieldPos){
 	$.ajax({
 		method: 'POST',
-		url: 'http://192.168.1.40:8080/items/shieldPos',
+		url: 'http://192.168.1.72:8080/items/shieldPos',
 		data: JSON.stringify(shieldPos),
 		processdata: false,
 		headers: {
@@ -234,7 +271,7 @@ function setShieldItemPos(shieldPos){
 function getShieldItemPos(callback){
 	$.ajax({
 		method: "GET",
-        url: 'http://192.168.1.40:8080/items/shieldPos',
+        url: 'http://192.168.1.72:8080/items/shieldPos',
         //data: JSON.stringify(user),
         processData: false,
         headers: {
@@ -247,7 +284,7 @@ function getShieldItemPos(callback){
 function setFoodItemPos(foodPos){
 	$.ajax({
 		method: 'POST',
-		url: 'http://192.168.1.40:8080/items/foodPos',
+		url: 'http://192.168.1.72:8080/items/foodPos',
 		data: JSON.stringify(foodPos),
 		processdata: false,
 		headers: {
@@ -258,7 +295,7 @@ function setFoodItemPos(foodPos){
 function getFoodItemPos(callback){
 	$.ajax({
 		method: "GET",
-        url: 'http://192.168.1.40:8080/items/foodPos',
+        url: 'http://192.168.1.72:8080/items/foodPos',
         //data: JSON.stringify(user),
         processData: false,
         headers: {
@@ -268,4 +305,3 @@ function getFoodItemPos(callback){
 		callback(items);
 	})
 }
-
