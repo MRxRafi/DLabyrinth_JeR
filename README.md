@@ -69,7 +69,7 @@ DIAGRAMAS DE LAS INTERFACES:
 ~~~
 El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (online), Opciones, Créditos y Salir. Dentro del juego se podrá expandir un menú (tecla escape) con la opción de salir de la batalla.  
 
-![Error al Cargar](/DLabyrinth/antiguo_assets/Untitled_Diagram.png)  
+![Error al Cargar](/DLabyrinth/antiguo_assets/Untitled_Diagram2.png)  
 ![Error al Cargar](/DLabyrinth/antiguo_assets/menu_principal(2).png)  
 ![Error al Cargar](/DLabyrinth/antiguo_assets/opciones.png)  
 ![Error al Cargar](/DLabyrinth/antiguo_assets/menu_pausa.png)  
