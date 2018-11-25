@@ -10,9 +10,12 @@ DLabyrinth.matchingState.prototype = {
     },
 
     create: function() {
+        
+        game.add.tileSprite(0, 0, 800, 600, 'background');
+        
         text = "Esperando jugadores..\nJugadores en lobby: "
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "center" };
-        spr_text = game.add.text(game.world.centerX-100, 50, text, style);
+        style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "center" };
+        spr_text = game.add.text(game.world.centerX-150, 50, text, style);
         
         
         if (DLabyrinth.player != undefined) {
@@ -27,8 +30,8 @@ DLabyrinth.matchingState.prototype = {
         numberPlayers(function(numero_usuarios){
         	text = numero_usuarios;
         });
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "center" };
-        n_jugadores = game.add.text(game.world.centerX+80, 78, text, style);
+        style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "center" };
+        n_jugadores = game.add.text(game.world.centerX+30, 78, text, style);
         
         numberPlayers(function(numero_usuarios){
         	if(numero_usuarios === 2){ game.state.start('levelState'); }
