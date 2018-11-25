@@ -2,6 +2,14 @@ DLabyrinth.preloadState = function(game){
 
 }
 
+WebFontConfig = {
+    
+    google: {
+      families: ['Press Start 2P']
+    }
+
+};
+
 DLabyrinth.preloadState.prototype = {
     preload: function() {
     	//LOADING TEXT
