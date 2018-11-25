@@ -13,7 +13,7 @@ WebFontConfig = {
 DLabyrinth.preloadState.prototype = {
     preload: function() {
     	//LOADING TEXT
-        game.add.text(game.world.centerX - 60, 200, "loading", { font: "50px Times New Roman", fill: "#FFFFFF", align: "left" });
+        game.add.text(game.world.centerX - 140, 220, "Loading", { font: "40px Press Start 2P", fill: "#FFFFFF", align: "left" });
 
         //PROGRESS BAR
         var preloadBar = game.add.sprite(100, 400, 'bar');
@@ -57,8 +57,8 @@ DLabyrinth.preloadState.prototype = {
         //Munición
         game.load.image('pistol_ammo', 'assets/props/ammo/pistol_ammo.png');
         game.load.image('ak47_ammo', 'assets/props/ammo/ak_ammo.png');
-        //Webfont, fuente nueva
-        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+        
+        
     },
 
     create: function() {
