@@ -1,7 +1,7 @@
 DLabyrinth.preloadState = function(game){
 
 }
-
+//Activamos las fuentes de google para poder utilizarlas
 WebFontConfig = {
     
     google: {
@@ -57,6 +57,8 @@ DLabyrinth.preloadState.prototype = {
         //Munición
         game.load.image('pistol_ammo', 'assets/props/ammo/pistol_ammo.png');
         game.load.image('ak47_ammo', 'assets/props/ammo/ak_ammo.png');
+        //Webfont, fuente nueva
+        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
     },
 
     create: function() {
