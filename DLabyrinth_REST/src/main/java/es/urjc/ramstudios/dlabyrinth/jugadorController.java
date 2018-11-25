@@ -2,7 +2,6 @@ package es.urjc.ramstudios.dlabyrinth;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/players")
 public class jugadorController {
 	Map<Long, Jugador> players = new ConcurrentHashMap<>(); 
-	AtomicLong nextId = new AtomicLong(0);
 	
 	@GetMapping
 	public int numberPlayers() {
@@ -30,9 +28,7 @@ public class jugadorController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public long nuevoJugador(@RequestBody Jugador player) {
-		long id = nextId.incrementAndGet();
-		player.setId(id);
-		players.put(id, player);
+		players.put(player.getId(), player);
 
 		return player.getId();
 	}
@@ -55,7 +51,10 @@ public class jugadorController {
 		Jugador savedPlayer = players.get(playerUpdated.getId());
 
 		if (savedPlayer != null) {
-
+			/*
+			savedPlayer.setVelX(playerUpdated.getVelX());
+			savedPlayer.setVelY(playerUpdated.getVelY());
+			*/
 			players.put(id, playerUpdated);
 
 			return new ResponseEntity<>(playerUpdated, HttpStatus.OK);
@@ -71,7 +70,7 @@ public class jugadorController {
 
 		if (savedPlayer != null) {
 			players.remove(savedPlayer.getId());
-			nextId.set(nextId.get() - 1);
+
 			return new ResponseEntity<>(savedPlayer, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
