@@ -80,16 +80,24 @@ ESTADOS DEL JUEGO
 ~~~
 
 1. **Boot:** Inicia físicas principales del juego  
-2. **Preload:** Carga assets del juego  
+2. **Preload:** Carga assets del juego
+![Error al Cargar](/DLabyrinth/antiguo_assets/Loading_state.png)  
 3. **Menu:** Estado intermedio en el que hay 4 botones:  
-  -*Empezar partida* te manda a matchingState.  
+  -*Jugar* te manda a matchingState.  
   -*Opciones* te manda a optionState.  
-  -*Créditos* te manda a creditState.  
+  -*Stats* te manda a statsState.  
   -*Salir* te manda a endingState.  
+  ![Error al Cargar](/DLabyrinth/antiguo_assets/Pantalla_Menu.png)  
 4. **Opciones:** puedes mirar los controles del juego y algunas opciones de sonido. Se puede volver al menuState pulsando sobre "Volver al menú principal".  
-5. **Créditos:** aparecen los principales diseñadores y desarrolladores del juego. Pulsando 'M' se puede volver al menú Principal.  
-6. **Empezar partida:** en matchingState se espera a que el emparejador encuentre los jugadores. Después, si ha sido satisfactorio, te manda al levelState.  
-7. **Salir:** agradecimientos por jugar, y se cierra la aplicación.  
+![Error al Cargar](/DLabyrinth/antiguo_assets/Pantalla_Opciones.png)  
+5. **Stats:** aparecen puntuaciones de la partida anterior (todavía por decidir) 
+6. **Jugar:** en matchingState se espera a que el emparejador encuentre los jugadores. Después, si ha sido satisfactorio, te manda al levelState.  
+7. **Matching** busca jugadores, cuando encuentra los necesarios comienza el levelState.
+![Error al Cargar](/DLabyrinth/antiguo_assets/Pantalla_Matchmaking.png)  
+8. **Partida** partida jugable.
+![Error al Cargar](/DLabyrinth/antiguo_assets/Pantalla_Partida.png)  
+9. **Salir:** agradecimientos por jugar, y se cierra la aplicación.  
+![Error al Cargar](/DLabyrinth/antiguo_assets/Pantalla_ending.png)  
 
 ~~~
 NIVELES:
