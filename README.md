@@ -76,6 +76,12 @@ El juego dispondrá de un menú inicial con las siguientes opciones: Batalla (on
 ![Error al Cargar](/DLabyrinth/antiguo_assets/final_ronda.png)  
 
 ~~~
+DIAGRAMA DE CLASES DE API REST
+~~~
+Esta es la relación de las clases de nuestro API REST.
+
+![Error al Cargar](/DLabyrinth/antiguo_assets/diagrama_clases.png)
+~~~
 ESTADOS DEL JUEGO  
 ~~~
 
