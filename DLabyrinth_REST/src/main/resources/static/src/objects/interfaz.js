@@ -403,25 +403,21 @@ function Interface() {
         }
         // ////////// FIN DAÑO ///////////////
 
-        // ///////////// TEMPORIZADOR ///////////////
-        //Ahora no necesitamos ningún temporizador en los clientes
-        var time;
+        /////////////// TEMPORIZADOR ///////////////
         temporizador.destroy();
-        getMapHandler(function(timeHandler){
-        	DLabyrinth.map = timeHandler;
-        });
-        if (DLabyrinth.map != undefined) {
-            time = DLabyrinth.map.timeLeftOnline;
+        if (temp === undefined) { temp = new timeController(); }
+        if (temp != undefined) {
+            time = temp.getTime();
             text = time[0] + ":" + time[1];
         } else { text = "0:00" }
-        
-        // text = time;
+
+        //text = time;
         style = { font: "25px Times New Roman", fill: "#FFFFFF", align: "left" };
         temporizador = game.add.text(0, 0, text, style);
         temporizador.fixedToCamera = true;
         temporizador.cameraOffset.setTo(400, 60);
         iGroup.add(temporizador);
-        // ///////////// FIN TEMPORIZADOR ///////////////
+        /////////////// FIN TEMPORIZADOR ///////////////
 
         game.world.bringToTop(iGroup);
     }
