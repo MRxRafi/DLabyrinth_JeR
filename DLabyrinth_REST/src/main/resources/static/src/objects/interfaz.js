@@ -74,7 +74,7 @@ function Interface() {
 
         // ///////////// MUNICION ///////////////
         text = "Municion:  ";
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "left" };
         municion = game.add.text(game.world.centerX - 60, 0, text, style);
         municion.fixedToCamera = true;
         municion.cameraOffset.setTo(625, 350);
@@ -83,7 +83,7 @@ function Interface() {
 
         // ///////////// COMIDA ///////////////
         text = "Comida:  ";
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "left" };
         comida = game.add.text(game.world.centerX - 60, 0, text, style);
         comida.fixedToCamera = true;
         comida.cameraOffset.setTo(625, 300);
@@ -92,7 +92,7 @@ function Interface() {
 
         // ///////////// PUNTUACIÓN ///////////////
         text = "Puntuacion:  ";
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "left" };
         puntuacion = game.add.text(game.world.centerX - 60, 0, text, style);
         puntuacion.fixedToCamera = true;
         puntuacion.cameraOffset.setTo(625, 25);
@@ -416,7 +416,7 @@ function Interface() {
         } else { text = "0:00" }
         
         // text = time;
-        style = { font: "25px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "25px Press Start 2P", fill: "#FFFFFF", align: "left" };
         temporizador = game.add.text(0, 0, text, style);
         temporizador.fixedToCamera = true;
         temporizador.cameraOffset.setTo(400, 60);
