@@ -80,7 +80,7 @@ DIAGRAMA DE CLASES DE API REST
 ~~~
 Esta es la relación de las clases de nuestro API REST.
 
-![Error al Cargar](/DLabyrinth/antiguo_assets/diagrama_clases.png)
+![Error al Cargar](/DLabyrinth/antiguo_assets/diagrama_clases1.png)
 ~~~
 ESTADOS DEL JUEGO  
 ~~~
