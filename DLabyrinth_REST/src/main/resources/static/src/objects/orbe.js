@@ -1,3 +1,4 @@
+//Funcion de creacion del orbe. Necesitamos el spritesheet para el movimiento y el jugador al que pertenece (pl)
 function Orbe(sprsheet, pl){
     //Separación del orbe
     this.offsetX = 20;
@@ -16,13 +17,14 @@ function Orbe(sprsheet, pl){
         this.weapons[i].weapon.bulletSpeed = 700;
         this.weapons[i].empty = true;
     }
-
+    //Funcion para intercambiar armas
     this.switch = function(){
         var a = this.weapons[0];
         this.weapons[0] = this.weapons[1];
         this.weapons[1] = a;
-        //this.weapons[0].weapon.onFire.add(function(){this.weapons[0].ammo -= 1;}, this);
+       
     }
+    //Funcion para asignar el arma al orbe.
     this.setWeapon = function(w){
         var i = 0;
         if(!this.weapons[0].empty && this.weapons[1].empty){
@@ -42,6 +44,7 @@ function Orbe(sprsheet, pl){
         this.weapons[i].empty = false;
         this.weapons[i].weapon.onFire.add(function(){this.weapons[0].ammo -= 1;}, this);
     }
+    //Funcion para poner municion al arma
     this.setAmmo = function(a){
         for(var i = 0; i <=1; i++){
             if(this.weapons[i].type == a.type){
