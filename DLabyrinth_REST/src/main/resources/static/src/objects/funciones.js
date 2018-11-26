@@ -1,4 +1,4 @@
-
+//Funcion de cambio de arma. Utiliza el ID del jugador y la tecla para activarlo.
 function changeWeaponFunc(key ,id_player){
     if(players[id_player].hasOrb){
         orbes[id_player].switch();
@@ -13,6 +13,7 @@ function punchFunc1(){
     players[currentPlayer.id-1].punch();
 }
 
+//Funcion para dibujar la direccion del daño. El dato entrante, b , es el sprite de la bala que colisiona con el jugador.
 function drawDamageDirection(b){
     //Cálculo de la dirección de la bala y su rotación
     var y = (b.y - (players[currentPlayer.id-1].sprite.y + players[currentPlayer.id-1].sprite.height/2));
@@ -38,6 +39,8 @@ function drawDamageDirection(b){
     setTimeout(deleteSpr,1000);
 }
 
+
+//Funcion para generar todos los items de manera aleatoria en el mapa. Si su sprite cae en un zona inaccesible se borra.
 function generateItems(){
   
     /////////////////////////////////////////ARMAS/////////////////////////////////
@@ -104,7 +107,7 @@ function generateItems(){
     }
     
     //Por último, mandamos la info de los items al servidor
-    
+    //Para weapon y ammo se manda u array para el tipo y otro para las posiciones. Para el resto de los items solo se mandan las posiciones
     var a = new Array();
     var b = new Array();
     for (var i = 0; i < 8; i++){
