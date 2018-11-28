@@ -167,9 +167,10 @@ function Jugador(x, y, sprsheet, id_player) {
                 	if(!disparado){
                 		var bala = {
                     			idJug: this.id,
-                    			directionX: game.input.mousePointer.position.x,
-                    			directionY: game.input.mousePointer.position.y
+                    			directionX: game.input.mousePointer.position.x + game.camera.x,
+                    			directionY: game.input.mousePointer.position.y + game.camera.y
                     	}
+                		//console.log(bala.directionX + " / " + bala.directionY);
                     	//Ajax Put
                 		createBala(bala);
                 		disparado = true;
@@ -247,6 +248,7 @@ function Jugador(x, y, sprsheet, id_player) {
             if(toRemove === 0){
                 //Eliminamos al jugador 0 del grupo de jugadores
                 //playerGroup.remove(toRemove);
+            	deletePlayer(toRemove+1);
                 game.state.start('endingState');
             }else{
             	/*
@@ -259,6 +261,7 @@ function Jugador(x, y, sprsheet, id_player) {
                 this.sprite.destroy();
                 players.splice(toRemove,1);
                */
+            	deletePlayer(toRemove+1);
                 game.state.start('endingState');
             }
         }

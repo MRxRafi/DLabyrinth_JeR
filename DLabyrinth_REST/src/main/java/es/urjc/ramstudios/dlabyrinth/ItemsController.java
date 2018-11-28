@@ -42,6 +42,7 @@ public class ItemsController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void setWeaponPos(@RequestBody int[][] pos) {
 		items.setWeaponPos(pos);
+		//system.out.println()
 	}
 	
 	@GetMapping("/ammoType")
