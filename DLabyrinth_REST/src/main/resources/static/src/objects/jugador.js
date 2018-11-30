@@ -7,7 +7,8 @@
 var otherPlayer;
 function Jugador(x, y, sprsheet, id_player) {
     this.id = id_player;
-
+    var disparado = false;
+    
     //Sprite del personaje y asignación de las animaciones a variables
     this.sprite = game.add.sprite(x, y, sprsheet);
     playerGroup.add(this.sprite);
@@ -60,6 +61,9 @@ function Jugador(x, y, sprsheet, id_player) {
     this.collisionArea.alpha = 0;
     game.physics.enable(this.collisionArea, Phaser.Physics.ARCADE);
 
+  //SI ES EL JUGADOR 1, COMENZAMOS EL TIMER DEL SERVIDOR (MapController)
+    if(this.id === 1 && DLabyrinth.player.id === 1) { startTimer(); }
+    
     this.punch = function () {
         switch (this.facing) {
             case 0:
@@ -105,20 +109,20 @@ function Jugador(x, y, sprsheet, id_player) {
         Esta función se encarga de asignar las teclas al usuario (movimiento, acción, etc)
     */
     this.createInputs = function () {
-       
+    	if (this.id === DLabyrinth.player.id) {
             //Asignamos teclas a variables
             this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
             this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
             this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
             this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
             this.qKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
-            this.qKey.onDown.add(changeWeaponFunc, this, 0, 0);
+            this.qKey.onDown.add(changeWeaponFunc, this, 0, this.id-1);
             this.zKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
             this.zKey.onDown.add(consumeFood, this);
             this.xKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
             this.xKey.onDown.add(punchFunc1);
             this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-       
+    	}
     }
 
     /*
@@ -127,7 +131,7 @@ function Jugador(x, y, sprsheet, id_player) {
     */
     this.updateInputs = function () {
         keydownMove = false;
-        if(this.id == DLabyrinth.player.id){
+        if (this.id === DLabyrinth.player.id){
             if (this.aKey.isDown) {
                 this.sprite.body.velocity.x = -230;
                 keydownMove = true;
@@ -154,10 +158,29 @@ function Jugador(x, y, sprsheet, id_player) {
                 keydownMove = true;
             }
             if (this.spaceKey.isDown) {
-                if (this.hasOrb) {
-                    if (orbes[currentPlayer.id - 1].weapons[0].ammo > 0) {
-                        orbes[currentPlayer.id - 1].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
-                    }
+            	if (orbes[this.id-1].weapons[0].ammo > 0) {
+                	//Al disparar debemos enviar al servidor que hemos disparado
+                	/* INFORMACIÓN A ENVIAR
+                	 * 1. ID del jugador que disparó
+                	 * 2. Dirección del disparo
+                	 */
+                	if(!disparado){
+                		var bala = {
+                    			idJug: this.id,
+                    			directionX: game.input.mousePointer.position.x + game.camera.x,
+                    			directionY: game.input.mousePointer.position.y + game.camera.y
+                    	}
+                		//console.log(bala.directionX + " / " + bala.directionY);
+                    	//Ajax Put
+                		createBala(bala);
+                		disparado = true;
+                		setTimeout(function(){ disparado = false; },orbes[this.id-1].weapons[0].weapon.fireRate);
+                	}
+
+                	
+                	
+                	//Disparamos en el juego
+                    orbes[this.id-1].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
                 }
             }
 
@@ -180,11 +203,13 @@ function Jugador(x, y, sprsheet, id_player) {
         var otherId;
         if(this.id === 1 && DLabyrinth.player.id === 1) { otherId = 2; }
         if(this.id === 2 && DLabyrinth.player.id === 2) { otherId = 1; }
-        getPlayer(function(player){
-        	otherPlayer = player;
-        }, otherId);
+        if((this.id === 1 && DLabyrinth.player.id === 1)||(this.id === 2 && DLabyrinth.player.id === 2)){
+        	getPlayer(function(player){
+            	otherPlayer = player;
+            }, otherId);
+        }
         
-        if(otherPlayer != undefined){
+        if(otherPlayer != undefined && players[otherPlayer.id - 1] != undefined){
         	
         	players[otherPlayer.id - 1].sprite.x = otherPlayer.positionX;
         	players[otherPlayer.id - 1].sprite.y = otherPlayer.positionY;
@@ -215,16 +240,26 @@ function Jugador(x, y, sprsheet, id_player) {
             orbes[this.id - 1].sprite.body.velocity.x = (this.sprite.x - orbes[this.id - 1].sprite.x - 30) * 5;
             orbes[this.id - 1].sprite.body.velocity.y = (this.sprite.y - orbes[this.id - 1].sprite.y - 30) * 5;
         }
+        //Puños
+        if(this.id != currentPlayer.id){
+	        hasPunchedPlayer(function(punched, id){
+	        	if(punched){
+	        		players[id-1].punch();
+	        	}
+	        }, this.id);
+        }
     }
 
     this.checkLifePoints = function(){
         if(this.lifePoints <= 0){
-            var toRemove = playerGroup.getIndex(this.sprite);
-            if(toRemove === 0){
+            //var toRemove = playerGroup.getIndex(this.sprite);
+            if(this.id === 1){
                 //Eliminamos al jugador 0 del grupo de jugadores
-                playerGroup.remove(toRemove);
+                //playerGroup.remove(toRemove);
+            	deletePlayer(this.id);
                 game.state.start('endingState');
             }else{
+            	/*
                 if(this.hasOrb){
                     orbes[toRemove].sprite.destroy();
                     orbes.splice(toRemove, 1);
@@ -233,8 +268,9 @@ function Jugador(x, y, sprsheet, id_player) {
                 playerGroup.remove(toRemove);
                 this.sprite.destroy();
                 players.splice(toRemove,1);
-               
-                //game.state.start('endingState');
+               */
+            	deletePlayer(this.id);
+                game.state.start('endingState');
             }
         }
     }

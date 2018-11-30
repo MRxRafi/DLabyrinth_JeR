@@ -34,6 +34,7 @@ DLabyrinth.menuState.prototype = {
   
         image1.events.onInputDown.add(this.avanzar1, this);
         image2.events.onInputDown.add(this.avanzar2, this);
+        image4.events.onInputDown.add(this.avanzar3, this);
 
     
     },
@@ -54,6 +55,12 @@ DLabyrinth.menuState.prototype = {
         this.game.state.start('optionState');
       
     },
+  //Al pulsar exit vamos al ending state, para que se vea en caso de fallo	
+    avanzar3: function() {
+
+        this.game.state.start('endingState');
+      
+},
 	  
 
 }

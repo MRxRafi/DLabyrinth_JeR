@@ -12,16 +12,17 @@ public class TimeManager {
 		@Override
 		public void run() {
 			remaining--;
-			System.out.println(remaining);
+			//System.out.println(remaining);
 			if (remaining == 0) {
 				//Cerramos sala
 				map.setClosedRoom(map.getNextRoom(), true);
 				map.nextRoom();
+				/*
 				String debug = "";
 				for(int i = 0; i < 10; i++) {
 					debug += "hab: " + map.getClosedRoom(i) + " ";
 				}
-				System.out.println(debug);
+				System.out.println(debug);*/
 				// Reiniciamos remaining si quedan habitaciones que cerrar;
 				if(!map.getClosedRoom(9)) {
 					remaining = generateRandomInteger(30, 70);

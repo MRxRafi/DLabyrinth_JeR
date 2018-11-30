@@ -1,3 +1,6 @@
+//se crean todos los items que se pueden recoger. Se les informa de su posicion, sprite, daño, municion, etc, dependiendo
+//del tipo de item que sean.
+
 function WeaponItem(x, y, spr, d, fr, b, type) {
     this.sprite = game.add.sprite(x, y, spr);
     this.damage = d;

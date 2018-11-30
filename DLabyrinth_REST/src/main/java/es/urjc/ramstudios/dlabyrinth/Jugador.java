@@ -6,7 +6,14 @@ public class Jugador {
 	private float positionY;
 	private float velX;
 	private float velY;
+	private boolean punch;
 	
+	public boolean isPunch() {
+		return punch;
+	}
+	public void setPunch(boolean punch) {
+		this.punch = punch;
+	}
 	public float getVelX() {
 		return velX;
 	}

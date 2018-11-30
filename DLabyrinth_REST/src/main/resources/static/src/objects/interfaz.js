@@ -74,7 +74,7 @@ function Interface() {
 
         // ///////////// MUNICION ///////////////
         text = "Municion:  ";
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "12px Press Start 2P", fill: "#FFFFFF", align: "left" };
         municion = game.add.text(game.world.centerX - 60, 0, text, style);
         municion.fixedToCamera = true;
         municion.cameraOffset.setTo(625, 350);
@@ -83,7 +83,7 @@ function Interface() {
 
         // ///////////// COMIDA ///////////////
         text = "Comida:  ";
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "12px Press Start 2P", fill: "#FFFFFF", align: "left" };
         comida = game.add.text(game.world.centerX - 60, 0, text, style);
         comida.fixedToCamera = true;
         comida.cameraOffset.setTo(625, 300);
@@ -92,7 +92,7 @@ function Interface() {
 
         // ///////////// PUNTUACIÓN ///////////////
         text = "Puntuacion:  ";
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "12px Press Start 2P", fill: "#FFFFFF", align: "left" };
         puntuacion = game.add.text(game.world.centerX - 60, 0, text, style);
         puntuacion.fixedToCamera = true;
         puntuacion.cameraOffset.setTo(625, 25);
@@ -129,7 +129,7 @@ function Interface() {
 
         // ///////////// TEMPORIZADOR ///////////////
         text = "0:00";
-        style = { font: "25px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "15px Press Start 2P", fill: "#FFFFFF", align: "left" };
         temporizador = game.add.text(game.world.centerX, 60, text, style);
         temporizador.fixedToCamera = true;
         temporizador.cameraOffset.setTo(400, 60);
@@ -179,26 +179,26 @@ function Interface() {
         }
         // ///////////// FIN ESCUDO ///////////////
 
-        // ///////////// ARMAS ///////////////
+     // ///////////// ARMAS ///////////////
         // Si existe el orbe del personaje miramos si tiene armas
-        if (orbe[0] != null) { // Si las tiene mostramos sprite
-            if (!orbe[0].weapons[0].empty) {
-                if (orbe[0].weapons[0].type === 'pistola') { weapons[0].visible = true; } else { weapons[0].visible = false; }
-                if (orbe[0].weapons[0].type === 'metralleta') { weapons[2].visible = true; } else { weapons[2].visible = false; }
+        if (orbe[player.id-1] != null && (player.id === DLabyrinth.player.id)) { // Si las tiene mostramos sprite
+            if (!orbe[player.id-1].weapons[0].empty) {
+                if (orbe[player.id-1].weapons[0].type === 'pistola') { weapons[0].visible = true; } else { weapons[0].visible = false; }
+                if (orbe[player.id-1].weapons[0].type === 'metralleta') { weapons[2].visible = true; } else { weapons[2].visible = false; }
             } else { weapons[0].visible = false; weapons[2].visible = false; }
-            if (!orbe[0].weapons[1].empty) {
-                if (orbe[0].weapons[1].type === 'pistola') { weapons[1].visible = true; } else { weapons[1].visible = false; }
-                if (orbe[0].weapons[1].type === 'metralleta') { weapons[3].visible = true; } else { weapons[3].visible = false; }
+            if (!orbe[player.id-1].weapons[1].empty) {
+                if (orbe[player.id-1].weapons[1].type === 'pistola') { weapons[1].visible = true; } else { weapons[1].visible = false; }
+                if (orbe[player.id-1].weapons[1].type === 'metralleta') { weapons[3].visible = true; } else { weapons[3].visible = false; }
             } else { weapons[1].visible = false; weapons[3].visible = false; }
         }
         // ///////////// FIN ARMAS ///////////////
 
         // ///////////// MUNICION ///////////////
-        if (orbe[0] != null) {
+        if (orbe[player.id-1] != null && (player.id === DLabyrinth.player.id)) {
             municion.destroy();
 
-            text = "Municion:  " + orbe[0].weapons[0].ammo;
-            style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+            text = "Municion:  " + orbe[player.id-1].weapons[0].ammo;
+            style = { font: "12px Press Start 2P", fill: "#FFFFFF", align: "left" };
             municion = game.add.text(game.world.centerX - 60, 0, text, style);
             municion.fixedToCamera = true;
             municion.cameraOffset.setTo(625, 350);
@@ -210,7 +210,7 @@ function Interface() {
         // ///////////// COMIDA ///////////////
         comida.destroy();
         text = "Comida:  " +player.food;
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "12px Press Start 2P", fill: "#FFFFFF", align: "left" };
         comida = game.add.text(game.world.centerX - 60, 0, text, style);
         comida.fixedToCamera = true;
         comida.cameraOffset.setTo(625, 300);
@@ -220,7 +220,7 @@ function Interface() {
         // ///////////// PUNTUACIÓN ///////////////
         puntuacion.destroy();
         text = "Puntuacion:  " +player.points;
-        style = { font: "20px Times New Roman", fill: "#FFFFFF", align: "left" };
+        style = { font: "12px Press Start 2P", fill: "#FFFFFF", align: "left" };
         puntuacion = game.add.text(game.world.centerX - 60, 0, text, style);
         puntuacion.fixedToCamera = true;
         puntuacion.cameraOffset.setTo(625, 25);
@@ -403,21 +403,25 @@ function Interface() {
         }
         // ////////// FIN DAÑO ///////////////
 
-        /////////////// TEMPORIZADOR ///////////////
+        // ///////////// TEMPORIZADOR ///////////////
+        //Ahora no necesitamos ningún temporizador en los clientes
+        var time;
         temporizador.destroy();
-        if (temp === undefined) { temp = new timeController(); }
-        if (temp != undefined) {
-            time = temp.getTime();
+        getMapHandler(function(timeHandler){
+        	DLabyrinth.map = timeHandler;
+        });
+        if (DLabyrinth.map != undefined) {
+            time = DLabyrinth.map.timeLeftOnline;
             text = time[0] + ":" + time[1];
         } else { text = "0:00" }
-
-        //text = time;
-        style = { font: "25px Times New Roman", fill: "#FFFFFF", align: "left" };
+        
+        // text = time;
+        style = { font: "15px Press Start 2P", fill: "#FFFFFF", align: "left" };
         temporizador = game.add.text(0, 0, text, style);
         temporizador.fixedToCamera = true;
         temporizador.cameraOffset.setTo(400, 60);
         iGroup.add(temporizador);
-        /////////////// FIN TEMPORIZADOR ///////////////
+        // ///////////// FIN TEMPORIZADOR ///////////////
 
         game.world.bringToTop(iGroup);
     }

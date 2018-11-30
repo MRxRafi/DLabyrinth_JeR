@@ -16,7 +16,7 @@ public class MapHandler {
 	//Métodos de nuestra clase
 	public void nextRoom(){
 		phase = checkPhase();
-		System.out.println("Fase: " + phase);
+		//System.out.println("Fase: " + phase);
 		if(phase == 1) { nextRoom = generateRandomInteger(0, 4); }
         if(phase == 2) { nextRoom = generateRandomInteger(5, 7); }
         if(phase == 3) { nextRoom = 8; }
@@ -24,7 +24,7 @@ public class MapHandler {
         if(closedRooms[nextRoom] && phase != 0) {nextRoom();}
         //En el cliente, nextRoom hay que sumarle 6
         
-        System.out.println("Próxima hab: " + nextRoom);
+        //System.out.println("Próxima hab: " + nextRoom);
 	}
 	public int checkPhase(){
 		int checkNum = 0;
