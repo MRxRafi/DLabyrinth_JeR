@@ -11,7 +11,14 @@ DLabyrinth.endingState.prototype = {
     	//Añadimos fondo
 		game.add.tileSprite(0, 0, 800, 600, 'background');
 		//Texto con estilo
-		var text = game.add.text(400, 300, "Gracias por jugar \n \n Pulse 'Space' \n \n para volver al menú");
+		var text;
+		if(DLabyrinth.player.win){
+			text = game.add.text(400, 250, "¡Has ganado!\n\nGracias por jugar\n\nPulse 'Space'\n\npara volver al menú");
+		} else {
+			text = game.add.text(400, 250, "Has perdido..\n\nGracias por jugar\n\nPulse 'Space'\n\npara volver al menú");
+		}
+		deletePlayer(DLabyrinth.player.id);
+		
         text.anchor.setTo(0.5);
 
         text.font = 'Press Start 2P';

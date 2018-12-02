@@ -7,7 +7,8 @@
 var otherPlayer;
 function Jugador(x, y, sprsheet, id_player) {
     this.id = id_player;
-
+    var disparado = false;
+    
     //Sprite del personaje y asignación de las animaciones a variables
     this.sprite = game.add.sprite(x, y, sprsheet);
     playerGroup.add(this.sprite);
@@ -108,33 +109,20 @@ function Jugador(x, y, sprsheet, id_player) {
         Esta función se encarga de asignar las teclas al usuario (movimiento, acción, etc)
     */
     this.createInputs = function () {
-        if (this.id === 1) {
+    	if (this.id === DLabyrinth.player.id) {
             //Asignamos teclas a variables
             this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
             this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
             this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
             this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
             this.qKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
-            this.qKey.onDown.add(changeWeaponFunc, this, 0, 0);
+            this.qKey.onDown.add(changeWeaponFunc, this, 0, this.id-1);
             this.zKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
             this.zKey.onDown.add(consumeFood, this);
             this.xKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
             this.xKey.onDown.add(punchFunc1);
             this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        }
-        if (this.id === 2) {
-            this.tKey = game.input.keyboard.addKey(Phaser.Keyboard.T);
-            this.gKey = game.input.keyboard.addKey(Phaser.Keyboard.G);
-            this.fKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
-            this.hKey = game.input.keyboard.addKey(Phaser.Keyboard.H);
-            this.rKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
-            this.rKey.onDown.add(changeWeaponFunc, this, 0, 1);
-            this.yKey = game.input.keyboard.addKey(Phaser.Keyboard.Y);
-            this.yKey.onDown.add(consumeFood, this); //Cambiar consumeFood
-            this.nKey = game.input.keyboard.addKey(Phaser.Keyboard.N);
-            this.nKey.onDown.add(punchFunc1); //Cambiar punchFunc
-            this.bKey = game.input.keyboard.addKey(Phaser.Keyboard.B);
-        }
+    	}
     }
 
     /*
@@ -143,7 +131,7 @@ function Jugador(x, y, sprsheet, id_player) {
     */
     this.updateInputs = function () {
         keydownMove = false;
-        if (this.id === 1) {
+        if (this.id === DLabyrinth.player.id){
             if (this.aKey.isDown) {
                 this.sprite.body.velocity.x = -230;
                 keydownMove = true;
@@ -170,61 +158,47 @@ function Jugador(x, y, sprsheet, id_player) {
                 keydownMove = true;
             }
             if (this.spaceKey.isDown) {
-                if (this.hasOrb) {
-                    if (orbes[0].weapons[0].ammo > 0) {
-                        orbes[0].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
-                    }
+            	if (orbes[this.id-1].weapons[0].ammo > 0) {
+                	//Al disparar debemos enviar al servidor que hemos disparado
+                	/* INFORMACIÓN A ENVIAR
+                	 * 1. ID del jugador que disparó
+                	 * 2. Dirección del disparo
+                	 */
+                	if(!disparado){
+                		var bala = {
+                    			idJug: this.id,
+                    			directionX: game.input.mousePointer.position.x + game.camera.x,
+                    			directionY: game.input.mousePointer.position.y + game.camera.y
+                    	}
+                		//console.log(bala.directionX + " / " + bala.directionY);
+                    	//Ajax Put
+                		createBala(bala);
+                		disparado = true;
+                		setTimeout(function(){ disparado = false; },orbes[this.id-1].weapons[0].weapon.fireRate);
+                	}
+
+                	
+                	
+                	//Disparamos en el juego
+                    orbes[this.id-1].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
                 }
             }
 
             if (this.aKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { this.left = true; }
             if (this.dKey.isDown && !this.wKey.isDown && !this.sKey.isDown) { this.right = true; }
         }
-        if (this.id === 2) {
-
-            if (this.fKey.isDown) {
-                this.sprite.body.velocity.x = -230;
-                keydownMove = true;
-            }
-            if (this.hKey.isDown) {
-                this.sprite.body.velocity.x = 230;
-                keydownMove = true;
-            }
-            if (this.tKey.isDown) {
-                this.up = true;
-                this.sprite.body.velocity.y = -230;
-                keydownMove = true;
-            }
-            if (this.gKey.isDown) {
-                this.down = true;
-                this.sprite.body.velocity.y = 230;
-                keydownMove = true;
-            }
-
-            //Quitamos velocidad en caso de que no estén las teclas pulsadas
-            if (!this.fKey.isDown && !this.hKey.isDown) { this.sprite.body.velocity.x = 0; }
-            if (!this.tKey.isDown && !this.gKey.isDown) { this.sprite.body.velocity.y = 0; }
-
-            if (this.bKey.isDown) {
-                if (this.hasOrb) {
-                    if (orbes[1].weapons[0].ammo > 0) {
-                        orbes[1].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
-                    }
-                }
-            }
-
-            if (this.fKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { this.left = true; }
-            if (this.hKey.isDown && !this.tKey.isDown && !this.gKey.isDown) { this.right = true; }
-
-        }
-        if(keydownMove){
-        	//Actualizamos posiciones en servidor
+        
+        
+        //if(keydownMove){
+        	//Actualizamos posiciones y velcidad en servidor
         	if(this.id === DLabyrinth.player.id){
         		DLabyrinth.player.positionX = this.sprite.x;
         		DLabyrinth.player.positionY = this.sprite.y;
+        		DLabyrinth.player.velX = this.sprite.body.velocity.x;
+        		DLabyrinth.player.velY = this.sprite.body.velocity.y;
         		updatePlayer(DLabyrinth.player);
         	}
-        }
+        //}
         
         var otherId;
         if(this.id === 1 && DLabyrinth.player.id === 1) { otherId = 2; }
@@ -234,22 +208,26 @@ function Jugador(x, y, sprsheet, id_player) {
             	otherPlayer = player;
             }, otherId);
         }
-
-        if(otherPlayer != undefined){
+        
+        if(otherPlayer != undefined && players[otherPlayer.id - 1] != undefined){
+        	
         	players[otherPlayer.id - 1].sprite.x = otherPlayer.positionX;
         	players[otherPlayer.id - 1].sprite.y = otherPlayer.positionY;
+        	
+        	players[otherPlayer.id - 1].sprite.body.velocity.x = otherPlayer.velX;
+        	players[otherPlayer.id - 1].sprite.body.velocity.y = otherPlayer.velY;
         }
     }
 
     this.updateAnimations = function () {
-        if (this.up) { this.sprite.animations.play('walkUp', 30, true); this.facing = 0; }
-        if (this.down) { this.sprite.animations.play('walkDown', 30, true); this.facing = 1; }
-        if (this.left) { this.sprite.animations.play('walkLeft', 30, true); this.facing = 2; }
-        if (this.right) { this.sprite.animations.play('walkRight', 30, true); this.facing = 3; }
+        if (this.sprite.body.velocity.y < 0) { this.sprite.animations.play('walkUp', 30, true); this.facing = 0; }
+        else if (this.sprite.body.velocity.y > 0) { this.sprite.animations.play('walkDown', 30, true); this.facing = 1; }
+        else if (this.sprite.body.velocity.x < 0) { this.sprite.animations.play('walkLeft', 30, true); this.facing = 2; }
+        else if (this.sprite.body.velocity.x > 0) { this.sprite.animations.play('walkRight', 30, true); this.facing = 3; }
         this.up = this.down = this.right = this.left = false; //Reiniciamos variables
 
-        //Paramos animación si no hay ninguna tecla pulsada PARA AMBOS JUGADORES
-        if (!keydownMove) {
+        //Paramos animación si no hay ninguna tecla pulsada
+        if (this.sprite.body.velocity.x == 0 && this.sprite.body.velocity.y == 0) {
             this.sprite.animations.stop('walkUp', true);
             this.sprite.animations.stop('walkDown', true);
             this.sprite.animations.stop('walkLeft', true);
@@ -257,33 +235,50 @@ function Jugador(x, y, sprsheet, id_player) {
         }
 
 
-        //Movimiento del orbe PARA AMBOS JUGADORES
+        //Movimiento del orbe 
         if (this.hasOrb) {
             orbes[this.id - 1].sprite.body.velocity.x = (this.sprite.x - orbes[this.id - 1].sprite.x - 30) * 5;
             orbes[this.id - 1].sprite.body.velocity.y = (this.sprite.y - orbes[this.id - 1].sprite.y - 30) * 5;
+        }
+        //Puños
+        if(this.id != currentPlayer.id){
+	        hasPunchedPlayer(function(punched, id){
+	        	if(punched){
+	        		players[id-1].punch();
+	        	}
+	        }, this.id);
         }
     }
 
     this.checkLifePoints = function(){
         if(this.lifePoints <= 0){
-            var toRemove = playerGroup.getIndex(this.sprite);
-            if(toRemove === 0){
-                //Eliminamos al jugador 0 del grupo de jugadores
-                playerGroup.remove(toRemove);
+            //var toRemove = playerGroup.getIndex(this.sprite);
+            if(this.id === DLabyrinth.player.id){
+                //Loose
+            	
+            	
+            	//deletePlayer(this.id);
                 game.state.start('endingState');
             }else{
-                if(this.hasOrb){
-                    orbes[toRemove].sprite.destroy();
-                    orbes.splice(toRemove, 1);
-                }
-                //Eliminamos al jugador 1 del grupo de jugadores
-                playerGroup.remove(toRemove);
-                this.sprite.destroy();
-                players.splice(toRemove,1);
-               
+            	//Win
+            	DLabyrinth.player.win = true;
+            	updatePlayer(DLabyrinth.player);
+            	
+            	//deletePlayer(this.id);
                 game.state.start('endingState');
             }
         }
+    }
+    
+    this.checkOtherWin = function(){
+    	var otherId;
+    	if(DLabyrinth.player.id === 1){ otherId = 2; } else { otherId = 1; }
+    	getPlayer(function(oPlayer){
+    		if(oPlayer.win){
+    			//Loose
+    			game.state.start('endingState');
+    		}
+    	}, otherId);
     }
 
     //Activamos físicas arcade para el personaje

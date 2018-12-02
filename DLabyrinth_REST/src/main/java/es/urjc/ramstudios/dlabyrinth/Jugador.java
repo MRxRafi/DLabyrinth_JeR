@@ -6,8 +6,17 @@ public class Jugador {
 	private float positionY;
 	private float velX;
 	private float velY;
+	private boolean win;
 	private boolean punch;
 	
+	Jugador(){}
+	
+	public boolean isWin() {
+		return win;
+	}
+	public void setWin(boolean win) {
+		this.win = win;
+	}
 	public boolean isPunch() {
 		return punch;
 	}

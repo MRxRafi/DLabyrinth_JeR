@@ -253,26 +253,32 @@ function Jugador(x, y, sprsheet, id_player) {
     this.checkLifePoints = function(){
         if(this.lifePoints <= 0){
             //var toRemove = playerGroup.getIndex(this.sprite);
-            if(this.id === 1){
-                //Eliminamos al jugador 0 del grupo de jugadores
-                //playerGroup.remove(toRemove);
-            	deletePlayer(this.id);
+            if(this.id === DLabyrinth.player.id){
+                //Loose
+            	
+            	
+            	//deletePlayer(this.id);
                 game.state.start('endingState');
             }else{
-            	/*
-                if(this.hasOrb){
-                    orbes[toRemove].sprite.destroy();
-                    orbes.splice(toRemove, 1);
-                }
-                //Eliminamos al jugador 1 del grupo de jugadores
-                playerGroup.remove(toRemove);
-                this.sprite.destroy();
-                players.splice(toRemove,1);
-               */
-            	deletePlayer(this.id);
+            	//Win
+            	DLabyrinth.player.win = true;
+            	updatePlayer(DLabyrinth.player);
+            	
+            	//deletePlayer(this.id);
                 game.state.start('endingState');
             }
         }
+    }
+    
+    this.checkOtherWin = function(){
+    	var otherId;
+    	if(DLabyrinth.player.id === 1){ otherId = 2; } else { otherId = 1; }
+    	getPlayer(function(oPlayer){
+    		if(oPlayer.win){
+    			//Loose
+    			game.state.start('endingState');
+    		}
+    	}, otherId);
     }
 
     //Activamos físicas arcade para el personaje
