@@ -10,6 +10,7 @@ function consumeFood(){
 }
 
 function punchFunc1(){
+	punchPlayer(currentPlayer.id);
     players[currentPlayer.id-1].punch();
 }
 
@@ -56,7 +57,6 @@ function generateItems(){
         while(map.tileMap.getTileWorldXY(w.sprite.x, w.sprite.y, 32, 32, map.layers[0]) === null){
             w.sprite.x = Math.floor(Math.random()*2800 + 200);
             w.sprite.y = Math.floor(Math.random()*2800 + 200);
-            console.log('out');
         }
         itemsGroup.add(w.sprite);
         weaponItems.push(w);
@@ -164,7 +164,6 @@ function loadItems(){
 			}
 			
 			weaponItems.push(w);
-			//console.log("Weapon: " + w.type)
 		}
 	});
 	
@@ -391,7 +390,6 @@ function loadOtherBullets(id){
 			if(balas){
 				//Pintamos las balas
 				
-				console.log(balas);
 				for(i = 0; i < balas.length; i++){
 					if(balas[i] != null){
 						orbes[otherId-1].weapons[0].weapon.fireAtXY(balas[i].directionX, balas[i].directionY);
@@ -403,4 +401,16 @@ function loadOtherBullets(id){
 			
 		}, otherId);
 	}
+}
+function checkNumPlayers(){
+	var nPlayers;
+	
+	numberPlayers(function (n){
+		if(n <= 1){
+			deletePlayer(DLabyrinth.player.id);
+			game.state.start('endingState');
+		}
+		});
+	
+	
 }

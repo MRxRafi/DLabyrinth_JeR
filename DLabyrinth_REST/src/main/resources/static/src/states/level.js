@@ -93,32 +93,31 @@ DLabyrinth.levelState.prototype = {
         	generateItems();
         }
         
-        //El resto de jugadores reciben la info de los items de forma que es igual para todos
-        else{
-        	loadItems();
-        }
-        
         //La cámara sigue al jugador
         game.camera.follow(currentPlayer.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     },
 
     update: function () {
-    	if(currentPlayer.id != 1 && weaponItems[0] === undefined && !cargado){
+    	if(weaponItems[0] === undefined && !cargado){
     		loadItems();
         }
 
+        players[currentPlayer.id-1].updateInputs();
+
         //Actualizamos eventos de teclado y animaciones de los personajes
         for (var i = 0; i < players.length; i++) {
-            players[i].updateInputs();
             players[i].updateAnimations();
             players[i].checkLifePoints();
         }
+        
         loadOtherBullets(currentPlayer.id);
         
         map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
+        checkNumPlayers();
+        
         playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);
         game.world.bringToTop(playerGroup);
         /////////////////////////// INTERFAZ ///////////////////////////

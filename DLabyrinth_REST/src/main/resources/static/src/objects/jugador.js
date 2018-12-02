@@ -240,31 +240,45 @@ function Jugador(x, y, sprsheet, id_player) {
             orbes[this.id - 1].sprite.body.velocity.x = (this.sprite.x - orbes[this.id - 1].sprite.x - 30) * 5;
             orbes[this.id - 1].sprite.body.velocity.y = (this.sprite.y - orbes[this.id - 1].sprite.y - 30) * 5;
         }
+        //Puños
+        if(this.id != currentPlayer.id){
+	        hasPunchedPlayer(function(punched, id){
+	        	if(punched){
+	        		players[id-1].punch();
+	        	}
+	        }, this.id);
+        }
     }
 
     this.checkLifePoints = function(){
         if(this.lifePoints <= 0){
-            var toRemove = playerGroup.getIndex(this.sprite);
-            if(toRemove === 0){
-                //Eliminamos al jugador 0 del grupo de jugadores
-                //playerGroup.remove(toRemove);
-            	deletePlayer(toRemove+1);
+            //var toRemove = playerGroup.getIndex(this.sprite);
+            if(this.id === DLabyrinth.player.id){
+                //Loose
+            	
+            	
+            	//deletePlayer(this.id);
                 game.state.start('endingState');
             }else{
-            	/*
-                if(this.hasOrb){
-                    orbes[toRemove].sprite.destroy();
-                    orbes.splice(toRemove, 1);
-                }
-                //Eliminamos al jugador 1 del grupo de jugadores
-                playerGroup.remove(toRemove);
-                this.sprite.destroy();
-                players.splice(toRemove,1);
-               */
-            	deletePlayer(toRemove+1);
+            	//Win
+            	DLabyrinth.player.win = true;
+            	updatePlayer(DLabyrinth.player);
+            	
+            	//deletePlayer(this.id);
                 game.state.start('endingState');
             }
         }
+    }
+    
+    this.checkOtherWin = function(){
+    	var otherId;
+    	if(DLabyrinth.player.id === 1){ otherId = 2; } else { otherId = 1; }
+    	getPlayer(function(oPlayer){
+    		if(oPlayer.win){
+    			//Loose
+    			game.state.start('endingState');
+    		}
+    	}, otherId);
     }
 
     //Activamos físicas arcade para el personaje

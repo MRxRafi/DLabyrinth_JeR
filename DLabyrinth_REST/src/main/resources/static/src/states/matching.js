@@ -12,7 +12,7 @@ DLabyrinth.matchingState.prototype = {
     create: function() {
     	game.add.tileSprite(0, 0, 800, 600, 'background');
         
-        text = "Esperando jugadores..\nJugadores en lobby: "
+        text = "Esperando jugadores..\nJugadores en lobby: ";
         style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "center" };
         spr_text = game.add.text(game.world.centerX-150, 50, text, style);
         

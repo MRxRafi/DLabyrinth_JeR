@@ -77,4 +77,16 @@ public class jugadorController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@PostMapping("/punch/{id}")
+	public void punch(@PathVariable long id) {
+		players.get(id).setPunch(true);
+	}
+	
+	@GetMapping("/punch/{id}")
+	public boolean hasPunched(@PathVariable long id) {
+		boolean p = players.get(id).isPunch();
+		players.get(id).setPunch(false);
+		return p;
+	}
 }
