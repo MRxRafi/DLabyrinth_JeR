@@ -74,6 +74,12 @@ public class TimeManager {
 	public void setRemaining(int remaining) {
 		this.remaining = remaining;
 	}
+	
+	@Override
+	public String toString() {
+		int[] ctime = getTimeLeftOnline();
+		return "{\"timeLeftOnline\":" + "[" + ctime[0] +"," + ctime[1] + "]" + "," + map.toString() + "}";
+	}
 }
 
 //Extraído de https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript por "Faiz Mohamed Haneef"

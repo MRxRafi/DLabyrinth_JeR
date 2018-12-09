@@ -65,5 +65,16 @@ public class MapHandler {
 		nextRoom = n;
 	}
 	
+	@Override
+	public String toString() {
+		boolean[] cRooms = getClosedRooms();
+		String text = "[";
+		for(int i = 0; i < 10; i++){
+			text += cRooms[i];
+			if(i < 9) { text += ","; }
+		}
+		text += "]";
+		return "\"closedRooms\":" + text + ",\"nextRoom\":" + getNextRoom();
+	}
 	
 }

@@ -330,7 +330,7 @@ function getFoodItemPos(callback){
 // ////////////////////////////WEBSOCKETS/////////////////////////////////////
 
 var connection = new WebSocket('ws://localhost:8080/dlabyrinth');
-connection.data = { type:undefined, actualPlayer:undefined, players:undefined, items: undefined };
+connection.data = { type:undefined, actualPlayer:undefined, players:undefined, items: undefined, startedTimer:false, map:undefined };
 connection.data.players = new Array();
 
 connection.onopen = function (event) {
@@ -348,20 +348,13 @@ connection.onclose = function (event) {
 }
 
 function createPlayerWS(){
-	        connection.data.type = 'JOIN'
+	connection.data.type = 'JOIN'
 	connection.send(JSON.stringify(connection.data));
 }
 function updateStateWS(){
-			connection.data.type = 'UPDATE';
-			connection.data.actualPlayer = DLabyrinth.player;
-			/*
-			 * id: currentPlayer.id, posX: currentPlayer.sprite.x, posY:
-			 * currentPlayer.sprite.y, velX:
-			 * currentPlayer.sprite.body.velocity.x, velY:
-			 * currentPlayer.sprite.body.velocity.y, win: DLabyrinth.player.win,
-			 * lifePoints: currentPlayer.lifePoints, shield:
-			 * currentPlayer.shield, hasOrb: currentPlayer.hasOrb,
-			 */
+	connection.data.type = 'UPDATE';
+	connection.data.actualPlayer = DLabyrinth.player;
+
 	connection.send(JSON.stringify(connection.data));
 }
 function updateMatchingWS(){
@@ -402,10 +395,12 @@ connection.onmessage = function (message) {
 				players[id].shield = msg.players[id].shield;
 				players[id].sprite.body.velocity.x = msg.players[id].velX;
 				players[id].sprite.body.velocity.y = msg.players[id].velY;
-				players[id].hasOrb = msg.players[id].hasOrb;
+				//players[id].hasOrb = msg.players[id].hasOrb;
 				players[id].win = msg.players[id].win;
-				console.log("positionX oPlayer " + id + " : " + msg.players[id].positionX);
-		        console.log("positionY oPlayer " + id + " : " + msg.players[id].positionY);
+				//console.log("positionX oPlayer " + id + " : " + msg.players[id].positionX);
+		        //console.log("positionY oPlayer " + id + " : " + msg.players[id].positionY);
+				
+				DLabyrinth.map = msg.map;
             break;
             
         case "MATCHING_STATE":

@@ -28,7 +28,7 @@ function Mapa(){
     
     this.update = function(){
     	if(DLabyrinth.map != undefined){
-    		var habitaciones = DLabyrinth.map.map.closedRooms;
+    		var habitaciones = DLabyrinth.map.closedRooms;
     		for(i = 6; i < 15; i++){
     			if(habitaciones[i-5] && !this.layers[i].visible){
     				this.closeZone(i);

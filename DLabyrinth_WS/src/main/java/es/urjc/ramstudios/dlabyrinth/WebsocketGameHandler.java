@@ -68,18 +68,21 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					break;
 					
 				case "UPDATE":
+					/* ACTUALIZACIÓN JUGADOR */
 					String textUpdPlayer = node.get("actualPlayer").toString();
-					System.out.println("Jugador: " + textUpdPlayer);
 					Gson gson = new Gson();
 					Jugador updPlayer = gson.fromJson(textUpdPlayer , Jugador.class);
-					System.out.println("Jugador: " + updPlayer.toString());
 					
 					gameController.updatePlayer(updPlayer);
-					
-					
+					/* FIN ACTUALIZACIÓN JUGADOR */
+					/* MAPA */
+					if(node.get("startedTimer").asBoolean() && !gameController.getStartTimer()) { //Si aún no se ha iniciado el temporizador y se actualiza el jugador 1 lo iniciamos
+						gameController.startTimer();
+					}
+					/*  FIN MAPA */
 					json.put("type", "UPDATE_STATE");
-					
 					json.putPOJO("players", gameController.getPlayers());
+					json.putPOJO("map", gameController.getTimer());
 					session.sendMessage(new TextMessage(json.toString()));
 					break;
 				

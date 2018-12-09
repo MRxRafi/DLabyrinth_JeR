@@ -62,7 +62,8 @@ function Jugador(x, y, sprsheet, id_player) {
     game.physics.enable(this.collisionArea, Phaser.Physics.ARCADE);
 
   //SI ES EL JUGADOR 1, COMENZAMOS EL TIMER DEL SERVIDOR (MapController)
-    if(this.id === 1 && DLabyrinth.player.id === 1) { startTimer(); }
+    //if(this.id === 1 && DLabyrinth.player.id === 1) { startTimer(); }
+    if(this.id === 1 && DLabyrinth.player.id === 1) { connection.data.startedTimer = true; }
     
     this.punch = function () {
         switch (this.facing) {
@@ -241,13 +242,14 @@ function Jugador(x, y, sprsheet, id_player) {
         }
         
         //Puños
+        /*
         if(this.id != currentPlayer.id){
 	        hasPunchedPlayer(function(punched, id){
 	        	if(punched){
 	        		players[id-1].punch();
 	        	}
 	        }, this.id);
-        }
+        }*/
     }
 
     this.checkLifePoints = function(){

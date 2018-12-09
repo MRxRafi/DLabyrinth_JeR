@@ -353,7 +353,7 @@ function Interface() {
 
                         }
                         if(DLabyrinth.map != undefined){
-                        	if (!map.layers[l].visible && tile && ((DLabyrinth.map.map.nextRoom + 5) === l)) {
+                        	if (!map.layers[l].visible && tile && ((DLabyrinth.map.nextRoom + 5) === l)) {
                                 // fill a pixel in the minimap
                                 miniMapBmd.ctx.fillStyle = '#D19C04';
                                 miniMapBmd.ctx.fillRect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
@@ -407,9 +407,10 @@ function Interface() {
         //Ahora no necesitamos ningún temporizador en los clientes
         var time;
         temporizador.destroy();
+        /*
         getMapHandler(function(timeHandler){
         	DLabyrinth.map = timeHandler;
-        });
+        });*/
         if (DLabyrinth.map != undefined) {
             time = DLabyrinth.map.timeLeftOnline;
             text = time[0] + ":" + time[1];
