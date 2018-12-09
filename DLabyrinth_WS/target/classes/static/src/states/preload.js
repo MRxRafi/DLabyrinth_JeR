@@ -61,7 +61,8 @@ DLabyrinth.preloadState.prototype = {
 
     create: function() {
     	//Creamos algunas variables globales para comunicarnos con el servidor
-    	DLabyrinth.player = { id:undefined, positionX:undefined, positionY:undefined, velX:undefined, velY:undefined, win: false };
+    	DLabyrinth.player = { id:undefined, positionX:undefined, positionY:undefined, velX:undefined,
+    			velY:undefined, win: false, lifePoints: undefined, shield: undefined, punch: false, hasOrb: undefined };
     	DLabyrinth.map;
     	//Pasamos al siguiente estado
        game.state.start('menuState');

@@ -239,6 +239,7 @@ function Jugador(x, y, sprsheet, id_player) {
             orbes[this.id - 1].sprite.body.velocity.x = (this.sprite.x - orbes[this.id - 1].sprite.x - 30) * 5;
             orbes[this.id - 1].sprite.body.velocity.y = (this.sprite.y - orbes[this.id - 1].sprite.y - 30) * 5;
         }
+        
         //Puños
         if(this.id != currentPlayer.id){
 	        hasPunchedPlayer(function(punched, id){

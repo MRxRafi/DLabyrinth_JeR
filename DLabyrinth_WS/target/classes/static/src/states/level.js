@@ -1,6 +1,7 @@
 DLabyrinth.levelState = function (game) {
 
 }
+var uodateTemp;
 var players;
 var currentPlayer;
 var orbes;
@@ -95,6 +96,8 @@ DLabyrinth.levelState.prototype = {
         
         //La cámara sigue al jugador
         game.camera.follow(currentPlayer.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        
+        updateTemp = setInterval(updateStateWS, 17);
 
     },
 
@@ -123,7 +126,6 @@ DLabyrinth.levelState.prototype = {
         /////////////////////////// INTERFAZ ///////////////////////////
         interfaz.updateInterface(currentPlayer, orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
-        updateStateWS();
 
     },
 

@@ -267,6 +267,11 @@ function checkCollisions(){
                     if(!players[j].hasOrb){
                         orbes[j] = new Orbe('orb', players[j]);
                         players[j].hasOrb = true;
+                        
+                        /* PROBLEMA DE SINCRONIZACION
+                        if(DLabyrinth.player.id === j+1){
+                        	DLabyrinth.player.hasOrb = true;
+                        }*/
                     }
                     orbes[j].setWeapon(o);
                     o.sprite.destroy();

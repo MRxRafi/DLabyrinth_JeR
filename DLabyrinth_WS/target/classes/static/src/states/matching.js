@@ -3,6 +3,7 @@ DLabyrinth.matchingState = function(game){
 }
 
 //var user;
+var text_jugadores;
 var n_jugadores;
 DLabyrinth.matchingState.prototype = {
 
@@ -19,23 +20,32 @@ DLabyrinth.matchingState.prototype = {
         
         if (DLabyrinth.player != undefined) {
             createPlayer( function(playerId){
-            	DLabyrinth.player.id = playerId;
+            	//DLabyrinth.player.id = playerId;
             }, DLabyrinth.player);
-            createPlayerWS();
+            
+            //CUANDO AÑADAMOS WS A TODO: QUITAR FUNCIONES AJAX
         } 
+        n_jugadores = 0;
+        createPlayerWS();
     },
 
     update: function() {
-        if(n_jugadores){n_jugadores.destroy();}
+        if(text_jugadores){text_jugadores.destroy();}
+        /*
         numberPlayers(function(numero_usuarios){
         	text = numero_usuarios;
         });
-        style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "center" };
-        n_jugadores = game.add.text(game.world.centerX+30, 105, text, style);
+        */
         
+        style = { font: "20px Press Start 2P", fill: "#FFFFFF", align: "center" };
+        text_jugadores = game.add.text(game.world.centerX+30, 105, n_jugadores, style);
+        
+        if(n_jugadores === 2){ game.state.start('levelState'); }
+        updateMatchingWS();
+        /*
         numberPlayers(function(numero_usuarios){
         	if(numero_usuarios === 2){ game.state.start('levelState'); }
-        });
+        });*/
         
         /*
         numberUsers(function(numero_usuarios){
