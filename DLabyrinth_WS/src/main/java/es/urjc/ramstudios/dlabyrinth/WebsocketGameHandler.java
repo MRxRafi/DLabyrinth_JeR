@@ -75,11 +75,17 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					
 					gameController.updatePlayer(updPlayer);
 					/* FIN ACTUALIZACIÓN JUGADOR */
+					
 					/* MAPA */
 					if(node.get("startedTimer").asBoolean() && !gameController.getStartTimer()) { //Si aún no se ha iniciado el temporizador y se actualiza el jugador 1 lo iniciamos
 						gameController.startTimer();
 					}
 					/*  FIN MAPA */
+					
+					/* ACTUALIZACIÓN ITEMS */
+					
+					
+					/* FIN ACTUALIZACIÓN ITEMS */
 					json.put("type", "UPDATE_STATE");
 					json.putPOJO("players", gameController.getPlayers());
 					json.putPOJO("map", gameController.getTimer());

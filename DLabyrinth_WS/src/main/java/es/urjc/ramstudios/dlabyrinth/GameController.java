@@ -6,6 +6,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 public class GameController {
 
 	Map<Long, Jugador> players = new ConcurrentHashMap<>();
@@ -13,6 +19,8 @@ public class GameController {
 	
 	TimeManager time = new TimeManager(); //Timer del mapa con su gestión de cierre de zonas
 	boolean startTimer = false;
+	
+	Items items = new Items();
 
 	//COSAS DE JUGADOR
 	public Collection<Jugador> getPlayers() {
@@ -58,4 +66,55 @@ public class GameController {
 		boolean strTimer = startTimer;
 		return strTimer;
 	}
+	
+	//ITEMS
+	public String[] getWeaponType() {
+		return items.getWeaponTypes();
+	}
+	
+	public void setWeaponType(String[] types) {
+		items.setWeaponTypes(types);
+	}
+	
+	public int[][] getWeaponPos() {
+		return items.getWeaponPos();
+	}
+	
+	public void setWeaponPos(int[][] pos) {
+		items.setWeaponPos(pos);
+		//system.out.println()
+	}
+	
+	public String[] getAmmoType() {
+		return items.getAmmoTypes();
+	}
+
+	public void setAmmoType(String[] types) {
+		items.setAmmoTypes(types);
+	}
+	
+	public int[][] getAmmoPos() {
+		return items.getAmmoPos();
+	}
+	
+	public void setAmmoPos(int[][] pos) {
+		items.setAmmoPos(pos);
+	}
+	
+	public int[][] getShieldPos() {
+		return items.getShieldPos();
+	}
+
+	public void setShieldPos(int[][] pos) {
+		items.setShieldPos(pos);
+	}
+	
+	public int[][] getFoodPos() {
+		return items.getFoodPos();
+	}
+
+	public void setFoodPos(int[][] pos) {
+		items.setFoodPos(pos);
+	}
+
 }

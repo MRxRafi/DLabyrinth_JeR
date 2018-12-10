@@ -69,4 +69,50 @@ public class Items {
 		this.foodPos = foodPos;
 	}
 
+	@Override
+	public String toString() {
+		String text = "";
+		String[] wt = getWeaponTypes();
+		String[] at = getAmmoTypes();
+		int[][] wp = getWeaponPos();
+		int[][] ap = getAmmoPos();
+		int[][] fp = getFoodPos();
+		int[][] sp = getShieldPos();
+		text += "{\"weaponTypes\": [";
+		for(int i = 0; i < wt.length; i++) {
+			text += wt[i];
+			if(i < wt.length-1) {
+				text += ",";
+			}
+		}
+		text+= "], \"ammoTypes\": [";
+		for(int i = 0; i < at.length; i++) {
+			text += at[i];
+			if(i < at.length-1) {
+				text += ",";
+			}
+		}
+		text+= "], \"weaponPos\": [";
+		for(int i = 0; i < wp.length; i++) {
+			for(int j = 0; j < wp[i].length; j++) {
+				
+			}
+		}
+		for(int i = 0; i < ap.length; i++) {
+			for(int j = 0; j < ap[i].length; j++) {
+				
+			}
+		}
+		for(int i = 0; i < fp.length; i++) {
+			for(int j = 0; j < fp[i].length; j++) {
+				
+			}
+		}
+		for(int i = 0; i < sp.length; i++) {
+			for(int j = 0; j < sp[i].length; j++) {
+				
+			}
+		}
+		return text;
+	}
 }

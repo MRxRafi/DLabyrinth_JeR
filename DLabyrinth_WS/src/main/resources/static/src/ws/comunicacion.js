@@ -354,6 +354,7 @@ function createPlayerWS(){
 function updateStateWS(){
 	connection.data.type = 'UPDATE';
 	connection.data.actualPlayer = DLabyrinth.player;
+	connection.data.items = DLabyrinth.items;
 
 	connection.send(JSON.stringify(connection.data));
 }

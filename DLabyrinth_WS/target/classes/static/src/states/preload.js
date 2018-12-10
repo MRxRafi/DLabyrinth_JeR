@@ -64,6 +64,16 @@ DLabyrinth.preloadState.prototype = {
     	DLabyrinth.player = { id:undefined, positionX:undefined, positionY:undefined, velX:undefined,
     			velY:undefined, win: false, lifePoints: undefined, shield: undefined, punch: false, hasOrb: undefined };
     	DLabyrinth.map;
+    	
+    	DLabyrinth.items = { weaponTypes:undefined, weaponPos:undefined, ammoTypes:undefined,
+    			ammoPos:undefined, foodPos:undefined, shieldPos:undefined }
+    	DLabyrinth.items.weaponTypes = new Array();
+    	DLabyrinth.items.weaponPos = new Array();
+    	DLabyrinth.items.ammoTypes = new Array();
+    	DLabyrinth.items.ammoPos = new Array();
+    	DLabyrinth.items.foodPos = new Array();
+    	DLabyrinth.items.shieldPos = new Array();
+    	
     	//Pasamos al siguiente estado
        game.state.start('menuState');
     },

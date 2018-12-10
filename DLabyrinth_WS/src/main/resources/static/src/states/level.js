@@ -8,7 +8,7 @@ var orbes;
 var cargado;
 var weaponItems;
 var ammoItems;
-var lifeItems;
+//var lifeItems;
 var shieldItems;
 var foodItems;
 var interfaz;
@@ -39,7 +39,7 @@ DLabyrinth.levelState.prototype = {
         orbes = new Array();
         weaponItems = new Array();
         ammoItems = new Array();
-        lifeItems = new Array();
+        //lifeItems = new Array();
         shieldItems = new Array();
         foodItems = new Array();
 
