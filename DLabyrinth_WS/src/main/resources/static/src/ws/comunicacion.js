@@ -363,6 +363,12 @@ function updateMatchingWS(){
 
 	connection.send(JSON.stringify(connection.data));
 }
+function sendItemsWS(wt, wp, at, ap, sp, fp){
+	connection.data.type = "ITEMS";
+	connection.data.items = {weaponTypes: wt, weaponPos:wp, ammoTypes:at, ammoPos: ap, shieldPos: sp, foodPos: fp};
+	connection.send(JSON.stringify(connection.data));
+	console.log("[DEBUG-WS] Items enviados");
+}
 connection.onmessage = function (message) {
 	
    
