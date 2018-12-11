@@ -1,6 +1,9 @@
 DLabyrinth.optionState = function(game){
     
 }
+
+var image1
+
 DLabyrinth.optionState.prototype = {
 
     preload: function() {
@@ -8,9 +11,12 @@ DLabyrinth.optionState.prototype = {
     },
 
     create: function() {
-        game.stage.backgroundColor = "#4488AA";
+        
+        game.add.tileSprite(0, 0, 800, 600, 'background');
 
-        var image1 = game.add.sprite(680, 550, 'salirO');
+        image1 = game.add.sprite(680, 550, 'salirO');
+        
+        image1.alpha = 0.75;
 
         image1.inputEnabled = true;
 
@@ -36,7 +42,17 @@ DLabyrinth.optionState.prototype = {
     },
 
     update: function() {
-        //game.state.start(menuState);
+        
+          if (image1.input.pointerOver())
+    {
+        image1.alpha = 1;
+        
+    }
+    else
+    {
+        image1.alpha = 0.75;
+    
+    }
         
     },
     avanzar1: function() {
