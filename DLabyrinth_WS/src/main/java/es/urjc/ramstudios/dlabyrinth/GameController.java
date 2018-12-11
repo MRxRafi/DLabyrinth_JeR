@@ -1,120 +1,134 @@
 package es.urjc.ramstudios.dlabyrinth;
 
-import java.util.Collection;
-import java.util.Map;
-//import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-public class GameController {
-
-	Map<Long, Jugador> players = new ConcurrentHashMap<>();
-	AtomicLong nextId = new AtomicLong(0);
+public class Items {
+	private String [] weaponTypes;
+	private int [][] weaponPos;
 	
-	TimeManager time = new TimeManager(); //Timer del mapa con su gestión de cierre de zonas
-	boolean startTimer = false;
+	private String [] ammoTypes;
+	private int [][] ammoPos;
 	
-	Items items = new Items();
-
-	//COSAS DE JUGADOR
-	public Collection<Jugador> getPlayers() {
-		return players.values();
+	private int [][] shieldPos;
+	
+	private int [][] foodPos;
+	
+	
+	public Items() {
+		weaponTypes = new String [5];
+		weaponPos = new int [5][2];
+		ammoTypes = new String[6];
+		ammoPos = new int [5][2];
+		shieldPos = new int [4][2];
+		foodPos = new int [8][2];
 	}
 	
-	public Jugador getPlayer(long id) {
-		return  players.get(id);
+	public String[] getWeaponTypes() {
+		return weaponTypes;
 	}
 
-	public Jugador newPlayer() {
-		Jugador player = new Jugador();
-		long id = nextId.incrementAndGet();
-		player.setId(id);
-		players.put(player.getId(), player);
-		return player;
+	public void setWeaponTypes(String[] weaponTypes) {
+		this.weaponTypes = weaponTypes;
 	}
 
-	public void deletePlayer(long id) {
-		Jugador savedPlayer = players.get(id);
-		if (savedPlayer != null) {
-			players.remove(savedPlayer.getId());
-		}
-	}
-	
-	public void updatePlayer(Jugador updPlayer) {
-		players.put(updPlayer.getId(), updPlayer);
-	}
-	
-	//COSAS DEL MAPA
-	public void startTimer() {
-		//Señal que inicia el timer. Debe enviarlo un solo jugador
-		time.start();
-		startTimer = true;
-	}
-	
-	public TimeManager getTimer() {
-		TimeManager savedTimer = time;
-		return savedTimer;
-	}
-	
-	public boolean getStartTimer() {
-		boolean strTimer = startTimer;
-		return strTimer;
-	}
-	
-	//ITEMS
-	public String[] getWeaponType() {
-		return items.getWeaponTypes();
-	}
-	
-	public void setWeaponType(String[] types) {
-		items.setWeaponTypes(types);
-	}
-	
 	public int[][] getWeaponPos() {
-		return items.getWeaponPos();
-	}
-	
-	public void setWeaponPos(int[][] pos) {
-		items.setWeaponPos(pos);
-		//system.out.println()
-	}
-	
-	public String[] getAmmoType() {
-		return items.getAmmoTypes();
+		return weaponPos;
 	}
 
-	public void setAmmoType(String[] types) {
-		items.setAmmoTypes(types);
+	public void setWeaponPos(int[][] weaponPos) {
+		this.weaponPos = weaponPos;
 	}
-	
+
+	public String[] getAmmoTypes() {
+		return ammoTypes;
+	}
+
+	public void setAmmoTypes(String[] ammoTypes) {
+		this.ammoTypes = ammoTypes;
+	}
+
 	public int[][] getAmmoPos() {
-		return items.getAmmoPos();
+		return ammoPos;
 	}
-	
-	public void setAmmoPos(int[][] pos) {
-		items.setAmmoPos(pos);
+
+	public void setAmmoPos(int[][] ammoPos) {
+		this.ammoPos = ammoPos;
 	}
-	
+
 	public int[][] getShieldPos() {
-		return items.getShieldPos();
+		return shieldPos;
 	}
 
-	public void setShieldPos(int[][] pos) {
-		items.setShieldPos(pos);
+	public void setShieldPos(int[][] shieldPos) {
+		this.shieldPos = shieldPos;
 	}
-	
+
 	public int[][] getFoodPos() {
-		return items.getFoodPos();
+		return foodPos;
 	}
 
-	public void setFoodPos(int[][] pos) {
-		items.setFoodPos(pos);
+	public void setFoodPos(int[][] foodPos) {
+		this.foodPos = foodPos;
 	}
 
+	@Override
+	public String toString() {
+		String text = "";
+		String[] wt = getWeaponTypes();
+		String[] at = getAmmoTypes();
+		int[][] wp = getWeaponPos();
+		int[][] ap = getAmmoPos();
+		int[][] fp = getFoodPos();
+		int[][] sp = getShieldPos();
+		text += "{\"weaponTypes\": [";
+		for(int i = 0; i < wt.length; i++) {
+			text += wt[i];
+			if(i < wt.length-1) {
+				text += ",";
+			}
+		}
+		text+= "], \"weaponPos\": [";
+		for(int i = 0; i < wp.length; i++) {
+			for(int j = 0; j < wp[i].length; j++) {
+				text += wp[i];
+				if(i < wp.length-1) {
+					text += ",";
+				}
+			}
+		}
+		text+= "], \"ammoTypes\": [";
+		for(int i = 0; i < at.length; i++) {
+			text += at[i];
+			if(i < at.length-1) {
+				text += ",";
+			}
+		}
+		text+= "], \"ammoPos\": [";
+		for(int i = 0; i < ap.length; i++) {
+			for(int j = 0; j < ap[i].length; j++) {
+				text += ap[i];
+				if(i < ap.length-1) {
+					text += ",";
+				}
+			}
+		}
+		text+= "], \"shieldPos\": [";
+		for(int i = 0; i < sp.length; i++) {
+			for(int j = 0; j < sp[i].length; j++) {
+				text += sp[i];
+				if(i < sp.length-1) {
+					text += ",";
+				}
+			}
+		}
+		text+= "], \"foodPos\": [";
+		for(int i = 0; i < fp.length; i++) {
+			for(int j = 0; j < fp[i].length; j++) {
+				text +=fp[i];
+				if(i < fp.length-1) {
+					text += ",";
+				}
+			}
+		}
+		text += "]}";
+		return text;
+	}
 }
