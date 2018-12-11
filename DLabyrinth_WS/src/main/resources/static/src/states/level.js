@@ -16,6 +16,7 @@ var map, layer;
 var temp, boolUpdate;
 var damage_spr;
 var vision_spr;
+var sendItems;
 var first_visible; // Es true cuando acaba de hacerse visible una capa de bloqueo. En la iteración posterior se vuelve false
 var map_handler; //Objeto que maneja las habitacioens a cerrar
 var playerGroup; //Grupo para los personajes (ordenar su profundidad para que aparezcan detras o delante)
@@ -48,7 +49,7 @@ DLabyrinth.levelState.prototype = {
         map.createMap();
 
         first_visible = false;
-
+        sendItems = false;
         //map_handler = new MapHandler(map, map.layers);
 
         temp = setInterval(miniMapUpdate, 400); //Temporizador para mejorar fps (actualiza el minimapa)
@@ -103,7 +104,7 @@ DLabyrinth.levelState.prototype = {
 
     update: function () {
     	if(weaponItems[0] === undefined && !cargado){
-    		loadItems();
+    		sendItems = true;
         }
 
         players[currentPlayer.id-1].updateInputs();
