@@ -108,7 +108,8 @@ function generateItems(){
     
     //Por último, mandamos la info de los items al servidor
     //Para weapon y ammo se manda u array para el tipo y otro para las posiciones. Para el resto de los items solo se mandan las posiciones
-    var a = new Array();
+    /*
+	var a = new Array();
     var b = new Array();
     for (var i = 0; i < 8; i++){
     	b[i] = new Array();
@@ -140,6 +141,43 @@ function generateItems(){
     	b[i][1] = foodItems[i].sprite.y;
     }
     setFoodItemPos(b);
+    */
+    var weaponPos = new Array();
+    var weaponType = new Array();
+    var ammoPos = new Array();
+    var ammoType = new Array();
+    var foodPos = new Array();
+    var shieldPos = new Array();
+    
+    for (var i = 0; i < 8; i++){
+    	weaponPos[i] = new Array();
+        ammoPos[i] = new Array();
+        foodPos[i] = new Array();
+        shieldPos[i] = new Array();
+    }
+    for (var i = 0; i < 5; i++){
+    	weaponType[i] =weaponItems[i].type;
+    	weaponPos[i][0] = weaponItems[i].sprite.x;
+    	weaponPos[i][1] = weaponItems[i].sprite.y;
+    }
+    
+    for(var i = 0; i < 6; i++){
+    	ammoType[i] = ammoItems[i].type;
+    	ammoPos[i][0] = ammoItems[i].sprite.x;
+    	ammoPos[i][1] = ammoItems[i].sprite.y;
+    }
+   
+    for(var i = 0; i < 4; i++){
+    	shieldPos[i][0] = shieldItems[i].sprite.x;
+    	shieldPos[i][1] = shieldItems[i].sprite.y;
+    }
+    
+    for(var i = 0; i < 8; i++){
+    	foodPos[i][0] = foodItems[i].sprite.x;
+    	foodPos[i][1] = foodItems[i].sprite.y;
+    }
+    sendItemsWS(weaponType, weaponPos, ammoType, ammoPos, shieldPos, foodPos);
+
     //itemsDone();
 }
 
