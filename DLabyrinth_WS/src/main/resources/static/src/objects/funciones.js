@@ -39,7 +39,26 @@ function drawDamageDirection(b){
     }
     setTimeout(deleteSpr,1000);
 }
-
+function clearItems(){
+	for(var i = 0; i < weaponItems.length; i++){
+		weaponItems[i].sprite.destroy();
+		weaponItems[i] = null;
+	}
+	for(var i = 0; i < ammoItems.length; i++){
+		ammoItems[i].sprite.destroy();
+		ammoItems[i] = null;
+	}
+	for(var i = 0; i < shieldItems.length; i++){
+		shieldItems[i].sprite.destroy();
+		shieldItems[i] = null;
+	}
+	for(var i = 0; i < foodItems.length; i++){
+		foodItems[i].sprite.destroy();
+		foodItems[i] = null;
+	}
+	console.log("Items cleared")
+	
+}
 
 //Funcion para generar todos los items de manera aleatoria en el mapa. Si su sprite cae en un zona inaccesible se borra.
 function generateItems(){
@@ -108,40 +127,6 @@ function generateItems(){
     
     //Por último, mandamos la info de los items al servidor
     //Para weapon y ammo se manda u array para el tipo y otro para las posiciones. Para el resto de los items solo se mandan las posiciones
-    /*
-	var a = new Array();
-    var b = new Array();
-    for (var i = 0; i < 8; i++){
-    	b[i] = new Array();
-    }
-    for (var i = 0; i < 5; i++){
-    	a[i] =weaponItems[i].type;
-    	b[i][0] = weaponItems[i].sprite.x;
-    	b[i][1] = weaponItems[i].sprite.y;
-    }
-    setWeaponItemType(a);
-    setWeaponItemPos(b);
-    
-    for(var i = 0; i < 6; i++){
-    	a[i] = ammoItems[i].type;
-    	b[i][0] = ammoItems[i].sprite.x;
-    	b[i][1] = ammoItems[i].sprite.y;
-    }
-    setAmmoItemType(a);
-    setAmmoItemPos(b);
-   
-    for(var i = 0; i < 4; i++){
-    	b[i][0] = shieldItems[i].sprite.x;
-    	b[i][1] = shieldItems[i].sprite.y;
-    }
-    setShieldItemPos(b);
-    
-    for(var i = 0; i < 8; i++){
-    	b[i][0] = foodItems[i].sprite.x;
-    	b[i][1] = foodItems[i].sprite.y;
-    }
-    setFoodItemPos(b);
-    */
     var weaponPos = new Array();
     var weaponType = new Array();
     var ammoPos = new Array();
@@ -149,11 +134,19 @@ function generateItems(){
     var foodPos = new Array();
     var shieldPos = new Array();
     
-    for (var i = 0; i < 8; i++){
+    for (var i = 0; i < 5; i++){
     	weaponPos[i] = new Array();
+    }
+    for (var i = 0; i < 6; i++){
         ammoPos[i] = new Array();
-        foodPos[i] = new Array();
+    }
+   
+    for (var i = 0; i < 4; i++){
+
         shieldPos[i] = new Array();
+    }
+    for (var i = 0; i < 8; i++){
+        foodPos[i] = new Array();
     }
     for (var i = 0; i < 5; i++){
     	weaponType[i] =weaponItems[i].type;
@@ -178,10 +171,9 @@ function generateItems(){
     }
     sendItemsWS(weaponType, weaponPos, ammoType, ammoPos, shieldPos, foodPos);
 
-    //itemsDone();
 }
 
-function loadItems(){
+function loadItems(items){
 	//console.log(isItemsDone(function(done){return done;}));
 	/*
 	while(!isItemsDone(function(done){return done;})){
@@ -189,6 +181,66 @@ function loadItems(){
 	}
 	*/
 	
+	//cargamos weapons
+	var wt = items.weaponTypes;
+	for(var i = 0; i < wt.length; i++){
+		var w;
+		if(wt[i] == "pistola"){
+			w = new WeaponItem(0, 0, 'pistol', 1, 500, 10, 'pistola');
+		}else if(wt[i] == "metralleta"){
+			w = new WeaponItem(0, 0,'ak-47', 0.25, 200, 30, 'metralleta');
+		}
+		
+		weaponItems[i] = w;
+	}
+	
+	var wp = items.weaponPos;
+	for(var i = 0; i < wp.length; i++){
+		if(weaponItems[i] != null){
+			weaponItems[i].sprite.x = wp[i][0];
+			weaponItems[i].sprite.y = wp[i][1];
+		}
+	}
+	if(weaponItems[0] != null){ cargado = true}
+	
+	//cargamos ammo
+	var at = items.ammoTypes;
+	for(var i = 0; i < wt.length; i++){
+		var a;
+		if(at[i] == "pistola"){
+			a = new AmmoItem(0, 0, 'pistol_ammo', 10, 'pistola');
+		}else if(at[i] == "metralleta"){
+			a = new AmmoItem(0, 0,'ak47_ammo', 30, 'metralleta');
+		}
+		
+		ammoItems[i] = a;
+	}
+	
+	var ap = items.ammoPos;
+	for(var i = 0; i < wp.length; i++){
+		if(ammoItems[i] != null){
+			ammoItems[i].sprite.x = ap[i][0];
+			ammoItems[i].sprite.y = ap[i][1];
+		}
+	}
+	
+	//cargamos shields
+	var sp = items.shieldPos;
+	for(var i = 0; i < sp.length; i++){
+		if((sp[i][0] != 0 || sp[i][1] != 0) && sp[i].length > 0){
+			shieldItems[i] = new ShieldItem(sp[i][0], sp[i][1]);
+		}
+	}
+	
+	//cargamos food
+	var fp = items.foodPos;
+	for(var i = 0; i < fp.length; i++){
+		if((fp[i][0] != 0 || fp[i][1] != 0) && fp[i].length > 0){
+			foodItems[i] = new FoodItem(fp[i][0], fp[i][1], 'food');
+		}
+	}
+	console.log("Items loaded");
+/*
 	getWeaponItemType(function loadWT(wt){
 		if(weaponItems[0] === undefined && weaponItems.length > 1){
 			weaponItems.splice(0,weaponItems.length);
@@ -265,7 +317,7 @@ function loadItems(){
 			//console.log(foodItems[i]);
 			//console.log('food ' + i)
 		}
-	});
+	});*/
 }
 
 function miniMapUpdate(){
