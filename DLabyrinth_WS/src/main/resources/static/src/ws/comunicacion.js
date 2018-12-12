@@ -354,8 +354,8 @@ function createPlayerWS(){
 function updateStateWS(){
 	connection.data.type = 'UPDATE';
 	connection.data.actualPlayer = DLabyrinth.player;
-	connection.data.items = DLabyrinth.items;
-
+	//connection.data.items = DLabyrinth.items;
+	connection.data.sendItems = sendItems;
 	connection.send(JSON.stringify(connection.data));
 }
 function updateMatchingWS(){
@@ -368,6 +368,7 @@ function sendItemsWS(wt, wp, at, ap, sp, fp){
 	connection.data.items = {weaponTypes: wt, weaponPos:wp, ammoTypes:at, ammoPos: ap, shieldPos: sp, foodPos: fp};
 	connection.send(JSON.stringify(connection.data));
 	console.log("[DEBUG-WS] Items enviados");
+	sendItems = true;
 }
 connection.onmessage = function (message) {
 	
@@ -408,11 +409,21 @@ connection.onmessage = function (message) {
 		        //console.log("positionY oPlayer " + id + " : " + msg.players[id].positionY);
 				
 				DLabyrinth.map = msg.map;
+				
+				if(msg.items){
+					if(currentPlayer.id == 1)
+						clearItems();
+		        		loadItems(msg.items);
+		        		sendItems = false;
+				}
             break;
             
         case "MATCHING_STATE":
         	n_jugadores = msg.players.length;
         	break;
+        case "ITEMS":
+        	clearItems();
+        	loadItems(msg.items);
     }
 }
 
