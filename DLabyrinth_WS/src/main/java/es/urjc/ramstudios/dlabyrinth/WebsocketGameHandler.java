@@ -83,8 +83,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					/*  FIN MAPA */
 					
 					/* ACTUALIZACIÓN ITEMS */
-					
-					
+					if(node.get("sendItems").asBoolean()) {
+						//json.put("type", "ITEMS");
+						json.putPOJO("items", gameController.items);
+						//session.sendMessage(new TextMessage(json.toString()));
+					}
 					/* FIN ACTUALIZACIÓN ITEMS */
 					json.put("type", "UPDATE_STATE");
 					json.putPOJO("players", gameController.getPlayers());
@@ -97,6 +100,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					json.putPOJO("players", gameController.getPlayers());
 					session.sendMessage(new TextMessage(json.toString()));
 					break;
+				case "ITEMS": 
+					String updateItemsText = node.get("items").toString();
+					Gson gsonIt = new Gson();
+					gameController.items = gsonIt.fromJson(updateItemsText, Items.class);
 				default:
 					break;
 			}
