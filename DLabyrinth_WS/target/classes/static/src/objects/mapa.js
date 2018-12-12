@@ -40,9 +40,9 @@ function Mapa(){
     this.closeZone = function(zone){
     	this.layers[zone].visible = true;
     	//Activamos colisiones del layer
-        this.tileMap.setCollisionBetween(5, 7, true, this.layers[zone]);
-        this.tileMap.setCollisionBetween(21, 23, true, this.layers[zone]);
-        this.tileMap.setCollisionBetween(37, 39, true, this.layers[zone]);
+        this.tileMap.setCollision(161, true, this.layers[zone]);
+        this.tileMap.setCollision(131, true, this.layers[zone]);
+        this.tileMap.setCollision(165, true, this.layers[zone]);
         first_visible = true;
     }
     

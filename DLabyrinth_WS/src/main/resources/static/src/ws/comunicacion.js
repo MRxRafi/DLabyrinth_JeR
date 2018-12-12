@@ -401,8 +401,11 @@ connection.onmessage = function (message) {
 				players[id].sprite.y = msg.players[id].positionY;
 				players[id].lifePoints = msg.players[id].lifePoints;
 				players[id].shield = msg.players[id].shield;
-				players[id].sprite.body.velocity.x = msg.players[id].velX;
-				players[id].sprite.body.velocity.y = msg.players[id].velY;
+				if(players[id].sprite.body){
+					players[id].sprite.body.velocity.x = msg.players[id].velX;
+					players[id].sprite.body.velocity.y = msg.players[id].velY;
+				}
+				
 				//players[id].hasOrb = msg.players[id].hasOrb;
 				players[id].win = msg.players[id].win;
 				//console.log("positionX oPlayer " + id + " : " + msg.players[id].positionX);
@@ -411,8 +414,8 @@ connection.onmessage = function (message) {
 				DLabyrinth.map = msg.map;
 				
 				if(msg.items){
-					if(currentPlayer.id == 1)
-						clearItems();
+					//if(currentPlayer.id == 1)
+						//clearItems();
 		        		loadItems(msg.items);
 		        		sendItems = false;
 				}
@@ -421,9 +424,6 @@ connection.onmessage = function (message) {
         case "MATCHING_STATE":
         	n_jugadores = msg.players.length;
         	break;
-        case "ITEMS":
-        	clearItems();
-        	loadItems(msg.items);
     }
 }
 

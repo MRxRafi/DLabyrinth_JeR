@@ -49,7 +49,7 @@ DLabyrinth.levelState.prototype = {
         map.createMap();
 
         first_visible = false;
-        sendItems = false;
+        sendItems  = false;
         //map_handler = new MapHandler(map, map.layers);
 
         temp = setInterval(miniMapUpdate, 400); //Temporizador para mejorar fps (actualiza el minimapa)
@@ -105,6 +105,7 @@ DLabyrinth.levelState.prototype = {
     update: function () {
     	if(weaponItems[0] === undefined && !cargado){
     		sendItems = true;
+    		
         }
 
         players[currentPlayer.id-1].updateInputs();

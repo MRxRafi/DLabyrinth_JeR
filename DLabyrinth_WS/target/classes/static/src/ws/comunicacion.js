@@ -354,14 +354,21 @@ function createPlayerWS(){
 function updateStateWS(){
 	connection.data.type = 'UPDATE';
 	connection.data.actualPlayer = DLabyrinth.player;
-	connection.data.items = DLabyrinth.items;
-
+	//connection.data.items = DLabyrinth.items;
+	connection.data.sendItems = sendItems;
 	connection.send(JSON.stringify(connection.data));
 }
 function updateMatchingWS(){
 	connection.data.type = 'MATCHING';
 
 	connection.send(JSON.stringify(connection.data));
+}
+function sendItemsWS(wt, wp, at, ap, sp, fp){
+	connection.data.type = "ITEMS";
+	connection.data.items = {weaponTypes: wt, weaponPos:wp, ammoTypes:at, ammoPos: ap, shieldPos: sp, foodPos: fp};
+	connection.send(JSON.stringify(connection.data));
+	console.log("[DEBUG-WS] Items enviados");
+	sendItems = true;
 }
 connection.onmessage = function (message) {
 	
@@ -394,14 +401,24 @@ connection.onmessage = function (message) {
 				players[id].sprite.y = msg.players[id].positionY;
 				players[id].lifePoints = msg.players[id].lifePoints;
 				players[id].shield = msg.players[id].shield;
-				players[id].sprite.body.velocity.x = msg.players[id].velX;
-				players[id].sprite.body.velocity.y = msg.players[id].velY;
+				if(players[id].sprite.body){
+					players[id].sprite.body.velocity.x = msg.players[id].velX;
+					players[id].sprite.body.velocity.y = msg.players[id].velY;
+				}
+				
 				//players[id].hasOrb = msg.players[id].hasOrb;
 				players[id].win = msg.players[id].win;
 				//console.log("positionX oPlayer " + id + " : " + msg.players[id].positionX);
 		        //console.log("positionY oPlayer " + id + " : " + msg.players[id].positionY);
 				
 				DLabyrinth.map = msg.map;
+				
+				if(msg.items){
+					//if(currentPlayer.id == 1)
+						//clearItems();
+		        		loadItems(msg.items);
+		        		sendItems = false;
+				}
             break;
             
         case "MATCHING_STATE":

@@ -171,6 +171,7 @@ function generateItems(){
     }
     sendItemsWS(weaponType, weaponPos, ammoType, ammoPos, shieldPos, foodPos);
 
+    clearItems();
 }
 
 function loadItems(items){
