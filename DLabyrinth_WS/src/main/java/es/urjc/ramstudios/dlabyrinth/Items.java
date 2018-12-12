@@ -80,39 +80,76 @@ public class Items {
 		int[][] sp = getShieldPos();
 		text += "{\"weaponTypes\": [";
 		for(int i = 0; i < wt.length; i++) {
-			text += wt[i];
+			text += "\"" + wt[i] + "\"";			
 			if(i < wt.length-1) {
-				text += ",";
-			}
-		}
-		text+= "], \"ammoTypes\": [";
-		for(int i = 0; i < at.length; i++) {
-			text += at[i];
-			if(i < at.length-1) {
 				text += ",";
 			}
 		}
 		text+= "], \"weaponPos\": [";
 		for(int i = 0; i < wp.length; i++) {
+			text += "[";
 			for(int j = 0; j < wp[i].length; j++) {
-				
+				text += wp[i][j];
+				if(j < 1) {
+					text += ",";
+				}
+			}
+			text += "]";
+			if(i < wp.length-1) {
+				text += ",";
 			}
 		}
+		text+= "], \"ammoTypes\": [";
+		for(int i = 0; i < at.length; i++) {
+			text += "\"" + at[i] + "\"";
+			if(i < at.length-1) {
+				text += ",";
+			}
+		}
+		text+= "], \"ammoPos\": [";
 		for(int i = 0; i < ap.length; i++) {
+			text += "[";
 			for(int j = 0; j < ap[i].length; j++) {
-				
+				text += ap[i][j];
+				if(j < 1) {
+					text += ",";
+				}
+			}
+			text += "]";
+			if(i < ap.length-1) {
+				text += ",";
 			}
 		}
-		for(int i = 0; i < fp.length; i++) {
-			for(int j = 0; j < fp[i].length; j++) {
-				
-			}
-		}
+		text+= "], \"shieldPos\": [";
 		for(int i = 0; i < sp.length; i++) {
+			text += "[";
 			for(int j = 0; j < sp[i].length; j++) {
-				
+				text += sp[i][j];
+				if(j < 1) {
+					text += ",";
+				}
+			}
+			text += "]";
+			if(i < sp.length-1) {
+				text += ",";
 			}
 		}
+		text+= "], \"foodPos\": [";
+		for(int i = 0; i < fp.length; i++) {
+			text += "[";
+			for(int j = 0; j < fp[i].length; j++) {
+				text +=fp[i][j];
+				if(j < 1) {
+					text += ",";
+				}
+			}
+			text += "]";
+			if(i < fp.length-1) {
+				text += ",";
+			}
+		}
+		text += "]}";
+		
 		return text;
 	}
 }
