@@ -7,10 +7,12 @@ function changeWeaponFunc(key ,id_player){
 
 function consumeFood(){
     players[currentPlayer.id-1].consume();
+    DLabyrinth.player.lifePoints = players[currentPlayer.id-1].lifePoints;
 }
 
 function punchFunc1(){
-	punchPlayer(currentPlayer.id);
+	//punchPlayer(currentPlayer.id);
+	DLabyrinth.player.punched = true;
     players[currentPlayer.id-1].punch();
 }
 
@@ -241,84 +243,7 @@ function loadItems(items){
 		}
 	}
 	console.log("Items loaded");
-/*
-	getWeaponItemType(function loadWT(wt){
-		if(weaponItems[0] === undefined && weaponItems.length > 1){
-			weaponItems.splice(0,weaponItems.length);
-		}
-		for(var i = 0; i < wt.length; i++){
-			var w;
-			if(wt[i] == "pistola"){
-				w = new WeaponItem(0, 0, 'pistol', 1, 500, 10, 'pistola');
-			}else if(wt[i] == "metralleta"){
-				w = new WeaponItem(0, 0,'ak-47', 0.25, 200, 30, 'metralleta');
-			}
-			
-			weaponItems.push(w);
-		}
-	});
-	
-	getWeaponItemPos(function loadWP(wp){
-		for(var i = 0; i < wp.length; i++){
-			if(weaponItems[i] != null){
-				weaponItems[i].sprite.x = wp[i][0];
-				weaponItems[i].sprite.y = wp[i][1];
-			}
-			
-			//console.log('weaponItems '+ weaponItems[i].sprite.x);
-		}
-		if(weaponItems[0] != null){ cargado = true; }
-	});
-	
-	getAmmoItemType(function loadAT(at){
-		var a;
-		if(ammoItems[0] === undefined && ammoItems.length > 1){
-			ammoItems.splice(0,ammoItems.length);
-		}
-		for(var i = 0; i < at.length; i++){
-			if(at[i] == 'pistola'){
-				a = new AmmoItem(0, 0, 'pistol_ammo', 10, 'pistola');
-			}else if(at[i] == 'metralleta'){
-				a = new AmmoItem(0, 0, 'ak47_ammo', 30, 'metralleta');
-			}
-			ammoItems.push(a);
-			//console.log("Ammo: " + a.type);
-		}
-	});
-	
-	getAmmoItemPos(function loadAP(ap){
-		for(var i = 0; i < ap.length; i++){
-			if(ammoItems[i] != null){
-				ammoItems[i].sprite.x = ap[i][0];
-				ammoItems[i].sprite.y = ap[i][1];
-			}
-			
-			//console.log('ammo item: ' + ammoItems[i].sprite.x);
-		}
-	});
-	
-	getShieldItemPos(function loadSP(sp) {
-		
-		for(var i = 0; i < sp.length; i++){
-			if((sp[i][0] != 0 || sp[i][1] != 0) && sp[i].length > 0){
-				shieldItems[i] = new ShieldItem(sp[i][0], sp[i][1]);
-			}
-			
-			//console.log(shieldItems[i]);
-			//console.log('shield ' + i);
-		}
-	});
-	
-	getFoodItemPos(function loadFP(fp) {
-		for(var i = 0; i < fp.length; i++){
-			if((fp[i][0] != 0 || fp[i][1] != 0) && fp[i].length > 0){
-				foodItems[i] = new FoodItem(fp[i][0], fp[i][1], 'food');
-			}
-			
-			//console.log(foodItems[i]);
-			//console.log('food ' + i)
-		}
-	});*/
+
 }
 
 function miniMapUpdate(){
@@ -446,11 +371,13 @@ function checkCollisions(){
                         if(game.physics.arcade.collide(players[i].sprite, b)){
                             if(players[i].shield > 0){
                                 players[i].shield -= orbes[j].weapons[0].damage;
-                                if(i==0){players[0].changedShield = true;}
+                                if(players[i].id === DLabyrinth.player.id) { DLabyrinth.player.shield = players[i].shield; players[i].changedShield = true;}
+                                //if(i==0){players[0].changedShield = true;}
 
                             }else{
                                 players[i].lifePoints -= orbes[j].weapons[0].damage;
-                                if(i==0){players[0].changedLife = true;}
+                                if(players[i].id === DLabyrinth.player.id) { DLabyrinth.player.lifePoints = players[i].lifePoints; players[i].changedLife = true;}
+                                //if(i==0){players[0].changedLife = true;}
                             }
                             if(i === currentPlayer.id-1){ drawDamageDirection(b); }
                             b.kill();
@@ -498,15 +425,4 @@ function loadOtherBullets(id){
 		}, otherId);
 	}
 }
-function checkNumPlayers(){
-	var nPlayers;
-	
-	numberPlayers(function (n){
-		if(n <= 1){
-			deletePlayer(DLabyrinth.player.id);
-			game.state.start('endingState');
-		}
-		});
-	
-	
-}
+

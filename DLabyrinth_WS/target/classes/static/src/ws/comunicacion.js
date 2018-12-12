@@ -143,6 +143,7 @@ function getBalas(callback, id){
 /*
  * ADMINISTRACIÓN PETICIONES MAPA
  */
+/*
 function startTimer() {
     $.ajax({
         method: 'PUT',
@@ -169,11 +170,11 @@ function getMapHandler(callback){
         callback(map);
     })
 }
-
+*/
 /*
  * ADMINISTRACION PETICIONES ITEMS
  */
-
+/*
 function setWeaponItemType(weaponTypes){
 	$.ajax({
 		method: 'POST',
@@ -325,7 +326,7 @@ function getFoodItemPos(callback){
 		callback(items);
 	})
 }
-
+*/
 
 // ////////////////////////////WEBSOCKETS/////////////////////////////////////
 
@@ -357,6 +358,8 @@ function updateStateWS(){
 	//connection.data.items = DLabyrinth.items;
 	connection.data.sendItems = sendItems;
 	connection.send(JSON.stringify(connection.data));
+	
+	if(DLabyrinth.player.punched = true){ DLabyrinth.player.punched = false; }
 }
 function updateMatchingWS(){
 	connection.data.type = 'MATCHING';
@@ -373,12 +376,12 @@ function sendItemsWS(wt, wp, at, ap, sp, fp){
 connection.onmessage = function (message) {
 	
    
-    console.log('[DEBUG-WS] Se ha recibido un mensaje: ' + message.data);
+    //console.log('[DEBUG-WS] Se ha recibido un mensaje: ' + message.data);
     
     
     var msg = JSON.parse(message.data);
 
-    console.log('INFO RECIBIDA ' + msg.type);
+    //console.log('INFO RECIBIDA ' + msg.type);
 
     switch (msg.type) {
         case "PLAYER_CREATED":
@@ -401,6 +404,7 @@ connection.onmessage = function (message) {
 				players[id].sprite.y = msg.players[id].positionY;
 				players[id].lifePoints = msg.players[id].lifePoints;
 				players[id].shield = msg.players[id].shield;
+				players[id].punched = msg.players[id].punched;
 				if(players[id].sprite.body){
 					players[id].sprite.body.velocity.x = msg.players[id].velX;
 					players[id].sprite.body.velocity.y = msg.players[id].velY;

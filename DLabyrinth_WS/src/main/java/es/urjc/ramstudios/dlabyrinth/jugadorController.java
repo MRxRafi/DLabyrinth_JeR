@@ -80,13 +80,13 @@ public class jugadorController {
 	
 	@PostMapping("/punch/{id}")
 	public void punch(@PathVariable long id) {
-		players.get(id).setPunch(true);
+		players.get(id).setPunched(true);
 	}
 	
 	@GetMapping("/punch/{id}")
 	public boolean hasPunched(@PathVariable long id) {
-		boolean p = players.get(id).getPunch();
-		players.get(id).setPunch(false);
+		boolean p = players.get(id).getPunched();
+		players.get(id).setPunched(false);
 		return p;
 	}
 }

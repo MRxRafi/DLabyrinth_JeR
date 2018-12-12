@@ -199,7 +199,7 @@ function Jugador(x, y, sprsheet, id_player) {
         		//updatePlayer(DLabyrinth.player);
         	}
         	
-        
+        /*
         var otherId;
         if(this.id === 1 && DLabyrinth.player.id === 1) { otherId = 2; }
         if(this.id === 2 && DLabyrinth.player.id === 2) { otherId = 1; }
@@ -216,7 +216,7 @@ function Jugador(x, y, sprsheet, id_player) {
         	
         	//players[otherPlayer.id - 1].sprite.body.velocity.x = otherPlayer.velX;
         	//players[otherPlayer.id - 1].sprite.body.velocity.y = otherPlayer.velY;
-        }
+        }*/
     }
 
     this.updateAnimations = function () {
@@ -242,6 +242,12 @@ function Jugador(x, y, sprsheet, id_player) {
         }
         
         //Puños
+        var otherId;
+        if(DLabyrinth.player.id === 1){ otherId = 2; } else { otherId = 1; }
+        if(players[otherId-1].punched){
+        	players[otherId-1].punch();
+        	//players[otherId-1].punched = false;
+        }
         /*
         if(this.id != currentPlayer.id){
 	        hasPunchedPlayer(function(punched, id){
@@ -257,15 +263,15 @@ function Jugador(x, y, sprsheet, id_player) {
             //var toRemove = playerGroup.getIndex(this.sprite);
             if(this.id === DLabyrinth.player.id){
                 //Loose
-            	
-            	
+            	DLabyrinth.player.lifePoints = 0;
+            	updateStateWS();
             	//deletePlayer(this.id);
                 game.state.start('endingState');
             }else{
             	//Win
             	DLabyrinth.player.win = true;
-            	updatePlayer(DLabyrinth.player);
-            	
+            	//updatePlayer(DLabyrinth.player);
+            	updateStateWS();
             	//deletePlayer(this.id);
                 game.state.start('endingState');
             }
@@ -275,12 +281,7 @@ function Jugador(x, y, sprsheet, id_player) {
     this.checkOtherWin = function(){
     	var otherId;
     	if(DLabyrinth.player.id === 1){ otherId = 2; } else { otherId = 1; }
-    	getPlayer(function(oPlayer){
-    		if(oPlayer.win){
-    			//Loose
-    			game.state.start('endingState');
-    		}
-    	}, otherId);
+    	if(players[otherId-1].win){ game.state.start('endingState'); }
     }
 
     //Activamos físicas arcade para el personaje

@@ -65,7 +65,7 @@ DLabyrinth.levelState.prototype = {
         DLabyrinth.player.velX = players[DLabyrinth.player.id-1].sprite.body.velocity.x,
         DLabyrinth.player.velY = players[DLabyrinth.player.id-1].sprite.body.velocity.y
         
-        updatePlayer(DLabyrinth.player);
+        //updatePlayer(DLabyrinth.player);
         
         //Inputs players
         players[0].createInputs();
@@ -114,6 +114,8 @@ DLabyrinth.levelState.prototype = {
         for (var i = 0; i < players.length; i++) {
             players[i].updateAnimations();
             players[i].checkLifePoints();
+            players[i].checkOtherWin();
+            //if(players[i].id != currentPlayer.id) { console.log("Vida del contrincante: " + players[i].lifePoints) }
         }
         
         loadOtherBullets(currentPlayer.id);
@@ -121,11 +123,15 @@ DLabyrinth.levelState.prototype = {
         map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
-        checkNumPlayers();
+        
         
         playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);
         game.world.bringToTop(playerGroup);
         /////////////////////////// INTERFAZ ///////////////////////////
+        /*
+        for(var i = 0; i < players.length; i++){
+        	if(currentPlayer.id === players[i].id) { currentPlayer = players[i]; }
+        }*/
         interfaz.updateInterface(currentPlayer, orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 

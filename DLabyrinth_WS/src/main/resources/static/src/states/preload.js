@@ -62,7 +62,7 @@ DLabyrinth.preloadState.prototype = {
     create: function() {
     	//Creamos algunas variables globales para comunicarnos con el servidor
     	DLabyrinth.player = { id:undefined, positionX:undefined, positionY:undefined, velX:undefined,
-    			velY:undefined, win: false, lifePoints: undefined, shield: undefined, punch: false, hasOrb: undefined };
+    			velY:undefined, win: false, lifePoints: undefined, shield: undefined, punched: false, hasOrb: undefined };
     	DLabyrinth.map;
     	
     	DLabyrinth.items = { weaponTypes:undefined, weaponPos:undefined, ammoTypes:undefined,

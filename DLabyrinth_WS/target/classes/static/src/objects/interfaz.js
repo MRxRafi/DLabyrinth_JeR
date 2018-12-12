@@ -145,7 +145,7 @@ function Interface() {
 
         // ///////////// VIDA ///////////////
         // Hacemos visible las vidas que le quedan al jugador
-        if (player.changedLife &&player.lifePoints > 0) {
+        if (player.changedLife && player.lifePoints > 0) {
             // Ocultamos los medios corazones
             for (i = 0; i < 3; i++) { halfH[i].visible = false; }
 

@@ -9,7 +9,7 @@ public class Jugador {
 	private boolean win;
 	private float lifePoints = 3.0F;	//le ponemos un valor ya para que no acabe el juego nada mas empezar 
 	private float shield;
-	private boolean punch;
+	private boolean punched;
 	private boolean hasOrb;
 	
 	//Contructor
@@ -86,11 +86,11 @@ public class Jugador {
 	public void setWin(boolean win) {
 		this.win = win;
 	}
-	public boolean getPunch() {
-		return punch;
+	public boolean getPunched() {
+		return punched;
 	}
-	public void setPunch(boolean punch) {
-		this.punch = punch;
+	public void setPunched(boolean punch) {
+		this.punched = punch;
 	}
 	public float getVelX() {
 		return velX;
@@ -127,7 +127,7 @@ public class Jugador {
 	public String toString() {
 		return "{\"id\":" + id + ",\"positionX\":" + positionX + ",\"positionY\":" + positionY +
 				",\"velX\":" + velX + ",\"velY\":" + velY + ",\"win\":" + win + ",\"lifePoints\":" + lifePoints +
-				",\"shield\":" + shield + ",\"punch\":" + punch + ",\"hasOrb\":" + hasOrb +"}";
+				",\"shield\":" + shield + ",\"punched\":" + punched + ",\"hasOrb\":" + hasOrb +"}";
 	}
 	
 }
