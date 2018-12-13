@@ -355,9 +355,14 @@ function createPlayerWS(){
 function updateStateWS(){
 	connection.data.type = 'UPDATE';
 	connection.data.actualPlayer = DLabyrinth.player;
-	//connection.data.items = DLabyrinth.items;
 	connection.data.sendItems = sendItems;
+	connection.data.bala = DLabyrinth.bala;
 	connection.send(JSON.stringify(connection.data));
+	
+	//Una vez mandada la bala, se reinicia para que no la siga mandando
+	DLabyrinth.bala.idJug = undefined;
+	DLabyrinth.bala.directionX = undefined;
+	DLabyrinth.bala.directionY= undefined;
 	
 	if(DLabyrinth.player.punched = true){ DLabyrinth.player.punched = false; }
 }
@@ -423,6 +428,8 @@ connection.onmessage = function (message) {
 		        		loadItems(msg.items);
 		        		sendItems = false;
 				}
+		    		shoot(msg.balas);
+
             break;
             
         case "MATCHING_STATE":
