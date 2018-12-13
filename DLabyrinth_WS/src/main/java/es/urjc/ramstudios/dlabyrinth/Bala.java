@@ -1,19 +1,19 @@
 package es.urjc.ramstudios.dlabyrinth;
 
 public class Bala {
-	private long idServer;
-	private int idJugador; //id para identificar de quien es la bala
+	//private long idServer;
+	private int idJug; //id para identificar de quien es la bala
 	private int directionX;
 	private int directionY;
 	
 	public Bala() {}
-
+	
 	public int getIdJug() {
-		return idJugador;
+		return idJug;
 	}
 
 	public void setIdJug(int idJugador) {
-		this.idJugador = idJugador;
+		this.idJug = idJugador;
 	}
 
 	public int getDirectionX() {
@@ -31,7 +31,7 @@ public class Bala {
 	public void setDirectionY(int direccionY) {
 		this.directionY = direccionY;
 	}
-
+/*
 	public long getIdServer() {
 		return idServer;
 	}
@@ -40,5 +40,9 @@ public class Bala {
 		this.idServer = idServer;
 	}
 	
-	
+	*/
+	@Override
+	public String toString() {
+		return "{\"idJug\":"+this.idJug+",\"directionX\":"+this.directionX+",\"directionY\":"+this.directionY+"}";
+	}
 }
