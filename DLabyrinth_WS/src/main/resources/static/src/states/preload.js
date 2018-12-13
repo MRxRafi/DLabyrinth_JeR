@@ -73,7 +73,9 @@ DLabyrinth.preloadState.prototype = {
     	DLabyrinth.items.ammoPos = new Array();
     	DLabyrinth.items.foodPos = new Array();
     	DLabyrinth.items.shieldPos = new Array();
-    	
+	    
+    	DLabyrinth.bala = {idJug: this.id, directionX:undefined, directionY:undefined};
+	    
     	//Pasamos al siguiente estado
        game.state.start('menuState');
     },
