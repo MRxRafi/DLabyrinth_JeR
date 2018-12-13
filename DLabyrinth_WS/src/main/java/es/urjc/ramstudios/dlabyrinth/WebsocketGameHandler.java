@@ -89,9 +89,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						//session.sendMessage(new TextMessage(json.toString()));
 					}
 					/* FIN ACTUALIZACIÓN ITEMS */
+					
+					/* ACTUALIZACION BALAS */
+					Gson gsonb = new Gson();
+					Bala b = gsonb.fromJson(node.get("bala").toString(), Bala.class);
+					if(b.getIdJug() > 0)
+						gameController.balas.add(b);
+					/* FIN ACTUALIZACIÓN BALAS */
+					
 					json.put("type", "UPDATE_STATE");
 					json.putPOJO("players", gameController.getPlayers());
 					json.putPOJO("map", gameController.getTimer());
+					json.putPOJO("balas", gameController.getBalasString(updPlayer.getId()));
 					session.sendMessage(new TextMessage(json.toString()));
 					break;
 				
