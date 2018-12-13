@@ -117,9 +117,7 @@ DLabyrinth.levelState.prototype = {
             players[i].checkOtherWin();
             //if(players[i].id != currentPlayer.id) { console.log("Vida del contrincante: " + players[i].lifePoints) }
         }
-        
-        loadOtherBullets(currentPlayer.id);
-        
+                
         map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
