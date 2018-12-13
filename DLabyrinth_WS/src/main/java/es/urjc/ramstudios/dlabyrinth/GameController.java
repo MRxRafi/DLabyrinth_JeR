@@ -1,26 +1,32 @@
 package es.urjc.ramstudios.dlabyrinth;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 //import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-
+/*
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
+*/
 public class GameController {
 
 	Map<Long, Jugador> players = new ConcurrentHashMap<>();
+	List<Bala> balas = new ArrayList<>();
+	
 	AtomicLong nextId = new AtomicLong(0);
 	
 	TimeManager time = new TimeManager(); //Timer del mapa con su gestión de cierre de zonas
 	boolean startTimer = false;
 	
 	Items items = new Items();
+	
+	//Bala bala = new Bala();
 
 	//COSAS DE JUGADOR
 	public Collection<Jugador> getPlayers() {
@@ -116,5 +122,19 @@ public class GameController {
 	public void setFoodPos(int[][] pos) {
 		items.setFoodPos(pos);
 	}
-
+	
+	public String getBalasString(long id) {
+		String b = "[";
+		for(int i = 0; i < balas.size(); i++) {
+			b += balas.get(i).toString();
+			if(id != balas.get(i).getIdJug()) {
+				balas.remove(i);
+			}
+			if(i < balas.size()-1) {
+				b+= ",";
+			}
+		}
+		b+="]";
+		return b;
+	}
 }
