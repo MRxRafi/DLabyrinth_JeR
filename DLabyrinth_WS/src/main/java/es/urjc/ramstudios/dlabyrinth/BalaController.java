@@ -62,7 +62,7 @@ public class BalaController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Bala nuevaBala(@RequestBody Bala bala) {
 		long balaid = nextId.incrementAndGet();
-		bala.setIdServer(balaid);
+		//bala.setIdServer(balaid);
 		balas.put(balaid, bala);
 
 		System.out.println("\nBala: \nIdJug: " + bala.getIdJug() + "\nDireccion: " + bala.getDirectionX() + " " + bala.getDirectionY());
