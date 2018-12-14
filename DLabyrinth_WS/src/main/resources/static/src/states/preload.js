@@ -76,6 +76,9 @@ DLabyrinth.preloadState.prototype = {
 	    
     	DLabyrinth.bala = {idJug: this.id, directionX:undefined, directionY:undefined};
 	    
+    	//Abrimos conexión WS
+    	openWSConnection();
+    	
     	//Pasamos al siguiente estado
        game.state.start('menuState');
     },

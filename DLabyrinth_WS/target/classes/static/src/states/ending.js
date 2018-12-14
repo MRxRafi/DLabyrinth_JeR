@@ -17,7 +17,6 @@ DLabyrinth.endingState.prototype = {
 		} else {
 			text = game.add.text(400, 250, "Has perdido..\n\nGracias por jugar\n\nPulse 'Space'\n\npara volver al menú");
 		}
-		deletePlayer(DLabyrinth.player.id);
 		
         text.anchor.setTo(0.5);
 
@@ -38,11 +37,34 @@ DLabyrinth.endingState.prototype = {
 		//Añadimos el input de nuestra tecla
         spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+    	//Mandamos al servidor la señal para reiniciar todas las variables y cerrar conexión
+        clearInterval(updateTemp);
+    	closeConnection();
+    	/*
+        //Reiniciamos todas las variables!!
+    	DLabyrinth.player = { id:undefined, positionX:undefined, positionY:undefined, velX:undefined,
+    			velY:undefined, win: false, lifePoints: undefined, shield: undefined, punched: false, hasOrb: undefined };
+    	DLabyrinth.map;
+    	
+    	DLabyrinth.items = { weaponTypes:undefined, weaponPos:undefined, ammoTypes:undefined,
+    			ammoPos:undefined, foodPos:undefined, shieldPos:undefined }
+    	DLabyrinth.items.weaponTypes = new Array();
+    	DLabyrinth.items.weaponPos = new Array();
+    	DLabyrinth.items.ammoTypes = new Array();
+    	DLabyrinth.items.ammoPos = new Array();
+    	DLabyrinth.items.foodPos = new Array();
+    	DLabyrinth.items.shieldPos = new Array();
+	    
+    	DLabyrinth.bala = {idJug: this.id, directionX:undefined, directionY:undefined};
+    	*/
+    	
     },
 
 	//función que cambia de estado al pulsar la tecla seleccionada
     update : function(){
-        if(spaceKey.isDown) { game.state.start('menuState'); }
+        if(spaceKey.isDown) { 
+        	game.state.start('bootState');
+        }
     },
 
 }

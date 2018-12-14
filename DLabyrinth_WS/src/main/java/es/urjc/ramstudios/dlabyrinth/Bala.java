@@ -20,15 +20,15 @@ public class Bala {
 		return directionX;
 	}
 
-	public void setDirectionX(float direccionX) {
+	public void setDirectionX(int direccionX) {
 		this.directionX = direccionX;
 	}
 
-	public int getDirectionY() {
+	public float getDirectionY() {
 		return directionY;
 	}
 
-	public void setDirectionY(float direccionY) {
+	public void setDirectionY(int direccionY) {
 		this.directionY = direccionY;
 	}
 /*

@@ -16,6 +16,15 @@ function punchFunc1(){
     players[currentPlayer.id-1].punch();
 }
 
+function shoot(balas){
+	for(var i = 0; i < balas.length; i++){
+		if(players[balas[i].idJug-1].hasOrb){
+			orbes[balas[i].idJug -1].weapons[0].weapon.fireAtXY(balas[i].directionX, balas[i].directionY);
+			console.log("disparada bala de "+ balas[i].idJug);
+		}
+	}
+}
+
 //Funcion para dibujar la direccion del daño. El dato entrante, b , es el sprite de la bala que colisiona con el jugador.
 function drawDamageDirection(b){
     //Cálculo de la dirección de la bala y su rotación
@@ -403,7 +412,8 @@ function checkCollisions(){
     
 }
 
-//Lee las balas que ha lanzado el otro cliente (del servidor) y las pinta en el cliente actual
+//Lee las balas que ha lanzado el otro cliente (del servidor) y las pinta en el cliente actual (APIREST)
+/*
 function loadOtherBullets(id){
 	if(id === DLabyrinth.player.id){
 		var otherId;
@@ -424,5 +434,5 @@ function loadOtherBullets(id){
 			
 		}, otherId);
 	}
-}
+}*/
 

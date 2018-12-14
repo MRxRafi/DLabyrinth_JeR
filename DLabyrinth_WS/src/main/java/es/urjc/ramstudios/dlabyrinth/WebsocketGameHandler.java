@@ -95,6 +95,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					Bala b = gsonb.fromJson(node.get("bala").toString(), Bala.class);
 					if(b.getIdJug() > 0)
 						gameController.balas.add(b);
+					
 					/* FIN ACTUALIZACIÓN BALAS */
 					
 					json.put("type", "UPDATE_STATE");
@@ -107,6 +108,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				case "MATCHING":
 					json.put("type", "MATCHING_STATE");
 					json.putPOJO("players", gameController.getPlayers());
+					session.sendMessage(new TextMessage(json.toString()));
+					break;
+				case "ENDING":
+					int idPlayer = node.get("actualPlayer").get("id").asInt();
+					
+					//El jugador 1 se encarga de reiniciar mapa
+					if(idPlayer == 1) { gameController.time = new TimeManager(); gameController.startTimer = false; }
+					gameController.deletePlayer((long)idPlayer);
+					
+					json.put("type", "ENDING_STATE");
 					session.sendMessage(new TextMessage(json.toString()));
 					break;
 				case "ITEMS": 

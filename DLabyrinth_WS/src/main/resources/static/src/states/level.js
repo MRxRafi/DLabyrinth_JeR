@@ -1,14 +1,13 @@
 DLabyrinth.levelState = function (game) {
 
 }
-var uodateTemp;
+var updateTemp;
 var players;
 var currentPlayer;
 var orbes;
 var cargado;
 var weaponItems;
 var ammoItems;
-//var lifeItems;
 var shieldItems;
 var foodItems;
 var interfaz;
@@ -28,8 +27,6 @@ DLabyrinth.levelState.prototype = {
     },
 
     create: function () {
-        //Sprite background
-        //this.bg = game.add.tileSprite(0, 0, 1920, 1920, 'bg');
 
         //Límites del mundo para la cámara
         game.world.setBounds(0, 0, 3200, 3200);
@@ -40,7 +37,6 @@ DLabyrinth.levelState.prototype = {
         orbes = new Array();
         weaponItems = new Array();
         ammoItems = new Array();
-        //lifeItems = new Array();
         shieldItems = new Array();
         foodItems = new Array();
 
@@ -64,8 +60,6 @@ DLabyrinth.levelState.prototype = {
         DLabyrinth.player.positionY = players[DLabyrinth.player.id-1].sprite.y,
         DLabyrinth.player.velX = players[DLabyrinth.player.id-1].sprite.body.velocity.x,
         DLabyrinth.player.velY = players[DLabyrinth.player.id-1].sprite.body.velocity.y
-        
-        //updatePlayer(DLabyrinth.player);
         
         //Inputs players
         players[0].createInputs();
@@ -115,21 +109,15 @@ DLabyrinth.levelState.prototype = {
             players[i].updateAnimations();
             players[i].checkLifePoints();
             players[i].checkOtherWin();
-            //if(players[i].id != currentPlayer.id) { console.log("Vida del contrincante: " + players[i].lifePoints) }
         }
                 
         map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 
         
-        
         playerGroup.sort('y', Phaser.Group.SORT_ASCENDING);
         game.world.bringToTop(playerGroup);
         /////////////////////////// INTERFAZ ///////////////////////////
-        /*
-        for(var i = 0; i < players.length; i++){
-        	if(currentPlayer.id === players[i].id) { currentPlayer = players[i]; }
-        }*/
         interfaz.updateInterface(currentPlayer, orbes);
         /////////////////////////// FIN INTERFAZ ///////////////////////////
 

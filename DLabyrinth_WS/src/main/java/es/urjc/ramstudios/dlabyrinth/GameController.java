@@ -49,6 +49,7 @@ public class GameController {
 		Jugador savedPlayer = players.get(id);
 		if (savedPlayer != null) {
 			players.remove(savedPlayer.getId());
+			nextId.decrementAndGet();
 		}
 	}
 	

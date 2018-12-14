@@ -62,7 +62,6 @@ function Jugador(x, y, sprsheet, id_player) {
     game.physics.enable(this.collisionArea, Phaser.Physics.ARCADE);
 
   //SI ES EL JUGADOR 1, COMENZAMOS EL TIMER DEL SERVIDOR (MapController)
-    //if(this.id === 1 && DLabyrinth.player.id === 1) { startTimer(); }
     if(this.id === 1 && DLabyrinth.player.id === 1) { connection.data.startedTimer = true; }
     
     this.punch = function () {
@@ -158,30 +157,19 @@ function Jugador(x, y, sprsheet, id_player) {
             if (this.xKey.isDown) {
                 keydownMove = true;
             }
-            if (this.spaceKey.isDown) {
+           if (this.spaceKey.isDown && this.hasOrb) {
             	if (orbes[this.id-1].weapons[0].ammo > 0) {
                 	//Al disparar debemos enviar al servidor que hemos disparado
                 	/* INFORMACIÓN A ENVIAR
                 	 * 1. ID del jugador que disparó
                 	 * 2. Dirección del disparo
                 	 */
-                	if(!disparado){
-                		var bala = {
-                    			idJug: this.id,
-                    			directionX: game.input.mousePointer.position.x + game.camera.x,
-                    			directionY: game.input.mousePointer.position.y + game.camera.y
-                    	}
-                		//console.log(bala.directionX + " / " + bala.directionY);
-                    	//Ajax Put
-                		createBala(bala);
+                		DLabyrinth.bala.idJug = this.id;
+                		DLabyrinth.bala.directionX = game.input.mousePointer.position.x + game.camera.x,
+                		DLabyrinth.bala.directionY = game.input.mousePointer.position.y + game.camera.y;
                 		disparado = true;
                 		setTimeout(function(){ disparado = false; },orbes[this.id-1].weapons[0].weapon.fireRate);
-                	}
 
-                	
-                	
-                	//Disparamos en el juego
-                    orbes[this.id-1].weapons[0].weapon.fireAtPointer(game.input.mousePointer);
                 }
             }
 
