@@ -5,6 +5,7 @@ VIDEO
 ~~~
 Se va a mostrar un breve vídeo en el que se indica las cosas mas destacables del juego. Se enseñará la pantalla de login y parte de una partida para que se puedan ver las mecánicas basicas. 
 
+https://www.youtube.com/watch?v=xnlLLIOrO3A
 
 ~~~
 CONCEPTO  
