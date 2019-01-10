@@ -1,7 +1,10 @@
 //Funcion de cambio de arma. Utiliza el ID del jugador y la tecla para activarlo.
 function changeWeaponFunc(key ,id_player){
     if(players[id_player].hasOrb){
-        orbes[id_player].switch();
+    	if(!orbes[id_player].weapons[1].empty){
+    		orbes[id_player].switch();
+    	}
+        
     }
 }
 
