@@ -19,7 +19,7 @@ window.onbeforeunload = function(){
 
 var connection;
 function openWSConnection(){
-	connection = new WebSocket('ws://localhost:8080/dlabyrinth');
+	connection = new WebSocket('ws://' + window.location.host + '/dlabyrinth');
 	connection.data = { type:undefined, actualPlayer:undefined, players:undefined, items: undefined, startedTimer:false, map:undefined };
 	connection.data.players = new Array();
 	
