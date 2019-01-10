@@ -8,6 +8,7 @@ function changeWeaponFunc(key ,id_player){
 function consumeFood(){
     players[currentPlayer.id-1].consume();
     DLabyrinth.player.lifePoints = players[currentPlayer.id-1].lifePoints;
+    eatAudio.play();
 }
 
 function punchFunc1(){
@@ -19,6 +20,7 @@ function punchFunc1(){
 function shoot(balas){
 	for(var i = 0; i < balas.length; i++){
 		if(players[balas[i].idJug-1].hasOrb){
+			shotAudio.play();
 			orbes[balas[i].idJug -1].weapons[0].weapon.fireAtXY(balas[i].directionX, balas[i].directionY);
 			console.log("disparada bala de "+ balas[i].idJug);
 		}
@@ -301,6 +303,7 @@ function checkCollisions(){
                     orbes[j].setWeapon(o);
                     o.sprite.destroy();
                     weaponItems.splice(i, 1);
+                    pickupAudio.play();
                 }
                 i++;
             }
@@ -321,6 +324,7 @@ function checkCollisions(){
                         if(orbes[j].setAmmo(o)){ 
                         o.sprite.destroy();
                         ammoItems.splice(i, 1);
+                        pickupAudio.play();
                         }
                     }
             }
@@ -341,6 +345,7 @@ function checkCollisions(){
                     shieldItems[i].sprite.destroy();
                     shieldItems.splice(i, 1);
                     players[j].changedShield = true;
+                    shieldAudio.play();
                 }
                 
             }
@@ -359,6 +364,7 @@ function checkCollisions(){
                         players[j].food++;
                         foodItems[i].sprite.destroy();
                         foodItems.splice(i, 1);
+                        pickupAudio.play();
                     }
                 
                 }
@@ -390,6 +396,7 @@ function checkCollisions(){
                             }
                             if(i === currentPlayer.id-1){ drawDamageDirection(b); }
                             b.kill();
+                            hitAudio.play();
                         }
                     }
                 }

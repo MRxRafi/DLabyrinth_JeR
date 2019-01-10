@@ -6,7 +6,7 @@ function Orbe(sprsheet, pl){
 
     //Añadimos orbe cerca del jugador correspondiente
     this.sprite = game.add.sprite(pl.sprite.x - this.offsetX, pl.sprite.y - this.offsetY ,sprsheet);
-    this.sprite.scale.setTo(0.05);
+    //this.sprite.scale.setTo(0.05);
     this.sprite.anchor.setTo(0.5);
 
     this.weapons = [new Weapon(), new Weapon()];
@@ -19,10 +19,12 @@ function Orbe(sprsheet, pl){
     }
     //Funcion para intercambiar armas
     this.switch = function(){
-        var a = this.weapons[0];
-        this.weapons[0] = this.weapons[1];
-        this.weapons[1] = a;
-       
+    	if(!this.weapons[1].empty){
+	        var a = this.weapons[0];
+	        this.weapons[0] = this.weapons[1];
+	        this.weapons[1] = a;
+	        switchAudio.play();
+    	}
     }
     //Funcion para asignar el arma al orbe.
     this.setWeapon = function(w){

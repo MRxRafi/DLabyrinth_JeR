@@ -21,13 +21,35 @@ var map_handler; //Objeto que maneja las habitacioens a cerrar
 var playerGroup; //Grupo para los personajes (ordenar su profundidad para que aparezcan detras o delante)
 var itemsGroup; //Grupo para los items para que siempre aparezcan detrás del personaje
 
+//audio
+var shotAudio;
+var pickupAudio;
+var eatAudio;
+var switchAudio;
+var gameplayAudio;
+var shieldAudio;
+var hitAudio;
+
 DLabyrinth.levelState.prototype = {
     preload: function () {
 
     },
 
     create: function () {
+    	//botones del ratón
+    	game.input.mouse.capture = true;
 
+    	//Audio
+    	shotAudio = game.add.audio('shot');
+    	pickupAudio = game.add.audio('pickup');
+    	eatAudio = game.add.audio('eat');
+    	switchAudio = game.add.audio('switch');
+    	shieldAudio = game.add.audio('shield');
+    	hitAudio = game.add.audio('hit');
+    	
+    	gameplayAudio = game.add.audio('gameplay');;
+    	gameplayAudio.loopFull(),
+    	
         //Límites del mundo para la cámara
         game.world.setBounds(0, 0, 3200, 3200);
         //game.stage.backgroundColor = "#71706F";
@@ -53,7 +75,7 @@ DLabyrinth.levelState.prototype = {
         //Creamos los jugador
         playerGroup = game.add.group();
         players.push(new Jugador(300, 300, 'spriteSheet', 1));
-        players.push(new Jugador(500, 300, 'spriteSheet2', 2));
+        players.push(new Jugador(1000, 300, 'spriteSheet2', 2));
 
         //Variables que subiremos al servidor y leerá el otro usuario
         DLabyrinth.player.positionX = players[DLabyrinth.player.id-1].sprite.x,

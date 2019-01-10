@@ -122,6 +122,7 @@ function Jugador(x, y, sprsheet, id_player) {
             this.xKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
             this.xKey.onDown.add(punchFunc1);
             this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            this.mouseButton = game.input.activePointer.leftButton;
     	}
     }
 
@@ -157,7 +158,7 @@ function Jugador(x, y, sprsheet, id_player) {
             if (this.xKey.isDown) {
                 keydownMove = true;
             }
-           if (this.spaceKey.isDown && this.hasOrb) {
+           if (this.mouseButton.isDown && this.hasOrb) {
             	if (orbes[this.id-1].weapons[0].ammo > 0) {
                 	//Al disparar debemos enviar al servidor que hemos disparado
                 	/* INFORMACIÓN A ENVIAR

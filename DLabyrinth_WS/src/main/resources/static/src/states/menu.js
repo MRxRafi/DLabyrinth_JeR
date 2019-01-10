@@ -4,6 +4,9 @@ DLabyrinth.menuState = function(game){
 
 //Variables generales para poder usarlas en create y update
 var  image1, image2, image3, image4, image5;
+var menuAudio;
+var beepAudio2;
+var play = false;								
 
 DLabyrinth.menuState.prototype = {
 
@@ -13,6 +16,11 @@ DLabyrinth.menuState.prototype = {
     },
 
     create: function() {
+    	
+    	//audio
+    	menuAudio = game.add.audio('menu');
+    	beepAudio2 = game.add.audio('beep2');
+    	menuAudio.play();
         
 	    game.add.tileSprite(0, 0, 800, 600, 'background');
 
@@ -22,7 +30,7 @@ DLabyrinth.menuState.prototype = {
         image4 = game.add.sprite(260, 440, 'salirM');
         image5 = game.add.sprite(100, 25, 'titulo');
 
-	image1.alpha = 0.75;
+        image1.alpha = 0.75;
         image2.alpha = 0.75;
         image3.alpha = 0.75;
         image4.alpha = 0.75;
@@ -55,7 +63,6 @@ DLabyrinth.menuState.prototype = {
      if (image2.input.pointerOver())
     {
         image2.alpha = 1;
-        
     }
     else
     {
@@ -66,8 +73,7 @@ DLabyrinth.menuState.prototype = {
      if (image3.input.pointerOver())
     {
         image3.alpha = 1;
-        
-    }
+     }
     else
     {
         image3.alpha = 0.75;
@@ -77,8 +83,7 @@ DLabyrinth.menuState.prototype = {
      if (image4.input.pointerOver())
     {
         image4.alpha = 1;
-        
-    }
+     }
     else
     {
         image4.alpha = 0.75;
@@ -88,19 +93,20 @@ DLabyrinth.menuState.prototype = {
     },
 
    avanzar1: function() {
-
+	   	beepAudio2.play();
+	   	menuAudio.stop();
         this.game.state.start('matchingState');
       
     },
 
     avanzar2: function() {
-
+    	beepAudio2.play();
         this.game.state.start('optionState');
       
     },
   //Al pulsar exit vamos al ending state, para que se vea en caso de fallo	
     avanzar3: function() {
-
+    	beepAudio2.play();
         this.game.state.start('endingState');
       
 },
