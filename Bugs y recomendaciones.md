@@ -4,7 +4,7 @@ Todo lo que se encuentra en cada sección está ordenado de mayor a menor import
 Error al recoger objetos: a veces no desaparecen. +3  
 Error al generar objetos: aparecen a veces posiciones no asequibles. +2  
 Colisión con un espacio invisible en el mapa +2  
-Contador de munición: al cambiar de arma solo teniendo una, sale “undefined” +2  
+~~Contador de munición: al cambiar de arma solo teniendo una, sale “undefined” +2~~ ARREGLADO  
 Minimapa: cuadrado de imprecisión a la hora de mostrar al jugador +3  
 
 **BUGS DESCONOCIDOS**  
@@ -28,7 +28,7 @@ Objetos del juego demasiado simplistas (sin sombras ni brillos)
 
 
 **RECOMENDACIONES DESCONOCIDAS**  
-CAMBIAR LO DE LA IP PARA QUE SEA AUTOMATICO (Analisis JUEGO_4-7)  
+~~CAMBIAR LO DE LA IP PARA QUE SEA AUTOMATICO (Analisis JUEGO_4-7)~~  HECHO
 A nivel gráfico, animaciones demasiado rápidas y con algún error de encuadre. Los sprites autogenerados hacen que pierda identidad propia el juego. Estética. +4  
 Minimapa: lioso no saber el espacio completo por el que te mueves. Tapa una buena parte de la pantalla. +2  
 Apuntar con el raton -> disparar con el raton  
