@@ -5,6 +5,7 @@ VIDEO
 ~~~
 Se va a mostrar un breve vídeo en el que se indica las cosas mas destacables del juego. Se enseñará la pantalla de login y parte de una partida para que se puedan ver las mecánicas basicas. 
 
+https://www.youtube.com/watch?v=xnlLLIOrO3A
 
 ~~~
 CONCEPTO  
@@ -87,6 +88,14 @@ DIAGRAMA DE CLASES DE API REST
 Esta es la relación de las clases de nuestro API REST.
 
 ![Error al Cargar](/DLabyrinth/antiguo_assets/diagrama_clases1.png)
+
+~~~
+DIAGRAMA DE CLASES DE WEBSOCKETS
+~~~
+Aquí incluimos otro diagrama de clases para los websockets.
+
+![Error al Cargar](/DLabyrinth/antiguo_assets/diagrama_clases2.png)
+
 ~~~
 ESTADOS DEL JUEGO  
 ~~~
