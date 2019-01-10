@@ -12,6 +12,9 @@ WebFontConfig = {
 
 DLabyrinth.preloadState.prototype = {
     preload: function() {
+    	//Ejecutar en 2º plano
+        game.stage.disableVisibilityChange=true;
+    	
     	//LOADING TEXT
     	game.add.text(game.world.centerX - 140, 220, "Loading", { font: "40px Press Start 2P", fill: "#FFFFFF", align: "left" });
 

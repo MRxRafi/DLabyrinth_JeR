@@ -234,91 +234,51 @@ function Interface() {
         miniMapBmd.ctx.clearRect(0, 0, miniMap.width, miniMap.height);
         var x, y, min_x, min_y; // Cuadrante en el que se encuentra el jugador
         /*
-		 * Distribucion de cuadrantes tomando el mapa como referencia: { 0, 1,
-		 * 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }
+		 * Distribucion de cuadrantes tomando el mapa como referencia:
+		 * { 0,  1,  2,  3,
+		 *   4,  5,  6,  7,
+		 *   8,  9,  10, 11,
+		 *   12, 13, 14, 15 }
 		 */
         if (player) {
-            if (Math.floor(player.sprite.x / 32) < 25) { // El jugador se
-																// encuentra
-																// entre los
-																// cuadrantes 0,
-																// 4, 8, 12
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 0; min_y = 0; x = 25; y = 25; }// Cuadrante
-																											// 0
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 0; min_y = 25; x = 25; y = 50; }// Cuadrante
-																																								// 4
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 0; min_y = 50; x = 25; y = 75; }// Cuadrante
-																																								// 8
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 0; min_y = 75; x = 25; y = 100; }// Cuadrante
-																												// 12
+        	// El jugador se encuentra entre los cuadrantes 0, 4, 8, 12
+            if (Math.floor(player.sprite.x / 32) < 25) { 
 
-            } else if (Math.floor(player.sprite.x / 32) >= 25 && Math.floor(player.sprite.x / 32) < 50) { // El
-																														// jugador
-																														// se
-																														// encuentra
-																														// entre
-																														// los
-																														// cuadrantes
-																														// 1,
-																														// 5,
-																														// 9,
-																														// 13
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 25; min_y = 0; x = 50; y = 25; }// Cuadrante
-																											// 1
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 25; min_y = 25; x = 50; y = 50; }// Cuadrante
-																																								// 5
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 25; min_y = 50; x = 50; y = 75; }// Cuadrante
-																																								// 9
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 25; min_y = 75; x = 50; y = 100; }// Cuadrante
-																												// 13
+                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 0; min_y = 0; x = 25; y = 25; } //Cuadrante 0
+                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 0; min_y = 25; x = 25; y = 50; }// Cuadrante 4
+                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 0; min_y = 50; x = 25; y = 75; }// Cuadrante 8
+                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 0; min_y = 75; x = 25; y = 100; }// Cuadrante 12
+                
+            // El jugador se encuentra entre los cuadrantes 1, 5, 9, 13
+            } else if (Math.floor(player.sprite.x / 32) >= 25 && Math.floor(player.sprite.x / 32) < 50) {
 
-            } else if (Math.floor(player.sprite.x / 32) >= 50 && Math.floor(player.sprite.x / 32) < 75) { // El
-																														// jugador
-																														// se
-																														// encuentra
-																														// entre
-																														// los
-																														// cuadrantes
-																														// 2,
-																														// 6,
-																														// 10,
-																														// 14
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 50; min_y = 0; x = 75; y = 25; }// Cuadrante
-																											// 2
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 50; min_y = 25; x = 75; y = 50; }// Cuadrante
-																																								// 6
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 50; min_y = 50; x = 75; y = 75; }// Cuadrante
-																																								// 10
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 50; min_y = 75; x = 75; y = 100; }// Cuadrante
-																												// 14
+                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 25; min_y = 0; x = 50; y = 25; }// Cuadrante 1
+                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 25; min_y = 25; x = 50; y = 50; }// Cuadrante 5
+                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 25; min_y = 50; x = 50; y = 75; }// Cuadrante 9
+                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 25; min_y = 75; x = 50; y = 100; }// Cuadrante 13
 
-            } else if (Math.floor(player.sprite.x / 32) >= 75) { // El
-																		// jugador
-																		// se
-																		// encuentra
-																		// entre
-																		// los
-																		// cuadrantes
-																		// 3, 7,
-																		// 11,
-																		// 15
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 75; min_y = 0; x = 100; y = 25; }// Cuadrante
-																												// 3
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 75; min_y = 25; x = 100; y = 100; }// Cuadrante
-																																								// 7
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 75; min_y = 50; x = 100; y = 75; }// Cuadrante
-																																								// 11
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 75; min_y = 75; x = 100; y = 100; }// Cuadrante
-																												// 15
+            // El jugador se encuentra entre los cuadrantes 2, 6, 10, 14
+            } else if (Math.floor(player.sprite.x / 32) >= 50 && Math.floor(player.sprite.x / 32) < 75) { 
+
+                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 50; min_y = 0; x = 75; y = 25; }// Cuadrante 2
+                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 50; min_y = 25; x = 75; y = 50; }// Cuadrante 6
+                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 50; min_y = 50; x = 75; y = 75; }// Cuadrante 10
+                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 50; min_y = 75; x = 75; y = 100; }// Cuadrante 14
+
+            } else if (Math.floor(player.sprite.x / 32) >= 75) { // // El jugador se encuentra entre los cuadrantes 3, 7, 11, 15
+
+                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 75; min_y = 0; x = 100; y = 25; }// Cuadrante 3
+                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 75; min_y = 25; x = 100; y = 100; }// Cuadrante 7
+                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 75; min_y = 50; x = 100; y = 75; }// Cuadrante 11
+                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 75; min_y = 75; x = 100; y = 100; }// Cuadrante 15
             }
         }
+        
         if (boolUpdate) {
-            for (l = 0; l < map.layers.length; l++) { // l <
-														// g_game.tileMap.layers.length
-                for (fy = min_y; fy < y; fy++) { // y <
-													// g_game.tileMap.layers.height
-                    for (fx = min_x; fx < x; fx++) { // x <
-														// g_game.tileMap.width
+            for (l = 0; l < map.layers.length; l++) { // l < g_game.tileMap.layers.length
+                for (fy = min_y; fy < y; fy++) { // y < g_game.tileMap.layers.height
+                    for (fx = min_x; fx < x; fx++) { // x < g_game.tileMap.width
+
                         var tile = map.tileMap.getTile(fx, fy, l);
                         // console.log(tile);
                         if (map.layers[l].visible && tile) {
@@ -340,9 +300,8 @@ function Interface() {
                                 // fill a pixel in the minimap
                                 miniMapBmd.ctx.fillStyle = '#08298A';
                                 miniMapBmd.ctx.fillRect((fx - min_x) * 8, (fy - min_y) * 8, 8, 8);
-
-
                             }
+                            
                             for (i = 1; i <= 11; i++) {
                                 if (tile.layer.name === "bloqueo" + i) {
                                     // fill a pixel in the minimap
@@ -352,6 +311,7 @@ function Interface() {
                             }
 
                         }
+                        
                         if(DLabyrinth.map != undefined){
                         	if (!map.layers[l].visible && tile && ((DLabyrinth.map.nextRoom + 5) === l)) {
                                 // fill a pixel in the minimap
@@ -371,11 +331,11 @@ function Interface() {
                     }
                 }
             }
-            miniMapBmd.dirty = true; // Sirve para que se actualice
-										// correctamente el minimapa
+            
+            // Sirve para que se actualice correctamente el minimapa
+            miniMapBmd.dirty = true; 
             boolUpdate = false;
         }
-
 
         // Aquí es donde actualizamos dinámicamente los objetos que se mueven
         game.miniMapOverlayBmd.context.clearRect(0, 0, game.miniMapOverlay.width, game.miniMapOverlay.height);
@@ -391,8 +351,10 @@ function Interface() {
 	            game.miniMapOverlayBmd.rect(Math.floor((players[i].sprite.x / 32) - min_x) * 8, Math.floor((players[i].sprite.y / 32) - min_y) * 8, 8, 8, 'red');
 	        }
         }
-        game.miniMapOverlayBmd.dirty = true; // Sirve para que se actualice
-												// correctamente el minimapa
+        
+        // Sirve para que se actualice correctamente el minimapa
+        game.miniMapOverlayBmd.dirty = true; 
+
         // ///////////// FIN MINIMAPA ///////////////
 
         // ////////// DAÑO ///////////////
