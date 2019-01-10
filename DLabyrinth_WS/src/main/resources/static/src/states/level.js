@@ -11,6 +11,7 @@ var ammoItems;
 var shieldItems;
 var foodItems;
 var interfaz;
+var iGroup;
 var map, layer;
 var temp, boolUpdate;
 var damage_spr;
@@ -20,6 +21,7 @@ var first_visible; // Es true cuando acaba de hacerse visible una capa de bloque
 var map_handler; //Objeto que maneja las habitacioens a cerrar
 var playerGroup; //Grupo para los personajes (ordenar su profundidad para que aparezcan detras o delante)
 var itemsGroup; //Grupo para los items para que siempre aparezcan detrás del personaje
+var textItems; //Array de textos para feedback actuales en la pantalla
 
 //audio
 var shotAudio;
@@ -61,7 +63,8 @@ DLabyrinth.levelState.prototype = {
         ammoItems = new Array();
         shieldItems = new Array();
         foodItems = new Array();
-
+        textItems = new Array();
+        
         //Mapa
         map = new Mapa();
         map.createMap();
@@ -75,7 +78,7 @@ DLabyrinth.levelState.prototype = {
         //Creamos los jugador
         playerGroup = game.add.group();
         players.push(new Jugador(300, 300, 'spriteSheet', 1));
-        players.push(new Jugador(1000, 300, 'spriteSheet2', 2));
+        players.push(new Jugador(500, 300, 'spriteSheet2', 2));
 
         //Variables que subiremos al servidor y leerá el otro usuario
         DLabyrinth.player.positionX = players[DLabyrinth.player.id-1].sprite.x,
@@ -93,6 +96,7 @@ DLabyrinth.levelState.prototype = {
         damage_spr.visible = false;
 
         /////////////////////////// INTERFAZ ///////////////////////////
+        iGroup = game.add.group(); // Grupo de sprite de la interfaz
         interfaz = new Interface();
         interfaz.createInterface();
         /////////////////////////// FIN INTERFAZ ///////////////////////////
@@ -102,6 +106,13 @@ DLabyrinth.levelState.prototype = {
             if(players[i].id === DLabyrinth.player.id){
                 currentPlayer = players[i];
             }
+        }
+        
+        //Actualizamos los itemsText en caso de que haya
+        if(textItems.length > 0){
+        	for(var i = 0; i < textItems.length; i++){
+        		textItems[i].update();
+        	}
         }
         
         //El cliente correspondiente al jugador 0 genera los items cuya info se manda al servidor
@@ -132,7 +143,14 @@ DLabyrinth.levelState.prototype = {
             players[i].checkLifePoints();
             players[i].checkOtherWin();
         }
-                
+        
+        //Actualizamos los itemsText en caso de que haya
+        if(textItems.length > 0){
+        	for(var i = 0; i < textItems.length; i++){
+        		textItems[i].update();
+        	}
+        }
+        
         map.update();
         checkCollisions(); // Chequeamos colisiones jugadores-objetos
 

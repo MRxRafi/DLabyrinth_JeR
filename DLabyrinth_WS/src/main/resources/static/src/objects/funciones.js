@@ -298,11 +298,25 @@ function checkCollisions(){
                         orbes[j] = new Orbe('orb', players[j]);
                         players[j].hasOrb = true;
                         
-                        /* PROBLEMA DE SINCRONIZACION
-                        if(DLabyrinth.player.id === j+1){
-                        	DLabyrinth.player.hasOrb = true;
-                        }*/
+                        
                     }
+                    //FEEDBACK: HAS RECOGIDO UN ARMA
+                    //pistola, metralleta
+                    if(players[j].id == DLabyrinth.player.id){
+	                    switch (o.type){
+	                    case "pistola":
+	                    	var text = "Has recogido una pistola."
+	                    	textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+	                    	textItems[textItems.length - 1].fixedToCamera();
+	                    	break;
+	                    case "metralleta":
+	                    	var text = "Has recogido un ak-47."
+	                        	textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+	                        	textItems[textItems.length - 1].fixedToCamera();
+	                    	break;
+	                    }
+                    }
+                    //Gestión al recogerla
                     orbes[j].setWeapon(o);
                     o.sprite.destroy();
                     weaponItems.splice(i, 1);
@@ -323,11 +337,52 @@ function checkCollisions(){
                     //////////////////////////////////////////////////////////////////
                     //mostrar por pantalla: recoge un arma para usar municion
                     //////////////////////////////////////////////////////////////////
+                    	//pistol_ammo, ak47_ammo
+                    	if(players[j].id == DLabyrinth.player.id){
+                    		var text = "Recoge un arma para recoger munición.";
+                            textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+                            textItems[textItems.length - 1].fixedToCamera();
+                    	}
+                    	
+                    	
                     }else{
                         if(orbes[j].setAmmo(o)){ 
-                        o.sprite.destroy();
-                        ammoItems.splice(i, 1);
-                        pickupAudio.play();
+                        	//FUNCIONALIDAD
+	                        o.sprite.destroy();
+	                        ammoItems.splice(i, 1);
+	                        pickupAudio.play();
+	                        
+	                        //FEEDBACK
+	                        if(players[j].id == DLabyrinth.player.id){
+		                        switch (o.type){
+	                            case "pistola":
+	                            	var text = "Has recogido " + o.ammo + " balas para pistola."
+	                                textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+	                                textItems[textItems.length - 1].fixedToCamera();
+	                            	break;
+	                            case "metralleta":
+	                            	var text = "Has recogido " + o.ammo + " balas para ak-47"
+	                                textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+	                                textItems[textItems.length - 1].fixedToCamera();
+	                            	break;
+	                            }
+	                        }
+                        } else {
+                        	//FEEDBACK
+                        	if(players[j].id == DLabyrinth.player.id){
+	                        	switch (o.type){
+	                            case "pistola":
+	                            	var text = "Necesitas una pistola para recoger esta munición."
+	                                textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+	                                textItems[textItems.length - 1].fixedToCamera();
+	                            	break;
+	                            case "metralleta":
+	                            	var text = "Necesitas un ak-47 para recoger esta munición."
+	                                textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+	                                textItems[textItems.length - 1].fixedToCamera();
+	                            	break;
+	                            }
+                        	}
                         }
                     }
             }
@@ -343,7 +398,20 @@ function checkCollisions(){
     	if(s != null){
     		for(var j = 0; j < players.length; j++){
                 if(game.physics.arcade.collide(players[j].sprite, s.sprite)){
-                   
+                	//FEEDBACK
+                	if(players[j].id == DLabyrinth.player.id){
+	                	if(players[j].shield == 3){
+	                		var text = "Ya tenias el escudo maximo.";
+	    	                textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+	    	                textItems[textItems.length - 1].fixedToCamera();
+	                	} else {
+	                		var text = "Has recogido escudo.";
+		                    textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+		                    textItems[textItems.length - 1].fixedToCamera();
+	                	}
+                	}
+                	
+                    //FUNCIONALIDAD
                     players[j].shield = 3;
                     shieldItems[i].sprite.destroy();
                     shieldItems.splice(i, 1);
@@ -364,6 +432,21 @@ function checkCollisions(){
     		for(var j = 0; j < players.length; j++){
                 if(players[j].food <=3){
                     if(game.physics.arcade.collide(players[j].sprite, f.sprite)){
+                    	//FEEDBACK
+                    	if(players[j].id == DLabyrinth.player.id){
+                    		if(players[j].food <= 3){
+                    			var text = "Has recogido comida.";
+        	    	            textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+        	    	            textItems[textItems.length - 1].fixedToCamera();
+                    		} else {
+                    			var text = "Ya tienes el máximo de comida.";
+        	    	            textItems[textItems.length] = new itemText(text, game.camera.width/2, game.camera.height/2);
+        	    	            textItems[textItems.length - 1].fixedToCamera();
+                    		}
+    	                	
+                    	}
+                    	
+                    	//FUNCIONALIDAD
                         players[j].food++;
                         foodItems[i].sprite.destroy();
                         foodItems.splice(i, 1);
@@ -422,27 +505,25 @@ function checkCollisions(){
     
 }
 
-//Lee las balas que ha lanzado el otro cliente (del servidor) y las pinta en el cliente actual (APIREST)
-/*
-function loadOtherBullets(id){
-	if(id === DLabyrinth.player.id){
-		var otherId;
-		if(id === 1) { otherId = 2; } else { otherId = 1; }
-		//Ajax get
-		getBalas(function(balas){
-			if(balas){
-				//Pintamos las balas
-				
-				for(i = 0; i < balas.length; i++){
-					if(balas[i] != null){
-						orbes[otherId-1].weapons[0].weapon.fireAtXY(balas[i].directionX, balas[i].directionY);
-					}
-					
-				}
-				
-			}
-			
-		}, otherId);
-	}
-}*/
+
+//OBJETO QUE MUESTRA UN TEXTO Y DESAPARECE CON EL TIEMPO
+function itemText(texto, posx, posy){
+  var style= {fill:"rgb(255,255,255)", font: "14px Press Start 2P", align:"center"};
+  var miTexto = game.add.text(posx, posy, texto, style);
+  iGroup.add(miTexto);
+  miTexto.anchor.x = 0.5;
+
+  this.update = function(){ //El texto desaparece poco a poco y va subiendo
+      miTexto.alpha -= 0.006;
+      miTexto.y -= 0.15;
+      if(miTexto.alpha <= 0.01){
+    	  iGroup.remove(miTexto);
+          miTexto.destroy();
+          delete this;
+      }
+  }
+  this.fixedToCamera = function(){
+      miTexto.fixedToCamera = true;
+  }
+}
 

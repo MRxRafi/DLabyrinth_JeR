@@ -1,6 +1,4 @@
 function Interface() {
-    var iGroup = game.add.group(); // Grupo de sprite de la interfaz
-
     var vision_spr;
     var oneH, halfH; // Corazones
     var shield; // Escudo
@@ -242,35 +240,35 @@ function Interface() {
 		 */
         if (player) {
         	// El jugador se encuentra entre los cuadrantes 0, 4, 8, 12
-            if (Math.floor(player.sprite.x / 32) < 25) { 
+            if (Math.round(player.sprite.x / 32) < 25) { 
 
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 0; min_y = 0; x = 25; y = 25; } //Cuadrante 0
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 0; min_y = 25; x = 25; y = 50; }// Cuadrante 4
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 0; min_y = 50; x = 25; y = 75; }// Cuadrante 8
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 0; min_y = 75; x = 25; y = 100; }// Cuadrante 12
+                if (Math.round((player.sprite.y + 16) / 32) < 25) { min_x = 0; min_y = 0; x = 25; y = 25; } //Cuadrante 0
+                if (Math.round((player.sprite.y + 16) / 32) >= 25 && Math.round((player.sprite.y + 16) / 32) < 50) { min_x = 0; min_y = 25; x = 25; y = 50; }// Cuadrante 4
+                if (Math.round((player.sprite.y + 16) / 32) >= 50 && Math.round((player.sprite.y + 16) / 32) < 75) { min_x = 0; min_y = 50; x = 25; y = 75; }// Cuadrante 8
+                if (Math.round((player.sprite.y + 16) / 32) >= 75) { min_x = 0; min_y = 75; x = 25; y = 100; }// Cuadrante 12
                 
             // El jugador se encuentra entre los cuadrantes 1, 5, 9, 13
-            } else if (Math.floor(player.sprite.x / 32) >= 25 && Math.floor(player.sprite.x / 32) < 50) {
+            } else if (Math.round(player.sprite.x / 32) >= 25 && Math.round(player.sprite.x / 32) < 50) {
 
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 25; min_y = 0; x = 50; y = 25; }// Cuadrante 1
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 25; min_y = 25; x = 50; y = 50; }// Cuadrante 5
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 25; min_y = 50; x = 50; y = 75; }// Cuadrante 9
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 25; min_y = 75; x = 50; y = 100; }// Cuadrante 13
+                if (Math.round((player.sprite.y + 16) / 32) < 25) { min_x = 25; min_y = 0; x = 50; y = 25; }// Cuadrante 1
+                if (Math.round((player.sprite.y + 16) / 32) >= 25 && Math.round((player.sprite.y + 16) / 32) < 50) { min_x = 25; min_y = 25; x = 50; y = 50; }// Cuadrante 5
+                if (Math.round((player.sprite.y + 16) / 32) >= 50 && Math.round((player.sprite.y + 16) / 32) < 75) { min_x = 25; min_y = 50; x = 50; y = 75; }// Cuadrante 9
+                if (Math.round((player.sprite.y + 16) / 32) >= 75) { min_x = 25; min_y = 75; x = 50; y = 100; }// Cuadrante 13
 
             // El jugador se encuentra entre los cuadrantes 2, 6, 10, 14
-            } else if (Math.floor(player.sprite.x / 32) >= 50 && Math.floor(player.sprite.x / 32) < 75) { 
+            } else if (Math.round(player.sprite.x / 32) >= 50 && Math.round(player.sprite.x / 32) < 75) { 
 
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 50; min_y = 0; x = 75; y = 25; }// Cuadrante 2
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 50; min_y = 25; x = 75; y = 50; }// Cuadrante 6
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 50; min_y = 50; x = 75; y = 75; }// Cuadrante 10
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 50; min_y = 75; x = 75; y = 100; }// Cuadrante 14
+                if (Math.round((player.sprite.y + 16) / 32) < 25) { min_x = 50; min_y = 0; x = 75; y = 25; }// Cuadrante 2
+                if (Math.round((player.sprite.y + 16) / 32) >= 25 && Math.round((player.sprite.y + 16) / 32) < 50) { min_x = 50; min_y = 25; x = 75; y = 50; }// Cuadrante 6
+                if (Math.round((player.sprite.y + 16) / 32) >= 50 && Math.round((player.sprite.y + 16) / 32) < 75) { min_x = 50; min_y = 50; x = 75; y = 75; }// Cuadrante 10
+                if (Math.round((player.sprite.y + 16) / 32) >= 75) { min_x = 50; min_y = 75; x = 75; y = 100; }// Cuadrante 14
 
-            } else if (Math.floor(player.sprite.x / 32) >= 75) { // // El jugador se encuentra entre los cuadrantes 3, 7, 11, 15
+            } else if (Math.round(player.sprite.x / 32) >= 75) { // // El jugador se encuentra entre los cuadrantes 3, 7, 11, 15
 
-                if (Math.floor(player.sprite.y / 32) < 25) { min_x = 75; min_y = 0; x = 100; y = 25; }// Cuadrante 3
-                if (Math.floor(player.sprite.y / 32) >= 25 && Math.floor(player.sprite.y / 32) < 50) { min_x = 75; min_y = 25; x = 100; y = 100; }// Cuadrante 7
-                if (Math.floor(player.sprite.y / 32) >= 50 && Math.floor(player.sprite.y / 32) < 75) { min_x = 75; min_y = 50; x = 100; y = 75; }// Cuadrante 11
-                if (Math.floor(player.sprite.y / 32) >= 75) { min_x = 75; min_y = 75; x = 100; y = 100; }// Cuadrante 15
+                if (Math.round((player.sprite.y + 16) / 32) < 25) { min_x = 75; min_y = 0; x = 100; y = 25; }// Cuadrante 3
+                if (Math.round((player.sprite.y + 16) / 32) >= 25 && Math.round((player.sprite.y + 16) / 32) < 50) { min_x = 75; min_y = 25; x = 100; y = 100; }// Cuadrante 7
+                if (Math.round((player.sprite.y + 16) / 32) >= 50 && Math.round((player.sprite.y + 16) / 32) < 75) { min_x = 75; min_y = 50; x = 100; y = 75; }// Cuadrante 11
+                if (Math.round((player.sprite.y + 16) / 32) >= 75) { min_x = 75; min_y = 75; x = 100; y = 100; }// Cuadrante 15
             }
         }
         
@@ -342,13 +340,13 @@ function Interface() {
 
         // Dibujamos al jugador
         if (player) {
-            game.miniMapOverlayBmd.rect(Math.floor((player.sprite.x / 32) - min_x) * 8, Math.floor((player.sprite.y / 32) - min_y) * 8, 8, 8, 'green');
+            game.miniMapOverlayBmd.rect(Math.round((player.sprite.x / 32) - min_x) * 8, Math.round(((player.sprite.y + 16) / 32) - min_y) * 8, 8, 8, 'green');
         }
         // Dibujamos enemigo (Sujeto a cambios, como que solo aparezca en el
 		// radio de visión)
         for(var i = 0; i < players.length; i++){
 	        if (players[i].id != player.id) {
-	            game.miniMapOverlayBmd.rect(Math.floor((players[i].sprite.x / 32) - min_x) * 8, Math.floor((players[i].sprite.y / 32) - min_y) * 8, 8, 8, 'red');
+	            game.miniMapOverlayBmd.rect(Math.round((players[i].sprite.x / 32) - min_x) * 8, Math.round(((players[i].sprite.y + 16) / 32) - min_y) * 8, 8, 8, 'red');
 	        }
         }
         
@@ -375,7 +373,12 @@ function Interface() {
         });*/
         if (DLabyrinth.map != undefined) {
             time = DLabyrinth.map.timeLeftOnline;
-            text = time[0] + ":" + time[1];
+            if(time[1] < 10){
+            	text = time[0] + ":0" + time[1];
+            } else {
+            	text = time[0] + ":" + time[1];
+            }
+            
         } else { text = "0:00" }
         
         // text = time;
