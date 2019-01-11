@@ -21,8 +21,8 @@ Contador de munición: bug visual al mostrar (unidades negativas). +3
 
 **RECOMENDACIONES “CONOCIDAS”**  
 Falta tutorial que explique qué hay que hacer y los controles, y para qué sirven los objetos. Feedback en general, cierre de salas. +6  SE HA AÑADIDO ALGO DE FEEDBACK  
-Sonido +5  
-Masterball como orbe -> Cambiar! +4  
+~~Sonido +5~~ HECHO (ADRI)  
+~~Masterball como orbe -> Cambiar! +4~~ HECHO (ADRI)  
 Completar el menú del juego (Opciones, por ejemplo). Añadir alguna animación más para el menú. +2  
 Objetos del juego demasiado simplistas (sin sombras ni brillos)  
 
@@ -31,7 +31,7 @@ Objetos del juego demasiado simplistas (sin sombras ni brillos)
 ~~CAMBIAR LO DE LA IP PARA QUE SEA AUTOMATICO (Analisis JUEGO_4-7)~~  HECHO  
 A nivel gráfico, animaciones demasiado rápidas y con algún error de encuadre. Los sprites autogenerados hacen que pierda identidad propia el juego. Estética. +4  
 Minimapa: lioso no saber el espacio completo por el que te mueves. Tapa una buena parte de la pantalla. +2  
-Apuntar con el raton -> disparar con el raton  
+~~Apuntar con el raton -> disparar con el raton~~ HECHO (ADRI)  
 Poca munición esparcida por el escenario +2  
 Mapa: demasiado grande para 2 jugadores  
 Recoges armas pero el que dispara es un orbe -> disonancia  
