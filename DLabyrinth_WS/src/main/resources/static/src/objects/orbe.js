@@ -15,6 +15,7 @@ function Orbe(sprsheet, pl){
         this.weapons[i].weapon.trackSprite(this.sprite, 0, 0);
         this.weapons[i].weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
         this.weapons[i].weapon.bulletSpeed = 700;
+        this.weapons[i].weapon.onFire.add(function(){shotAudio.play();});
         this.weapons[i].empty = true;
     }
     //Funcion para intercambiar armas
@@ -45,6 +46,7 @@ function Orbe(sprsheet, pl){
         this.weapons[i].type = w.type;
         this.weapons[i].empty = false;
         this.weapons[i].weapon.onFire.add(function(){this.weapons[0].ammo -= 1;}, this);
+        this.weapons[i].weapon.onFire.add(function(){shotAudio.play();});
     }
     //Funcion para poner municion al arma
     this.setAmmo = function(a){

@@ -23,7 +23,6 @@ function punchFunc1(){
 function shoot(balas){
 	for(var i = 0; i < balas.length; i++){
 		if(players[balas[i].idJug-1].hasOrb){
-			shotAudio.play();
 			orbes[balas[i].idJug -1].weapons[0].weapon.fireAtXY(balas[i].directionX, balas[i].directionY);
 			console.log("disparada bala de "+ balas[i].idJug);
 		}
@@ -89,7 +88,10 @@ function generateItems(){
                 var w = new WeaponItem(Math.floor(Math.random()*2800 + 200), Math.floor(Math.random()*2800 + 200),'ak-47', 0.25, 200, 30, 'metralleta');
                 break;
         }
-        while(map.tileMap.getTileWorldXY(w.sprite.x, w.sprite.y, 32, 32, map.layers[0]) === null){
+        while(map.tileMap.getTileWorldXY(w.sprite.x, w.sprite.y, 32, 32, map.layers[0]) === null ||
+        		map.tileMap.getTileWorldXY(w.sprite.x, w.sprite.y, 32, 32, map.layers[3]) !== null ||
+        		map.tileMap.getTileWorldXY(w.sprite.x, w.sprite.y, 32, 32, map.layers[4]) !== null ||
+        		map.tileMap.getTileWorldXY(w.sprite.x, w.sprite.y, 32, 32, map.layers[5]) !== null){
             w.sprite.x = Math.floor(Math.random()*2800 + 200);
             w.sprite.y = Math.floor(Math.random()*2800 + 200);
         }
@@ -109,7 +111,10 @@ function generateItems(){
                 var a = new AmmoItem(Math.floor(Math.random()*2800 + 200), Math.floor(Math.random()*2800 + 200),'ak47_ammo',30, 'metralleta');
                 break;
         }
-        while(map.tileMap.getTileWorldXY(a.sprite.x, a.sprite.y, 32, 32, map.layers[0]) === null){
+        while(map.tileMap.getTileWorldXY(a.sprite.x, a.sprite.y, 32, 32, map.layers[0]) === null ||
+        		map.tileMap.getTileWorldXY(a.sprite.x, a.sprite.y, 32, 32, map.layers[3]) !== null ||
+        		map.tileMap.getTileWorldXY(a.sprite.x, a.sprite.y, 32, 32, map.layers[4]) !== null ||
+        		map.tileMap.getTileWorldXY(a.sprite.x, a.sprite.y, 32, 32, map.layers[5]) !== null){
             a.sprite.x = Math.floor(Math.random()*2800 + 200);
             a.sprite.y = Math.floor(Math.random()*2800 + 200);
         }
@@ -123,7 +128,10 @@ function generateItems(){
     /////////////////////////////////////ESCUDO//////////////////////////////////////////////
     for(var i = 0; i < 4; i ++){
         var s = new ShieldItem(Math.floor(Math.random()*2800 + 200), Math.floor(Math.random()*2800 + 200));
-        while(map.tileMap.getTileWorldXY(s.sprite.x, s.sprite.y, 32, 32, map.layers[0]) === null){
+        while(map.tileMap.getTileWorldXY(s.sprite.x, s.sprite.y, 32, 32, map.layers[0]) === null ||
+        		map.tileMap.getTileWorldXY(s.sprite.x, s.sprite.y, 32, 32, map.layers[3]) !== null ||
+        		map.tileMap.getTileWorldXY(s.sprite.x, s.sprite.y, 32, 32, map.layers[4]) !== null ||
+        		map.tileMap.getTileWorldXY(s.sprite.x, s.sprite.y, 32, 32, map.layers[5]) !== null){
             s.sprite.x = Math.floor(Math.random()*2800 + 200);
             s.sprite.y = Math.floor(Math.random()*2800 + 200);
         }
@@ -133,7 +141,10 @@ function generateItems(){
     //Comida
     for(var i = 0; i < 8; i++){
         var f = new FoodItem(Math.floor(Math.random()*2800 + 200), Math.floor(Math.random()*2800 + 200),'food');
-        while(map.tileMap.getTileWorldXY(f.sprite.x, f.sprite.y, 32, 32, map.layers[0]) === null){
+        while(map.tileMap.getTileWorldXY(f.sprite.x, f.sprite.y, 32, 32, map.layers[0]) === null ||
+        		map.tileMap.getTileWorldXY(f.sprite.x, f.sprite.y, 32, 32, map.layers[3]) !== null ||
+        		map.tileMap.getTileWorldXY(f.sprite.x, f.sprite.y, 32, 32, map.layers[4]) !== null ||
+        		map.tileMap.getTileWorldXY(f.sprite.x, f.sprite.y, 32, 32, map.layers[5]) !== null){
             f.sprite.x = Math.floor(Math.random()*2800 + 200);
             f.sprite.y = Math.floor(Math.random()*2800 + 200);
         }
