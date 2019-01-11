@@ -39,7 +39,7 @@ DLabyrinth.preloadState.prototype = {
         game.load.spritesheet('spriteSheet', 'assets/spriteSheets/spriteSheet2.png', 30, 49, 80);
         game.load.spritesheet('spriteSheet2', 'assets/spriteSheets/spriteSheet3.png', 30, 49, 80);
         game.load.spritesheet('food', 'assets/props/food_spriteSheet.png', 28, 28, 4)
-        game.load.image('orb', 'assets/props/orbe.png');
+        game.load.image('orb', 'assets/props/orbe1.png');
         game.load.image('bg', 'assets/tiles/debug.png');
         game.load.image('bullet', 'assets/props/bullet.png');
         game.load.image('damage', 'assets/props/damage.png');
